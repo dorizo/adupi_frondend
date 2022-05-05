@@ -13,6 +13,16 @@ import DashboardApp from './pages/DashboardApp';
 import Welcome from './screens/Welcome';
 import MobileLayout from './layouts/MobileLayout';
 import Home from './screens/Home';
+import BeliSampah from './screens/BeliSampah';
+import JualSampah from './screens/JualSampah';
+import Masalah from './screens/Masalah';
+import Anggota from './screens/Anggota';
+import TambahAlat from './screens/TambahAlat';
+import FasilitatorHome from './screens/Home/FasilitatorHome';
+import FasilitatorWelcome from './screens/Welcome/FasilitatorWelcome';
+import TambahMitra from './screens/TambahMitra';
+import ListMitra from './screens/ListMitra';
+import ListKehadiran from './screens/ListKehadiran';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +43,17 @@ export default function Router() {
       element: <MobileLayout />,
       children: [
         { path: '', element: <Home /> },
+        { path: 'fasilitator', element: <FasilitatorHome /> },
         { path: 'welcome', element: <Welcome /> },
+        { path: 'login', element: <FasilitatorWelcome /> },
+        { path: 'beli-sampah', element: <BeliSampah /> },
+        { path: 'jual-sampah', element: <JualSampah /> },
+        { path: 'masalah', element: <Masalah /> },
+        { path: 'anggota', element: <Anggota /> },
+        { path: 'tambah-alat', element: <TambahAlat /> },
+        { path: 'tambah-mitra', element: <TambahMitra /> },
+        { path: 'list-mitra', element: <ListMitra /> },
+        { path: 'list-kehadiran', element: <ListKehadiran /> },
       ],
     },
     {

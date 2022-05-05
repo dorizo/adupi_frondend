@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import React, { useState } from 'react';
-import recyle from '../../assets/illustation/recyle.png';
+import adupi from '../../assets/logo/adupi.png';
 import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import ButtonSecondary from '../../components/Button/ButtonSecondary';
@@ -8,7 +8,7 @@ import useDrawer from '../../hooks/useDrawer';
 import Masuk from './Masuk';
 import Register from './Register';
 
-export default function Welcome() {
+export default function FasilitatorWelcome() {
   const { onOpen, Drawer } = useDrawer();
   const [action, setAction] = useState('Masuk');
   const [drawerTitle, setDrawerTitle] = useState('');
@@ -19,21 +19,14 @@ export default function Welcome() {
   };
   return (
     <>
-      <AdupiXMayoraHead />
-      <img alt="recyle logo" width="100%" src={recyle} />
+      <AdupiXMayoraHead text />
+      <img alt="recyle logo" width="100%" style={{ paddingLeft: 20, paddingRight: 20 }} src={adupi} />
       <div style={{ textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
-        <Typography variant="h4">Selamat Datang Mitra Adupi</Typography>
-        <Typography align="center" style={{ wordWrap: 'break-word', width: 240, margin: 'auto' }}>
-          Sebelum masuk ke aplikasi {'\n'} silahkan daftar dulu ya
-        </Typography>
+        <Typography variant="h4">Selamat Datang </Typography>
+
         <ButtonPrimary
-          onClick={() => handleOpen('Data Pribadi')}
-          style={{ marginTop: 5, marginBottom: 5 }}
-          label={'Daftar Akun Baru'}
-        />
-        <ButtonSecondary
           onClick={() => handleOpen('Masuk')}
-          style={{ marginTop: 10, marginBottom: 5 }}
+          style={{ marginTop: 10, marginBottom: 15 }}
           label={'Masuk'}
         />
         <Typography variant="caption">
@@ -46,7 +39,9 @@ export default function Welcome() {
             Kebijakan Privasi
           </a>
         </Typography>
-        <Drawer title={drawerTitle}>{action === 'Masuk' ? <Masuk /> : <Register />}</Drawer>
+        <Drawer title={drawerTitle}>
+          <Masuk />
+        </Drawer>
       </div>
     </>
   );

@@ -1,35 +1,26 @@
-import * as React from 'react';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import HomeIcon from '@mui/icons-material/Home';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Divider from '@mui/material/Divider';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import HomeIcon from '@mui/icons-material/Home';
-import adupi from '../../assets/logo/adupi-w.png';
-import menuBeli from '../../assets/illustation/menu-beli-sampah.png';
-import menuJual from '../../assets/illustation/menu-jual-sampah.png';
-import menuMasalah from '../../assets/illustation/menu-masalah.png';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import kehadiran from '../../assets/illustation/kehadiran.png';
+import listMitra from '../../assets/illustation/list-mitra.png';
 import menuAnggota from '../../assets/illustation/menu-anggota.png';
+import adupi from '../../assets/logo/adupi-w.png';
 
 const menuList = [
-  { title: 'Beli Sampah', desc: 'Masukkan Data Sampah yang Dibeli', icon: menuBeli, link: '/mobile/beli-sampah' },
-  { title: 'Jual Sampah', desc: 'Masukkan Data Sampah yang Dijual', icon: menuJual, link: '/mobile/jual-sampah' },
-  { title: 'Masalah', desc: 'Laporkan Masalah Mesin/Kendaraan', icon: menuMasalah, link: '/mobile/masalah' },
-  {
-    title: 'Tambah Anggota/Sumber',
-    desc: 'Tambah Anggota/Sumber Sampah',
-    icon: menuAnggota,
-    link: '/mobile/anggota',
-  },
+  { title: 'Tambah Mitra', desc: 'Tambah Mitra ADUPI', icon: menuAnggota, link: '/mobile/tambah-mitra' },
+  { title: 'List Mitra', desc: 'Daftar Mitra ADUPI', icon: listMitra, link: '/mobile/list-mitra' },
+  { title: 'Kehadiran Mitra', desc: 'Cek Kehadiran Mitra Disini', icon: kehadiran, link: '/mobile/list-kehadiran' },
 ];
-export default function Home() {
+export default function FasilitatorHome() {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   return (
@@ -62,12 +53,7 @@ export default function Home() {
       </AppBar>
       <Box sx={{ padding: 3 }}>
         <Typography variant="h3">Selamat Datang,</Typography>
-        <Typography variant="h3">PT. KMBRPS</Typography>
-        <Typography>Selamat bergabung sebagai mitra</Typography>
-        <br />
-        <Button color="error" variant="contained">
-          Lengkapi Pendaftaran
-        </Button>
+        <Typography>Selamat Pagi!, Semangat Selalu</Typography>
       </Box>
       <Grid sx={{ padding: 3 }} container spacing={2}>
         {menuList.map((m, i) => (
