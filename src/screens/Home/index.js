@@ -87,7 +87,7 @@ export default function Home() {
         ))}
       </Grid>
       <BottomNavigation
-        sx={{ position: 'fixed', bottom: 0, width: '100%' }}
+        sx={{ position: 'fixed', bottom: 0, margin: '0 auto', left: 0, right: 0 }}
         showLabels
         value={value}
         onChange={(event, newValue) => {

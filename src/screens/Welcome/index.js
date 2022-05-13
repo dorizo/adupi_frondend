@@ -12,6 +12,11 @@ export default function Welcome() {
   const { onOpen, Drawer } = useDrawer();
   const [action, setAction] = useState('Masuk');
   const [drawerTitle, setDrawerTitle] = useState('');
+  const [step, setStep] = useState(1);
+  const handleNext = (s, t) => {
+    setStep(s);
+    setDrawerTitle(t);
+  };
   const handleOpen = (a) => {
     setAction(a);
     setDrawerTitle(a);
@@ -46,7 +51,9 @@ export default function Welcome() {
             Kebijakan Privasi
           </a>
         </Typography>
-        <Drawer title={drawerTitle}>{action === 'Masuk' ? <Masuk /> : <Register />}</Drawer>
+        <Drawer title={drawerTitle}>
+          {action === 'Masuk' ? <Masuk /> : <Register handleNext={handleNext} step={step} />}
+        </Drawer>
       </div>
     </>
   );

@@ -1,18 +1,20 @@
 import { useFormik } from 'formik';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import TextInput from '../../components/TextInput';
 
 export default function Masuk() {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       password: '',
       email: '',
     },
     validationSchema: Yup.object({
-      password: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-      email: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+      password: Yup.string().max(20, 'Must be 20 characters or less'),
+      email: Yup.string().max(20, 'Must be 20 characters or less'),
     }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -44,7 +46,7 @@ export default function Masuk() {
         helperText={formik.touched.password && formik.errors.password}
         label={'Password'}
       />
-      <ButtonPrimary type="submit" label="Masuk" />
+      <ButtonPrimary onClick={() => navigate('/mobile')} type="submit" label="Masuk" />
     </form>
   );
 }

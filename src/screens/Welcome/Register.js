@@ -3,17 +3,21 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import TextInput from '../../components/TextInput';
 
-export default function Register() {
+export default function Register({ handleNext, step }) {
   return (
     <>
-      <Step1 />
+      {step === 1 && <Step1 handleNext={handleNext} />}
+      {step === 2 && <Step2 handleNext={handleNext} />}
+      {step === 3 && <Step3 handleNext={handleNext} />}
+      {step === 4 && <Step4 handleNext={handleNext} />}
     </>
   );
 }
-const Step1 = () => {
+const Step1 = ({ handleNext }) => {
   const [tglLahir, setTglLahir] = useState(null);
   const formik = useFormik({
     initialValues: {
@@ -23,10 +27,10 @@ const Step1 = () => {
       email: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-      alamat: Yup.string().max(100, 'Must be 100 characters or less').required('Required'),
-      tempat_lahir: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-      email: Yup.string().email('Invalid email address').required('Required'),
+      name: Yup.string().max(20, 'Must be 20 characters or less'),
+      alamat: Yup.string().max(100, 'Must be 100 characters or less'),
+      tempat_lahir: Yup.string().max(20, 'Must be 20 characters or less'),
+      email: Yup.string().email('Invalid email address'),
     }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -98,11 +102,11 @@ const Step1 = () => {
         label={'Alamat'}
         placeholder="Cth. Bandar Lampung"
       />
-      <ButtonPrimary type="submit" label="Selanjutnya" />
+      <ButtonPrimary type="submit" onClick={() => handleNext(2, 'Data Usaha')} label="Selanjutnya" />
     </form>
   );
 };
-const Step2 = () => {
+const Step2 = ({ handleNext }) => {
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -111,10 +115,10 @@ const Step2 = () => {
       email: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-      alamat: Yup.string().max(100, 'Must be 100 characters or less').required('Required'),
-      tempat_lahir: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-      email: Yup.string().email('Invalid email address').required('Required'),
+      name: Yup.string().max(20, 'Must be 20 characters or less'),
+      alamat: Yup.string().max(100, 'Must be 100 characters or less'),
+      tempat_lahir: Yup.string().max(20, 'Must be 20 characters or less'),
+      email: Yup.string().email('Invalid email address'),
     }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -239,11 +243,11 @@ const Step2 = () => {
         label={'Alamat Usaha'}
         placeholder="Cth. Bandar Lampung"
       />
-      <ButtonPrimary type="submit" label="Selanjutnya" />
+      <ButtonPrimary type="submit" onClick={() => handleNext(3, 'Unggah Foto Gudang')} label="Selanjutnya" />
     </form>
   );
 };
-const Step3 = () => {
+const Step3 = ({ handleNext }) => {
   const [selectedImg, setSelectedImg] = useState([]);
   const handleUploadClick = (event) => {
     if (selectedImg.length > 3) {
@@ -279,19 +283,20 @@ const Step3 = () => {
           label="Unggah File"
         />
       </div>
-      <ButtonPrimary type="submit" label="Selesai" />
+      <ButtonPrimary type="submit" onClick={() => handleNext(4, 'Daftar Akun')} label="Selesai" />
     </>
   );
 };
-const Step4 = () => {
+const Step4 = ({ handleNext }) => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       password: '',
       password2: '',
     },
     validationSchema: Yup.object({
-      password: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-      password2: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+      password: Yup.string().max(20, 'Must be 20 characters or less'),
+      password2: Yup.string().max(20, 'Must be 20 characters or less'),
     }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -323,7 +328,7 @@ const Step4 = () => {
         helperText={formik.touched.password2 && formik.errors.password2}
         label={'Masukkan Lagi Password'}
       />
-      <ButtonPrimary type="submit" label="Selanjutnya" />
+      <ButtonPrimary type="submit" onClick={() => navigate('/mobile')} label="Selanjutnya" />
     </form>
   );
 };
