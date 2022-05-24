@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import React, { useState } from 'react';
+import Page from '../../components/Page';
 import recyle from '../../assets/illustation/recyle.png';
 import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
@@ -23,7 +24,7 @@ export default function Welcome() {
     onOpen();
   };
   return (
-    <>
+    <Page title="Welcome">
       <AdupiXMayoraHead />
       <img alt="recyle logo" width="100%" src={recyle} />
       <div style={{ textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
@@ -55,6 +56,6 @@ export default function Welcome() {
           {action === 'Masuk' ? <Masuk /> : <Register handleNext={handleNext} step={step} />}
         </Drawer>
       </div>
-    </>
+    </Page>
   );
 }
