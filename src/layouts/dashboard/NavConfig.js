@@ -16,6 +16,11 @@ const navConfig = [
     path: '/dashboard/user',
     icon: getIcon('eva:people-fill'),
   },
+  {
+    title: 'role',
+    path: '/dashboard/role',
+    icon: getIcon('eva:people-fill'),
+  },
 ];
 
 export default navConfig;

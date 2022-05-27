@@ -33,20 +33,16 @@ export default function DialogComponent(props) {
   };
   const formik = useFormik({
     initialValues: {
-      name: item ? item.name : '',
+      // name: item ? item.name : '',
       email: item ? item.email : '',
       password: item ? item.password : '',
-      nik_ta: item ? item.nik_ta : '',
-      nik_api: item ? item.nik_api : '',
-      package_id: item ? item.package_id : '',
+      isActive: item ? item.isActive : '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Harus Disisi'),
+      // name: Yup.string().required('Harus Disisi'),
       email: Yup.string().email('Must be a valid email').required('Harus Disisi'),
       password: Yup.string().required('Harus Disisi'),
-      nik_ta: Yup.string().required('Harus Disisi'),
-      nik_api: Yup.string().required('Harus Disisi'),
-      package_id: Yup.string(),
+      isActive: Yup.number().required('Harus Disisi'),
     }),
     onSubmit: handleSubmit,
   });
@@ -56,7 +52,7 @@ export default function DialogComponent(props) {
         <DialogTitle> {editMode ? 'Edit' : 'Tambah'} User</DialogTitle>
         <form onSubmit={formik.handleSubmit}>
           <DialogContent>
-            <TextField
+            {/* <TextField
               margin="dense"
               name="name"
               id="name"
@@ -69,7 +65,7 @@ export default function DialogComponent(props) {
               error={formik.touched.name && Boolean(formik.errors.name)}
               variant="standard"
               helperText={formik.touched.name && formik.errors.name}
-            />
+            /> */}
             <TextField
               margin="dense"
               name="email"
@@ -98,54 +94,27 @@ export default function DialogComponent(props) {
               variant="standard"
               helperText={formik.touched.password && formik.errors.password}
             />
-            <TextField
-              margin="dense"
-              name="nik_ta"
-              id="nik_ta"
-              label="NIK TA"
-              type="text"
-              disabled={processing}
-              value={formik.values.nik_ta}
-              onChange={formik.handleChange}
-              fullWidth
-              error={formik.touched.nik_ta && Boolean(formik.errors.nik_ta)}
-              variant="standard"
-              helperText={formik.touched.nik_ta && formik.errors.nik_ta}
-            />
-            <TextField
-              margin="dense"
-              name="nik_api"
-              id="nik_api"
-              label="NIK API"
-              type="text"
-              disabled={processing}
-              value={formik.values.nik_api}
-              onChange={formik.handleChange}
-              fullWidth
-              error={formik.touched.nik_api && Boolean(formik.errors.nik_api)}
-              variant="standard"
-              helperText={formik.touched.nik_api && formik.errors.nik_api}
-            />
             <FormControl
-              error={formik.touched.package_id && Boolean(formik.errors.package_id)}
+              error={formik.touched.isActive && Boolean(formik.errors.isActive)}
               variant="standard"
               margin="dense"
               fullWidth
+              name="isActive"
               disabled={processing}
             >
-              <InputLabel id="demo-simple-select-label">Package</InputLabel>
+              <InputLabel id="demo-simple-select-label">Active</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={formik.values.package_id}
-                label="package_id"
-                name="package_id"
+                value={formik.values.isActive}
+                label="Active"
+                name="isActive"
                 onChange={formik.handleChange}
               >
-                <MenuItem value={0}>Not Set</MenuItem>
-                {option && option.map((o) => <MenuItem value={o.id}>{o.label}</MenuItem>)}
+                <MenuItem value={0}>In Active</MenuItem>
+                <MenuItem value={1}>Active</MenuItem>
               </Select>
-              <FormHelperText>{formik.touched.package_id && formik.errors.package_id}</FormHelperText>
+              <FormHelperText>{formik.touched.isActive && formik.errors.isActive}</FormHelperText>
             </FormControl>
           </DialogContent>
           <DialogActions>

@@ -11,9 +11,11 @@ import TableHeader from './Head';
 import TableToolbar from './Tool';
 
 const useTable = ({ header, rows, loading }) => {
-  rows = rows.map((a, i) => {
-    return { ...a, no: i + 1 };
-  });
+  rows =
+    rows &&
+    rows.map((a, i) => {
+      return { ...a, no: i + 1 };
+    });
   const [search, setSearch] = React.useState('');
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -69,11 +71,12 @@ const useTable = ({ header, rows, loading }) => {
     if (query) {
       const column = array[0] && Object.keys(array[0]);
       return array.filter((a) =>
-        column.some((col) => a[col].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
+        column.some((col) => a[col] && a[col].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
       );
     }
     return stabilizedThis.map((el) => el[0]);
   }
+  console.log(loading);
   if (loading) {
     const SkeletonLoad = (
       <>
@@ -106,7 +109,7 @@ const useTable = ({ header, rows, loading }) => {
         </>
       ),
       list: [],
-      search,
+      search: '',
     };
   }
   const list = rows

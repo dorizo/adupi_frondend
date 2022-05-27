@@ -1,0 +1,1417 @@
+{
+  "info": {
+    "_postman_id": "d3aa7b42-1b51-4ae2-8fc8-eec592e753df",
+    "name": "ADUPI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "20007375"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"su@mail.com\",\r\n    \"password\":\"asdasd\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "v1", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "refresh token",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/token",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "v1", "token"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Management User",
+      "item": [
+        {
+          "name": "Role",
+          "item": [
+            {
+              "name": "get all role",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUxOTgyNDI0LCJleHAiOjE2NTIwNjg4MjR9.v4SW0HNd4F68c_3Q424y_EHNnfuvNi5_y0UsoUU5O6k",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/role/all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "role", "all"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add role",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUxOTgyNDI0LCJleHAiOjE2NTIwNjg4MjR9.v4SW0HNd4F68c_3Q424y_EHNnfuvNi5_y0UsoUU5O6k",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"role\":\"Mitra2\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/role/add",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "role", "add"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "edit role",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUxOTgyNDI0LCJleHAiOjE2NTIwNjg4MjR9.v4SW0HNd4F68c_3Q424y_EHNnfuvNi5_y0UsoUU5O6k",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"roleCode\": 3,\r\n    \"role\":\"Mitra2\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/role/edit",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "role", "edit"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete role",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUxOTgyNDI0LCJleHAiOjE2NTIwNjg4MjR9.v4SW0HNd4F68c_3Q424y_EHNnfuvNi5_y0UsoUU5O6k",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userCode\": 3\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/user/delete",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "user", "delete"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add permission to role",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUyMTE2Mzc1LCJleHAiOjE2NTIyMDI3NzV9.xgeeVhOVucPmHVzaMN80yAOL1HBeY5ADZb__goP-UDU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"roleCode\": 2,\r\n    \"permissionCode\": 5\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/rolePermission/add",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "rolePermission", "add"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete permission from role",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUyMTE2Mzc1LCJleHAiOjE2NTIyMDI3NzV9.xgeeVhOVucPmHVzaMN80yAOL1HBeY5ADZb__goP-UDU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"rpCode\": 13\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/rolePermission/delete",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "rolePermission", "delete"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "list permission of role",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDEzNjM3LCJleHAiOjE2NTM1MDAwMzd9.Bf_uaIcNhEof-_rK5w4VTuTYg19O2Z8frOUfQhLC-Dg",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"roleCode\": \"1\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/rolePermission/list",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "rolePermission", "list"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get one role",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzMjkyNTY4LCJleHAiOjE2NTMzNzg5Njh9.aRTg5vFm0INBFaddS_R3sVMfB1gdCK5xE9pMsAvnGzU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"roleCode\": 2\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/role/one",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "role", "one"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "User",
+          "item": [
+            {
+              "name": "get all user",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDEzNjM3LCJleHAiOjE2NTM1MDAwMzd9.Bf_uaIcNhEof-_rK5w4VTuTYg19O2Z8frOUfQhLC-Dg",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/user/all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "user", "all"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add user",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNTcyNzM5LCJleHAiOjE2NTM2NTkxMzl9._8UsbKOqgvX0CB_WCL6tGpeRZuwYK4QtOP88Zo-_jxs",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"test2@gmail.com\",\r\n    \"password\":\"123\",\r\n    \"isActive\": 0\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/user/add",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "user", "add"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete user",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzMTYzMDQ0LCJleHAiOjE2NTMyNDk0NDR9.vCHIrDVhXOq0lYGLunsdaxdNN-cLiwqz45OBC5zuciA",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userCode\": 27\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/user/delete",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "user", "delete"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "edit user",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNTcyNzM5LCJleHAiOjE2NTM2NTkxMzl9._8UsbKOqgvX0CB_WCL6tGpeRZuwYK4QtOP88Zo-_jxs",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userCode\": 28,\r\n    \"email\":\"test@mail.com\",\r\n    \"password\":\"123\",\r\n    \"isActive\": 0\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/user/edit",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "user", "edit"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get one user",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzMjkyNTY4LCJleHAiOjE2NTMzNzg5Njh9.aRTg5vFm0INBFaddS_R3sVMfB1gdCK5xE9pMsAvnGzU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userCode\": 27\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/user/one",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "user", "one"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add role to user",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzMjkyNTY4LCJleHAiOjE2NTMzNzg5Njh9.aRTg5vFm0INBFaddS_R3sVMfB1gdCK5xE9pMsAvnGzU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"roleCode\": 2,\r\n    \"userCode\": 27\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/roleUser/add",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "roleUser", "add"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete role from user",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzMjkyNTY4LCJleHAiOjE2NTMzNzg5Njh9.aRTg5vFm0INBFaddS_R3sVMfB1gdCK5xE9pMsAvnGzU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"ruCode\": 3\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/roleUser/delete",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "roleUser", "delete"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "list role of user",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzMjkyNTY4LCJleHAiOjE2NTMzNzg5Njh9.aRTg5vFm0INBFaddS_R3sVMfB1gdCK5xE9pMsAvnGzU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userCode\": \"27\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/roleUser/list",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "roleUser", "list"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add special permission to user",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzMjkyNTY4LCJleHAiOjE2NTMzNzg5Njh9.aRTg5vFm0INBFaddS_R3sVMfB1gdCK5xE9pMsAvnGzU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userCode\": 1,\r\n    \"permissionCode\": 5\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/userPermission/add",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "userPermission", "add"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete special permission from user",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzMjkyNTY4LCJleHAiOjE2NTMzNzg5Njh9.aRTg5vFm0INBFaddS_R3sVMfB1gdCK5xE9pMsAvnGzU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"upCode\": 1\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/userPermission/delete",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "userPermission", "delete"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "list special permission from user",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDEzNjM3LCJleHAiOjE2NTM1MDAwMzd9.Bf_uaIcNhEof-_rK5w4VTuTYg19O2Z8frOUfQhLC-Dg",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userCode\": 1\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/userPermission/list",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "userPermission", "list"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Permission",
+          "item": [
+            {
+              "name": "get all permission",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDEzNjM3LCJleHAiOjE2NTM1MDAwMzd9.Bf_uaIcNhEof-_rK5w4VTuTYg19O2Z8frOUfQhLC-Dg",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/permission/all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "permission", "all"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all permission by module",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDEzNjM3LCJleHAiOjE2NTM1MDAwMzd9.Bf_uaIcNhEof-_rK5w4VTuTYg19O2Z8frOUfQhLC-Dg",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"moduleCode\":1\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/permissionByModule/list",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "permissionByModule", "list"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all permission with module",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDEzNjM3LCJleHAiOjE2NTM1MDAwMzd9.Bf_uaIcNhEof-_rK5w4VTuTYg19O2Z8frOUfQhLC-Dg",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/permissionWithModule/list",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "permissionWithModule", "list"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get one permission",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDEzNjM3LCJleHAiOjE2NTM1MDAwMzd9.Bf_uaIcNhEof-_rK5w4VTuTYg19O2Z8frOUfQhLC-Dg",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"permissionCode\": \"1\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/permission/one",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "permission", "one"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Master",
+      "item": [
+        {
+          "name": "Jenis Sampah",
+          "item": [
+            {
+              "name": "lihat semua jenis sampah",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUyMTE2Mzc1LCJleHAiOjE2NTIyMDI3NzV9.xgeeVhOVucPmHVzaMN80yAOL1HBeY5ADZb__goP-UDU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/master/jenisSampah/all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "master", "jenisSampah", "all"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "menambah jenis sampah",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUyMTE2Mzc1LCJleHAiOjE2NTIyMDI3NzV9.xgeeVhOVucPmHVzaMN80yAOL1HBeY5ADZb__goP-UDU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"jenis\":\"Bodong Mix\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/master/jenisSampah/add",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "master", "jenisSampah", "add"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "mengubah jenis sampah",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUyMTE2Mzc1LCJleHAiOjE2NTIyMDI3NzV9.xgeeVhOVucPmHVzaMN80yAOL1HBeY5ADZb__goP-UDU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"jsCode\": 1,\r\n    \"jenis\":\"Bodong Mix\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/master/jenisSampah/edit",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "master", "jenisSampah", "edit"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "menghapus jenis sampah",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUyMTE2Mzc1LCJleHAiOjE2NTIyMDI3NzV9.xgeeVhOVucPmHVzaMN80yAOL1HBeY5ADZb__goP-UDU",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"jsCode\": 1\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/master/jenisSampah/delete",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "master", "jenisSampah", "delete"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Wilayah",
+      "item": [
+        {
+          "name": "Provinsi",
+          "item": [
+            {
+              "name": "Get all provinsi",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/wilayah/provinsi/all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "wilayah", "provinsi", "all"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Kabupaten",
+          "item": [
+            {
+              "name": "Get all kabupaten",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"wilayahCode\": 11\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/wilayah/kabupaten/all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "wilayah", "kabupaten", "all"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Kecamatan",
+          "item": [
+            {
+              "name": "Get all kecamatan",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"wilayahCode\": \"11.05\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/wilayah/kecamatan/all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "wilayah", "kecamatan", "all"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Desa",
+          "item": [
+            {
+              "name": "Get all desa",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"wilayahCode\": \"11.05.07\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/v1/wilayah/desa/all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "5000",
+                  "path": ["api", "v1", "wilayah", "desa", "all"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mitra",
+      "item": [
+        {
+          "name": "Registrasi",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nama\": \"Diki Rahmad Sandi\",\r\n    \"nik\": \"1807122006990005\",\r\n    \"noHp\": \"0895606226096\",\r\n    \"jenisKelamin\": \"L\",\r\n    \"wilayahCode\": \"11.05.07.2002\",\r\n    \"jenisMitra\": \"PT\",\r\n    \"tempatLahir\": \"Pugung Raharjo\",\r\n    \"tanggalLahir\": \"1999-06-20\",\r\n    \"ktp\": \"image base 64\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg Cempaka 6, No.07\",\r\n    \"email\": \"wawaiguntang@gmail.com\",\r\n    \"password\": \"123\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/registrasi/mitra",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "v1", "registrasi", "mitra"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Fasilitator",
+      "item": [
+        {
+          "name": "lihat semua data fasilitator (super admin)",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDk3NTI0LCJleHAiOjE2NTM1ODM5MjR9.ldaE4k7olW1wlnY0Qkz3k0GYkba5WJYtU2Jy3sYBt8c",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"jenis\":\"Bodong Mix\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/fasilitator/all",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "v1", "fasilitator", "all"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "lihat semua user untuk tambah data fasilitator (super admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNTcyNzM5LCJleHAiOjE2NTM2NTkxMzl9._8UsbKOqgvX0CB_WCL6tGpeRZuwYK4QtOP88Zo-_jxs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/fasilitator/getUserForAdd",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "v1", "fasilitator", "getUserForAdd"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "tambah data fasilitator (super admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNTcyNzM5LCJleHAiOjE2NTM2NTkxMzl9._8UsbKOqgvX0CB_WCL6tGpeRZuwYK4QtOP88Zo-_jxs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nama\":\"Diki Rahmad Sandi\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg.Cempaka 6, No 07\",\r\n    \"userCode\":27,\r\n    \"wilayahCode\":\"11.05.07.2002\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/fasilitator/add",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "v1", "fasilitator", "add"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "lihat semua user untuk ubah data fasilitator (super admin)",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNTcyNzM5LCJleHAiOjE2NTM2NTkxMzl9._8UsbKOqgvX0CB_WCL6tGpeRZuwYK4QtOP88Zo-_jxs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fasilitatorCode\": 2\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/fasilitator/getUserForEdit",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "v1", "fasilitator", "getUserForEdit"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ubah data fasilitator (super admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDk3NTI0LCJleHAiOjE2NTM1ODM5MjR9.ldaE4k7olW1wlnY0Qkz3k0GYkba5WJYtU2Jy3sYBt8c",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fasilitatorCode\": 1,\r\n    \"nama\":\"Diki Rahmad Sandi\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg.Cempaka 6, No 07\",\r\n    \"userCode\":27,\r\n    \"wilayahCode\":\"11.05.07.2002\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/fasilitator/edit",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "v1", "fasilitator", "edit"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "hapus data fasilitator (super admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDk3NTI0LCJleHAiOjE2NTM1ODM5MjR9.ldaE4k7olW1wlnY0Qkz3k0GYkba5WJYtU2Jy3sYBt8c",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fasilitatorCode\": 1\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/fasilitator/delete",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "v1", "fasilitator", "delete"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

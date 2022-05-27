@@ -1,52 +1,92 @@
-import { useFormik } from 'formik';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import TextInput from '../../components/TextInput';
+import axios from '../../api';
+
+const LOGIN_URL = '/login';
 
 export default function Masuk() {
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
-  const formik = useFormik({
-    initialValues: {
-      password: '',
-      email: '',
-    },
-    validationSchema: Yup.object({
-      password: Yup.string().max(20, 'Must be 20 characters or less'),
-      email: Yup.string().max(20, 'Must be 20 characters or less'),
-    }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/mobile';
+
+  const userRef = useRef();
+  const errRef = useRef();
+
+  const [user, setUser] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState('');
+
+  useEffect(() => {
+    userRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    setErrMsg('');
+  }, [user, pwd]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(LOGIN_URL, JSON.stringify({ email: user, password: pwd }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const accessToken = response?.data?.data.accessToken;
+      const refreshToken = response?.data?.data.refreshToken;
+      // const roles = null;
+      await localStorage.setItem('accessToken', accessToken);
+      await localStorage.setItem('refreshToken', refreshToken);
+
+      setAuth({ accessToken });
+      setUser('');
+      setPwd('');
+      navigate(from, { replace: true });
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg('No Server Response');
+      } else if (err.response?.status === 400) {
+        setErrMsg('Missing Username or Password');
+      } else if (err.response?.status === 401) {
+        setErrMsg('Unauthorized');
+      } else {
+        setErrMsg('Login Failed');
+      }
+      errRef.current.focus();
+    }
+    setLoading(false);
+  };
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <TextInput
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.email}
-        autoFocus
-        error={formik.touched.email && Boolean(formik.errors.email)}
-        helperText={formik.touched.email && formik.errors.email}
-        label={'E-mail'}
-      />
-      <TextInput
-        id="password"
-        name="password"
-        type="password"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.password}
-        autoFocus
-        error={formik.touched.password && Boolean(formik.errors.password)}
-        helperText={formik.touched.password && formik.errors.password}
-        label={'Password'}
-      />
-      <ButtonPrimary onClick={() => navigate('/mobile')} type="submit" label="Masuk" />
-    </form>
+    <>
+      <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live="assertive">
+        {errMsg}
+      </p>
+      <form onSubmit={handleSubmit}>
+        <TextInput
+          id="email"
+          name="email"
+          type="email"
+          ref={userRef}
+          autoComplete="off"
+          onChange={(e) => setUser(e.target.value)}
+          value={user}
+          required
+          label={'E-mail'}
+        />
+        <TextInput
+          type="password"
+          id="password"
+          onChange={(e) => setPwd(e.target.value)}
+          value={pwd}
+          required
+          label={'Password'}
+        />
+        <ButtonPrimary disabled={loading} type="submit" label="Masuk" />
+      </form>
+    </>
   );
 }

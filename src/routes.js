@@ -4,11 +4,11 @@ import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 import Blog from './pages/Blog';
-import User from './pages/User/User';
+import User from './pages/User';
 import Login from './pages/Login';
 import NotFound from './pages/Page404';
 import Register from './pages/Register';
-import Products from './pages/Products';
+import Role from './pages/Role';
 import DashboardApp from './pages/DashboardApp';
 import Welcome from './screens/Welcome';
 import MobileLayout from './layouts/MobileLayout';
@@ -23,6 +23,7 @@ import FasilitatorWelcome from './screens/Welcome/FasilitatorWelcome';
 import TambahMitra from './screens/TambahMitra';
 import ListMitra from './screens/ListMitra';
 import ListKehadiran from './screens/ListKehadiran';
+import RequireAuth from './Guard/RequiredAuth';
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +35,7 @@ export default function Router() {
       children: [
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
-        { path: 'products', element: <Products /> },
+        { path: 'role', element: <Role /> },
         { path: 'blog', element: <Blog /> },
       ],
     },
@@ -42,7 +43,14 @@ export default function Router() {
       path: '/mobile',
       element: <MobileLayout />,
       children: [
-        { path: '', element: <Home /> },
+        {
+          path: '',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <Home />
+            </RequireAuth>
+          ),
+        },
         { path: 'fasilitator', element: <FasilitatorHome /> },
         { path: 'welcome', element: <Welcome /> },
         { path: 'login', element: <FasilitatorWelcome /> },
