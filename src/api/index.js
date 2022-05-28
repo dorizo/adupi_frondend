@@ -5,6 +5,7 @@ export default axios.create({
 });
 
 export function catchCallBack(error) {
+  console.log(error);
   if (error.response) {
     // console.log('error.response ', error.response);
     return error.response;

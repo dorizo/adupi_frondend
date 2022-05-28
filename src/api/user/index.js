@@ -14,15 +14,23 @@ const GET_USERS = async () => {
     return catchCallBack(error);
   }
 };
-const GET_USER = async (id) => {
-  const data = qs.stringify({
-    userCode: id,
-  });
+const GET_ME = async () => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.get(`user/one`, data, { headers });
+    const response = await axios.get('account/self', { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+const GET_USER = async (id) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`user/one/${id}`, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
@@ -50,27 +58,23 @@ const UPDATE_USER = async ({ name, email, password, isActive }, id) => {
     password,
     name,
     isActive,
-    userCode: id,
   });
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.put(`user/edit`, data, { headers });
+    const response = await axios.put(`user/edit/${id}`, data, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
   }
 };
 const DELETE_USER = async (id) => {
-  const data = qs.stringify({
-    userCode: id,
-  });
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.delete(`user/delete`, data, { headers });
+    const response = await axios.delete(`user/delete/${id}`, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
@@ -106,54 +110,45 @@ const ADD_USER_PERMISSION = async (userCode, permissionCode) => {
     return catchCallBack(error);
   }
 };
-const GET_USER_DETAIL_PERMISSION = async (id) => {
-  const data = qs.stringify({
-    userCode: id,
-  });
+const GET_USER_PERMISSION = async (id) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.get(`userPermission/list`, data, { headers });
+    const response = await axios.get(`userPermission/list/${id}`, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
   }
 };
-const GET_PERMISSIONS = async () => {
+const GET_USER_ROLE = async (id) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.get(`permission/all`, { headers });
+    const response = await axios.get(`roleUser/list/${id}`, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
   }
 };
 const DELETE_USER_ROLE = async (id) => {
-  const data = qs.stringify({
-    ruCode: id,
-  });
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.delete(`roleUser/delete`, data, { headers });
+    const response = await axios.delete(`roleUser/delete/${id}`, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
   }
 };
 const DELETE_USER_PERMISSION = async (id) => {
-  const data = qs.stringify({
-    upCode: id,
-  });
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.delete(`userPermission/delete`, data, { headers });
+    const response = await axios.delete(`userPermission/delete/${id}`, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
@@ -167,8 +162,9 @@ export {
   DELETE_USER,
   ADD_USER_PERMISSION,
   ADD_USER_ROLE,
-  GET_USER_DETAIL_PERMISSION,
+  GET_USER_PERMISSION,
   DELETE_USER_PERMISSION,
   DELETE_USER_ROLE,
-  GET_PERMISSIONS,
+  GET_USER_ROLE,
+  GET_ME,
 };

@@ -54,7 +54,7 @@ export default function Index() {
     setDialogOpen(true);
   };
   const handleDetail = () => {
-    navigate(`/master/role/${itemSelected.roleCode}`);
+    navigate(`/dashboard/role/detail/${itemSelected.roleCode}`);
   };
   // HANDLE ALERT
   const handleAlertOpen = (text) => {
@@ -126,7 +126,7 @@ export default function Index() {
   const actionOpen = Boolean(anchorEl);
   const processing = loading || isLoading || deleteMutation.isLoading;
   return (
-    <Page title="User">
+    <Page title="Role">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -146,7 +146,7 @@ export default function Index() {
                 return (
                   <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
                     <TableCell>{row.no}</TableCell>
-                    <TableCell component="th" id={labelId} scope="row" padding="none">
+                    <TableCell id={labelId} scope="row">
                       {row.role}
                     </TableCell>
                   </TableRow>

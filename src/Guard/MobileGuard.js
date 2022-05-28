@@ -1,7 +1,7 @@
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
-const RequireAuth = ({ allowedRoles = null, children }) => {
+const MobileGuard = ({ allowedRoles = null, children }) => {
   const { auth } = useAuth();
   const location = useLocation();
 
@@ -10,12 +10,10 @@ const RequireAuth = ({ allowedRoles = null, children }) => {
   // if (!auth?.user) {
   //   return <Navigate to="/unauthorized" state={{ from: location }} replace />;
   // }
-  console.log(auth, 'asss');
-
-  if (!auth.user) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+  if (!auth.accessToken) {
+    return <Navigate to="/mobile/welcome" state={{ from: location }} replace />;
   }
   return children;
 };
 
-export default RequireAuth;
+export default MobileGuard;

@@ -14,7 +14,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
-  padding: theme.spacing(12, 0)
+  padding: theme.spacing(12, 0),
 }));
 
 // ----------------------------------------------------------------------
@@ -29,8 +29,8 @@ export default function Page404() {
           </Typography>
 
           <Typography sx={{ color: 'text.secondary' }}>
-            Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL? Be
-            sure to check your spelling.
+            Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL? Be sure to check your
+            spelling.
           </Typography>
 
           <Box
@@ -39,7 +39,7 @@ export default function Page404() {
             sx={{ height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
           />
 
-          <Button to="/" size="large" variant="contained" component={RouterLink}>
+          <Button to="/dashboard" size="large" variant="contained" component={RouterLink}>
             Go to Home
           </Button>
         </ContentStyle>

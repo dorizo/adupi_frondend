@@ -5,10 +5,14 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 import Blog from './pages/Blog';
 import User from './pages/User';
+import UserDetail from './pages/UserDetail';
 import Login from './pages/Login';
 import NotFound from './pages/Page404';
 import Register from './pages/Register';
 import Role from './pages/Role';
+import JenisSampah from './pages/JenisSampah';
+import Fasilitator from './pages/Fasilitator';
+import RoleDetail from './pages/RoleDetail';
 import DashboardApp from './pages/DashboardApp';
 import Welcome from './screens/Welcome';
 import MobileLayout from './layouts/MobileLayout';
@@ -24,6 +28,7 @@ import TambahMitra from './screens/TambahMitra';
 import ListMitra from './screens/ListMitra';
 import ListKehadiran from './screens/ListKehadiran';
 import RequireAuth from './Guard/RequiredAuth';
+import MobileGuard from './Guard/MobileGuard';
 
 // ----------------------------------------------------------------------
 
@@ -34,9 +39,65 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
-        { path: 'role', element: <Role /> },
+        {
+          path: 'role',
+          children: [
+            {
+              path: '',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <Role />
+                </RequireAuth>
+              ),
+            },
+            {
+              path: 'detail/:roleId',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <RoleDetail />
+                </RequireAuth>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'user',
+          children: [
+            {
+              path: '',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <User />
+                </RequireAuth>
+              ),
+            },
+            {
+              path: 'detail/:id',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <UserDetail />
+                </RequireAuth>
+              ),
+            },
+          ],
+        },
         { path: 'blog', element: <Blog /> },
+        {
+          path: 'jenis-sampah',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <JenisSampah />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'fasilitator',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <Fasilitator />
+            </RequireAuth>
+          ),
+        },
       ],
     },
     {
@@ -46,9 +107,9 @@ export default function Router() {
         {
           path: '',
           element: (
-            <RequireAuth allowedRoles={['admin']}>
+            <MobileGuard allowedRoles={['admin']}>
               <Home />
-            </RequireAuth>
+            </MobileGuard>
           ),
         },
         { path: 'fasilitator', element: <FasilitatorHome /> },

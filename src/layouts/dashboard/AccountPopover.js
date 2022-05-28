@@ -3,6 +3,7 @@ import { Avatar, Box, Divider, IconButton, MenuItem, Typography } from '@mui/mat
 // @mui
 import { alpha } from '@mui/material/styles';
 import { useRef, useState } from 'react';
+import useAuth from '../../hooks/useAuth';
 // components
 import MenuPopover from '../../components/MenuPopover';
 // mocks_
@@ -32,6 +33,7 @@ import account from '../../_mock/account';
 
 export default function AccountPopover() {
   const anchorRef = useRef(null);
+  const { auth, logout } = useAuth();
 
   const [open, setOpen] = useState(null);
 
@@ -82,10 +84,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {auth.user}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {auth.role && auth.role.join()}
           </Typography>
         </Box>
 
@@ -101,7 +103,7 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} /> */}
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
+        <MenuItem onClick={logout} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </MenuPopover>

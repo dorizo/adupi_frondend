@@ -1,57 +1,45 @@
-import { Avatar, Button, Card, Container, Stack, TableCell, TableRow } from '@mui/material';
+import { Button, Card, Container, Stack, TableCell, TableRow } from '@mui/material';
 import Typography from '@mui/material/Typography';
+// import { useMee } from 'contexts/MeContext';
 import * as React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router';
 import { useSnackbar } from 'notistack';
-import { ADD_USER, DELETE_USER, GET_USERS, UPDATE_USER } from '../../api/user';
+import {
+  ADD_JENIS_SAMPAH,
+  DELETE_JENIS_SAMPAH,
+  GET_ALL_JENIS_SAMPAH,
+  UPDATE_JENIS_SAMPAH,
+} from '../../api/jenis_sampah';
 import DialogConfirm from '../../components/DialogConfirm';
-import DialogComponent from './DialogComponent';
 import useTable from '../../hooks/useTable/index';
-import Page from '../../components/Page';
 import Action from './Action';
-import Label from '../../components/Label';
+import DialogComponent from './DialogComponent';
+import Page from '../../components/Page';
 
 const headCells = [
-  //   {
-  //     id: 'name',
-  //     numeric: false,
-  //     disablePadding: true,
-  //     label: 'Nama',
-  //   },
   {
-    id: 'email',
+    id: 'jenis',
     numeric: false,
     disablePadding: true,
-    label: 'Email',
+    label: 'Jenis Sampah',
   },
-  {
-    id: 'status',
-    numeric: false,
-    disablePadding: true,
-    label: 'Status',
-  },
-  //   {
-  //     id: 'active',
-  //     numeric: false,
-  //     disablePadding: true,
-  //     label: 'Active',
-  //   },
 ];
 
 export default function Index() {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [alertOpen, setAlertOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [alertText, setAlertText] = React.useState('');
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [itemSelected, setItemSelected] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
+  //   const { checkPermision } = useMee();
+  const { data, isLoading, refetch } = useQuery('GET_ALL_JENIS_SAMPAH', GET_ALL_JENIS_SAMPAH);
   const navigate = useNavigate();
-  const { data, isLoading, refetch } = useQuery('GET_USERS', GET_USERS);
-
   const { enqueueSnackbar } = useSnackbar();
 
   const rows = data && data.data.data;
+
   const { TableComponent, list } = useTable({
     header: headCells,
     rows,
@@ -71,7 +59,7 @@ export default function Index() {
     setDialogOpen(true);
   };
   const handleDetail = () => {
-    navigate(`/dashboard/user/detail/${itemSelected.userCode}`);
+    navigate(`/dashboard/role/detail/${itemSelected.roleCode}`);
   };
   // HANDLE ALERT
   const handleAlertOpen = (text) => {
@@ -83,7 +71,7 @@ export default function Index() {
     setAlertOpen(false);
   };
 
-  const deleteMutation = useMutation((params) => DELETE_USER(params.id), {
+  const deleteMutation = useMutation((params) => DELETE_JENIS_SAMPAH(params.id), {
     onSuccess: async (res) => {
       const variant = res.status === 200 ? 'success' : 'warning';
       await enqueueSnackbar(res.data.message, { variant });
@@ -99,7 +87,7 @@ export default function Index() {
   // HANDLE ACTION
   const onAdd = async (data, callbackSetError) => {
     setLoading(true);
-    const response = await ADD_USER(data);
+    const response = await ADD_JENIS_SAMPAH(data);
     if (response.status === 400) {
       callbackSetError(response.data.error.form);
     }
@@ -116,14 +104,11 @@ export default function Index() {
       setDialogOpen(false);
       handleActionClose();
     }
-    if (response.status === 500) {
-      await enqueueSnackbar('Internal server error', 'error');
-    }
     await setLoading(false);
   };
   const onUpdate = async (data, id, callbackSetError) => {
     setLoading(true);
-    const response = await UPDATE_USER(data, id);
+    const response = await UPDATE_JENIS_SAMPAH(data, id);
     if (response.data.status === 400) {
       callbackSetError(response.data.error.form);
     }
@@ -137,26 +122,27 @@ export default function Index() {
     await setLoading(false);
   };
   const onDelete = async () => {
-    deleteMutation.mutate({ id: itemSelected.userCode });
+    deleteMutation.mutate({ id: itemSelected.jsCode });
   };
   const handleConfirm = async () => {
     await onDelete();
   };
 
   const actionOpen = Boolean(anchorEl);
-  const processing = loading || deleteMutation.isLoading || isLoading;
+  const processing = loading || isLoading || deleteMutation.isLoading;
   return (
-    <Page title="User">
+    <Page title="Jenis Sampah">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Role
+            Jenis Sampah
           </Typography>
-
           <Button onClick={() => setDialogOpen(true)} variant="contained">
             Tambah
           </Button>
+          {/* )} */}
         </Stack>
+
         <Card>
           {list &&
             TableComponent(
@@ -165,19 +151,9 @@ export default function Index() {
                 return (
                   <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
                     <TableCell>{row.no}</TableCell>
-                    {/* <TableCell component="th" id={labelId} scope="row" padding="none">
-                      <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Avatar sx={{ margin: 1 }} alt={row.name} src={row.photo} />
-                        {row.name}
-                      </div>
-                    </TableCell> */}
-                    <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.status}</TableCell>
-                    {/* <TableCell align="left">
-                      <Label variant="ghost" color={row.isActive ? 'success' : 'error'}>
-                        {row.isActive ? 'Active' : 'InActive'}
-                      </Label>
-                    </TableCell> */}
+                    <TableCell id={labelId} scope="row">
+                      {row.jenis}
+                    </TableCell>
                   </TableRow>
                 );
               })
@@ -198,7 +174,6 @@ export default function Index() {
         <Action
           actionOpen={actionOpen}
           handleEdit={handleEdit}
-          handleDetail={handleDetail}
           handelDelete={() => handleAlertOpen('Apakah yakin mau delete')}
           anchorEl={anchorEl}
           actionClose={handleActionClose}
