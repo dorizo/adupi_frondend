@@ -36,7 +36,11 @@ export default function Router() {
   return useRoutes([
     {
       path: '/dashboard',
-      element: <DashboardLayout />,
+      element: (
+        <RequireAuth allowedRoles={['admin']}>
+          <DashboardLayout />
+        </RequireAuth>
+      ),
       children: [
         { path: 'app', element: <DashboardApp /> },
         {
