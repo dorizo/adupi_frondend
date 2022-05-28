@@ -2,6 +2,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function AutoCompleteLoading({
   options = [],
@@ -43,3 +44,13 @@ export default function AutoCompleteLoading({
     />
   );
 }
+
+AutoCompleteLoading.propTypes = {
+  options: PropTypes.array,
+  loading: PropTypes.bool,
+  value: PropTypes.object,
+  onChange: PropTypes.func,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  id: PropTypes.string,
+};

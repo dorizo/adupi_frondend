@@ -160,8 +160,10 @@ export default function Index() {
                 label="type"
                 name="type"
               >
-                {roles.data.map((r) => (
-                  <MenuItem value={r.roleCode}>{r.role}</MenuItem>
+                {roles.data.map((r, i) => (
+                  <MenuItem key={i} value={r.roleCode}>
+                    {r.role}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -172,8 +174,13 @@ export default function Index() {
 
           <Stack direction="row" style={{ marginTop: 4, display: 'flex', flexWrap: 'wrap' }} spacing={1}>
             {userRole &&
-              userRole.data.map((role) => (
-                <Chip style={{ marginTop: 10 }} label={role.role} onDelete={() => handleDeleteRole(role.ruCode)} />
+              userRole.data.map((role, i) => (
+                <Chip
+                  key={i}
+                  style={{ marginTop: 10 }}
+                  label={role.role}
+                  onDelete={() => handleDeleteRole(role.ruCode)}
+                />
               ))}
           </Stack>
         </Card>
@@ -217,8 +224,9 @@ export default function Index() {
           </div>
           <Stack direction="row" style={{ marginTop: 4, display: 'flex', flexWrap: 'wrap' }} spacing={1}>
             {userPermission &&
-              userPermission.data.map((p) => (
+              userPermission.data.map((p, i) => (
                 <Chip
+                  key={i}
                   style={{ marginTop: 10 }}
                   label={p.description}
                   onDelete={() => handleDeletePermission(p.rpCode)}

@@ -89,7 +89,7 @@ export default function Index() {
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
-      keys.forEach((key, index) => {
+      keys.forEach((key) => {
         enqueueSnackbar(asdf[key].msg, { variant: 'warning' });
       });
     }

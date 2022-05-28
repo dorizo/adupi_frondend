@@ -144,8 +144,13 @@ export default function RoleDetail() {
         </div>
         <Stack direction="row" style={{ marginTop: 4, display: 'flex', flexWrap: 'wrap' }} spacing={1}>
           {result &&
-            result.data.map((p) => (
-              <Chip style={{ marginTop: 10 }} label={p.description} onDelete={() => handleDeletePermission(p.rpCode)} />
+            result.data.map((p, i) => (
+              <Chip
+                key={i}
+                style={{ marginTop: 10 }}
+                label={p.description}
+                onDelete={() => handleDeletePermission(p.rpCode)}
+              />
             ))}
         </Stack>
       </Card>

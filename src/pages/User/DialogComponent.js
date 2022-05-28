@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 import useScriptRef from '../../hooks/useScriptRef';
 
 export default function DialogComponent(props) {
-  const { open, onClose, item, onAdd, onUpdate, processing, option } = props;
+  const { open, onClose, item, onAdd, onUpdate, processing } = props;
 
   const editMode = Boolean(item && item.userCode);
   const scriptedRef = useScriptRef();
@@ -136,6 +136,5 @@ DialogComponent.propTypes = {
   item: PropTypes.any,
   onAdd: PropTypes.any,
   onUpdate: PropTypes.any,
-  option: PropTypes.any,
   processing: PropTypes.any,
 };

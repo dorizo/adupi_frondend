@@ -1,15 +1,13 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Card, Container, Typography } from '@mui/material';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Card, Link, Container, Typography } from '@mui/material';
-// hooks
-import useResponsive from '../hooks/useResponsive';
+import Logo from '../components/Logo';
 // components
 import Page from '../components/Page';
-import Logo from '../components/Logo';
+// hooks
+import useResponsive from '../hooks/useResponsive';
 // sections
 import { LoginForm } from '../sections/auth/login';
-import AuthSocial from '../sections/auth/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -57,7 +55,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
-  const smUp = useResponsive('up', 'sm');
+  // const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
 

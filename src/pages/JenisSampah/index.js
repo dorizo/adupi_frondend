@@ -1,10 +1,9 @@
 import { Button, Card, Container, Stack, TableCell, TableRow } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import { useSnackbar } from 'notistack';
 // import { useMee } from 'contexts/MeContext';
 import * as React from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { useNavigate } from 'react-router';
-import { useSnackbar } from 'notistack';
 import {
   ADD_JENIS_SAMPAH,
   DELETE_JENIS_SAMPAH,
@@ -12,10 +11,10 @@ import {
   UPDATE_JENIS_SAMPAH,
 } from '../../api/jenis_sampah';
 import DialogConfirm from '../../components/DialogConfirm';
+import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
 import Action from './Action';
 import DialogComponent from './DialogComponent';
-import Page from '../../components/Page';
 
 const headCells = [
   {
@@ -35,7 +34,6 @@ export default function Index() {
   const [itemSelected, setItemSelected] = React.useState(null);
   //   const { checkPermision } = useMee();
   const { data, isLoading, refetch } = useQuery('GET_ALL_JENIS_SAMPAH', GET_ALL_JENIS_SAMPAH);
-  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const rows = data && data.data.data;
@@ -58,9 +56,7 @@ export default function Index() {
   const handleEdit = () => {
     setDialogOpen(true);
   };
-  const handleDetail = () => {
-    navigate(`/dashboard/role/detail/${itemSelected.roleCode}`);
-  };
+
   // HANDLE ALERT
   const handleAlertOpen = (text) => {
     setAlertText(text);
@@ -94,7 +90,7 @@ export default function Index() {
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
-      keys.forEach((key, index) => {
+      keys.forEach((key) => {
         enqueueSnackbar(asdf[key].msg, { variant: 'warning' });
       });
     }

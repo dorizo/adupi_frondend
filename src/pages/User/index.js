@@ -1,16 +1,15 @@
-import { Avatar, Button, Card, Container, Stack, TableCell, TableRow } from '@mui/material';
+import { Button, Card, Container, Stack, TableCell, TableRow } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import { useSnackbar } from 'notistack';
 import * as React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router';
-import { useSnackbar } from 'notistack';
 import { ADD_USER, DELETE_USER, GET_USERS, UPDATE_USER } from '../../api/user';
 import DialogConfirm from '../../components/DialogConfirm';
-import DialogComponent from './DialogComponent';
-import useTable from '../../hooks/useTable/index';
 import Page from '../../components/Page';
+import useTable from '../../hooks/useTable/index';
 import Action from './Action';
-import Label from '../../components/Label';
+import DialogComponent from './DialogComponent';
 
 const headCells = [
   //   {
@@ -106,7 +105,7 @@ export default function Index() {
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
-      keys.forEach((key, index) => {
+      keys.forEach((key) => {
         enqueueSnackbar(asdf[key].msg, { variant: 'warning' });
       });
     }
@@ -163,7 +162,13 @@ export default function Index() {
               list.map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`;
                 return (
-                  <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
+                  <TableRow
+                    label={labelId}
+                    onClick={(event) => handleActionOpen(event, row)}
+                    hover
+                    tabIndex={-1}
+                    key={index}
+                  >
                     <TableCell>{row.no}</TableCell>
                     {/* <TableCell component="th" id={labelId} scope="row" padding="none">
                       <div style={{ display: 'flex', alignItems: 'center' }}>

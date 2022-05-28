@@ -1,4 +1,5 @@
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
+/* eslint-disable arrow-body-style */
+
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -6,17 +7,17 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import useScriptRef from '../../hooks/useScriptRef';
-import AutoCompleteLoading from '../../components/AutoCompleteLoading';
-import { GET_ALL_PROVINSI, GET_DESA, GET_KABUPATEN, GET_KECAMATAN } from '../../api/wilayah';
 import {
+  // GET_ONE_FASILITATOR,
   GET_USER_FOR_ADD_FASILITATOR,
   GET_USER_FOR_UPDATE_FASILITATOR,
-  GET_ONE_FASILITATOR,
 } from '../../api/fasilitator';
+import { GET_ALL_PROVINSI, GET_DESA, GET_KABUPATEN, GET_KECAMATAN } from '../../api/wilayah';
+import AutoCompleteLoading from '../../components/AutoCompleteLoading';
+import useScriptRef from '../../hooks/useScriptRef';
 
 export default function DialogComponent(props) {
   const { open, onClose, item, onAdd, onUpdate, processing } = props;
@@ -29,25 +30,25 @@ export default function DialogComponent(props) {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(false);
 
-  async function getOne() {
-    setLoading(true);
-    GET_ONE_FASILITATOR(item?.fasilitatorCode)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        setProvinsi();
-        console.log(e);
-      });
-    setKabupaten();
-    setKecamatan();
-    setDesa();
-    setLoading(false);
-  }
+  // async function getOne() {
+  //   setLoading(true);
+  //   GET_ONE_FASILITATOR(item?.fasilitatorCode)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((e) => {
+  //       setProvinsi();
+  //       console.log(e);
+  //     });
+  //   setKabupaten();
+  //   setKecamatan();
+  //   setDesa();
+  //   setLoading(false);
+  // }
 
-  async function getUser(id = null) {
+  async function getUser() {
     setLoading(true);
-    const API = editMode ? GET_USER_FOR_UPDATE_FASILITATOR(id) : GET_USER_FOR_ADD_FASILITATOR();
+    const API = editMode ? GET_USER_FOR_UPDATE_FASILITATOR(item?.fasilitatorCode) : GET_USER_FOR_ADD_FASILITATOR();
     API.then((res) => {
       const list =
         res &&
@@ -141,10 +142,10 @@ export default function DialogComponent(props) {
   useEffect(() => {
     function eff() {
       getPro();
-      getUser(item?.fasilitatorCode);
+      getUser();
     }
     eff();
-  }, []);
+  });
   const handleSubmit = (values, { setErrors, setStatus, setSubmitting }) => {
     try {
       if (item && item.fasilitatorCode) {
