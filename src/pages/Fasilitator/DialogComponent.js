@@ -145,7 +145,7 @@ export default function DialogComponent(props) {
       getUser();
     }
     eff();
-  });
+  }, []);
   const handleSubmit = (values, { setErrors, setStatus, setSubmitting }) => {
     try {
       if (item && item.fasilitatorCode) {
