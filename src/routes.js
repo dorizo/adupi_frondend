@@ -44,7 +44,7 @@ export default function Router() {
         </RequireAuth>
       ),
       children: [
-        { path: 'app', element: <DashboardApp /> },
+        { path: 'app', element: <ComingSoon /> },
         {
           path: 'role',
           children: [
