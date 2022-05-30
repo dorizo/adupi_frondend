@@ -9,6 +9,7 @@ import UserDetail from './pages/UserDetail';
 import Login from './pages/Login';
 import NotFound from './pages/Page404';
 import ComingSoon from './pages/ComingSoon';
+import GoogleMaps from './pages/GoogleMaps';
 import Register from './pages/Register';
 import Role from './pages/Role';
 import JenisSampah from './pages/JenisSampah';
@@ -147,7 +148,7 @@ export default function Router() {
           path: 'peta-sebaran',
           element: (
             <RequireAuth allowedRoles={['admin']}>
-              <ComingSoon />
+              <GoogleMaps />
             </RequireAuth>
           ),
         },
