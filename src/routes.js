@@ -8,6 +8,7 @@ import User from './pages/User';
 import UserDetail from './pages/UserDetail';
 import Login from './pages/Login';
 import NotFound from './pages/Page404';
+import ComingSoon from './pages/ComingSoon';
 import Register from './pages/Register';
 import Role from './pages/Role';
 import JenisSampah from './pages/JenisSampah';
@@ -99,6 +100,62 @@ export default function Router() {
           element: (
             <RequireAuth allowedRoles={['admin']}>
               <Fasilitator />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'list-mitra',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <ComingSoon />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'masalah',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <ComingSoon />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'kunjungan-fasilitator',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <ComingSoon />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'log',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <ComingSoon />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'report',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <ComingSoon />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'peta-sebaran',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <ComingSoon />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'validasi-mitra',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <ComingSoon />
             </RequireAuth>
           ),
         },

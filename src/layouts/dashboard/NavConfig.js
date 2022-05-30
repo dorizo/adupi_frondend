@@ -31,6 +31,41 @@ const navConfig = [
     path: '/dashboard/fasilitator',
     icon: getIcon('eva:person-done-outline'),
   },
+  {
+    title: 'list-mitra',
+    path: '/dashboard/list-mitra',
+    icon: getIcon('eva:list-outline'),
+  },
+  {
+    title: 'masalah',
+    path: '/dashboard/masalah',
+    icon: getIcon('eva:settings-2-outline'),
+  },
+  {
+    title: 'kunjungan-fasilitator',
+    path: '/dashboard/kunjungan-fasilitator',
+    icon: getIcon('eva:corner-up-right-outline'),
+  },
+  {
+    title: 'log',
+    path: '/dashboard/log',
+    icon: getIcon('eva:bookmark-outline'),
+  },
+  {
+    title: 'report',
+    path: '/dashboard/report',
+    icon: getIcon('eva:archive-outline'),
+  },
+  {
+    title: 'peta-sebaran',
+    path: '/dashboard/peta-sebaran',
+    icon: getIcon('eva:map-outline'),
+  },
+  {
+    title: 'validasi-mitra',
+    path: '/dashboard/validasi-mitra',
+    icon: getIcon('eva:person-add-outline'),
+  },
 ];
 
 export default navConfig;
