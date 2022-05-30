@@ -31,6 +31,11 @@ const navConfig = [
     path: '/dashboard/fasilitator',
     icon: getIcon('eva:person-done-outline'),
   },
+  {
+    title: 'mitra',
+    path: '/dashboard/fasilitator',
+    icon: getIcon('eva:person-done-outline'),
+  },
 ];
 
 export default navConfig;
