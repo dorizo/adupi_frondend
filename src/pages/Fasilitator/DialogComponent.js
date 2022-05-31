@@ -53,7 +53,11 @@ export default function DialogComponent(props) {
   const handleSubmit = (values, { setErrors, setStatus, setSubmitting }) => {
     try {
       if (item && item.fasilitatorCode) {
-        const vals = { ...values, userCode: values.userCode.value, wilayahCode: values.wilayahCode.value };
+        const vals = {
+          ...values,
+          userCode: values.userCode.value || userC.value,
+          wilayahCode: values.wilayahCode.value,
+        };
         onUpdate(vals, item.fasilitatorCode, setErrors);
       } else {
         const vals = { ...values, userCode: values.userCode.value, wilayahCode: values.wilayahCode.value };
