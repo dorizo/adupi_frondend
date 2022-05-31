@@ -7,7 +7,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-import { values } from 'lodash';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
@@ -53,6 +52,7 @@ export default function DialogComponent(props) {
   const handleSubmit = (values, { setErrors, setStatus, setSubmitting }) => {
     try {
       if (item && item.fasilitatorCode) {
+        console.log(values.userCode.value, userC.value);
         const vals = {
           ...values,
           userCode: values.userCode.value || userC.value,
@@ -96,6 +96,7 @@ export default function DialogComponent(props) {
         res.data.data.map((p) => {
           if (editMode && item.userCode === p.userCode) {
             setUserC({ value: p.userCode, title: p.email });
+            formik.setFieldValue('userCode', { value: p.userCode, title: p.email });
           }
           return { value: p.userCode, title: p.email };
         });
@@ -193,16 +194,16 @@ export default function DialogComponent(props) {
       .then((res) => {
         const list =
           res &&
-          res.data.data.map(async (p) => {
+          res.data.data.map((p) => {
             if (editMode && idWil === p.wilayahCode) {
-              await formik.setValues({
-                ...formik.values,
-                wilayahCode: { value: p.wilayahCode, title: p.wilayah },
-                userCode: userC,
+              formik.setFieldValue('wilayahCode', {
+                value: p.wilayahCode,
+                title: p.wilayah,
               });
             }
             return { value: p.wilayahCode, title: p.wilayah };
           });
+
         setDesa(list);
       })
       .catch((e) => {
@@ -225,10 +226,10 @@ export default function DialogComponent(props) {
     getDesa(v.value);
   };
   const handleChangeDesa = (_, v) => {
-    formik.setValues({ ...formik.values, wilayahCode: v });
+    formik.setFieldValue('wilayahCode', v);
   };
   const handleChangeUser = (_, v) => {
-    formik.setValues({ ...formik.values, userCode: v });
+    formik.setFieldValue('userCode', v);
   };
   useEffect(() => {
     function eff() {
