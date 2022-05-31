@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
+import { values } from 'lodash';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
@@ -24,10 +25,14 @@ export default function DialogComponent(props) {
   const editMode = Boolean(item && item.fasilitatorCode);
   const scriptedRef = useScriptRef();
   const [provinsi, setProvinsi] = useState();
+  const [provinsiS, setProvinsiS] = useState(null);
+  const [kabupatenS, setKabupatenS] = useState(null);
   const [kabupaten, setKabupaten] = useState();
+  const [kecamatanS, setKecamatanS] = useState(null);
   const [kecamatan, setKecamatan] = useState();
   const [desa, setDesa] = useState();
   const [user, setUser] = useState();
+  const [userC, setUserC] = useState(null);
   const [loading, setLoading] = useState(false);
 
   // async function getOne() {
@@ -45,107 +50,6 @@ export default function DialogComponent(props) {
   //   setDesa();
   //   setLoading(false);
   // }
-
-  async function getUser() {
-    setLoading(true);
-    const API = editMode ? GET_USER_FOR_UPDATE_FASILITATOR(item?.fasilitatorCode) : GET_USER_FOR_ADD_FASILITATOR();
-    API.then((res) => {
-      const list =
-        res &&
-        res.data.data.map((p) => {
-          return { value: p.userCode, title: p.email };
-        });
-      setUser(list);
-    }).catch((e) => {
-      setUser();
-      console.log(e);
-    });
-    setLoading(false);
-  }
-  async function getPro() {
-    setLoading(true);
-    GET_ALL_PROVINSI()
-      .then((res) => {
-        const list =
-          res &&
-          res.data.data.map((p) => {
-            return { value: p.wilayahCode, title: p.wilayah };
-          });
-        setProvinsi(list);
-      })
-      .catch((e) => {
-        setProvinsi();
-        console.log(e);
-      });
-    setKabupaten();
-    setKecamatan();
-    setDesa();
-    setLoading(false);
-  }
-  async function getKab(id) {
-    setLoading(true);
-    GET_KABUPATEN(id)
-      .then((res) => {
-        const list =
-          res &&
-          res.data.data.map((p) => {
-            return { value: p.wilayahCode, title: p.wilayah };
-          });
-        console.log(res);
-        setKabupaten(list);
-      })
-      .catch((e) => {
-        setKabupaten();
-        console.log(e);
-      });
-    setKecamatan();
-    setDesa();
-    setLoading(false);
-  }
-  async function getKec(id) {
-    setLoading(true);
-    GET_KECAMATAN(id)
-      .then((res) => {
-        const list =
-          res &&
-          res.data.data.map((p) => {
-            return { value: p.wilayahCode, title: p.wilayah };
-          });
-        console.log(res);
-        setKecamatan(list);
-      })
-      .catch((e) => {
-        setKecamatan();
-        console.log(e);
-      });
-    setDesa();
-    setLoading(false);
-  }
-  async function getDesa(id) {
-    setLoading(true);
-    GET_DESA(id)
-      .then((res) => {
-        const list =
-          res &&
-          res.data.data.map((p) => {
-            return { value: p.wilayahCode, title: p.wilayah };
-          });
-        console.log(res);
-        setDesa(list);
-      })
-      .catch((e) => {
-        setDesa();
-        console.log(e);
-      });
-    setLoading(false);
-  }
-  useEffect(() => {
-    function eff() {
-      getPro();
-      getUser();
-    }
-    eff();
-  }, []);
   const handleSubmit = (values, { setErrors, setStatus, setSubmitting }) => {
     try {
       if (item && item.fasilitatorCode) {
@@ -178,13 +82,142 @@ export default function DialogComponent(props) {
     }),
     onSubmit: handleSubmit,
   });
+
+  async function getUser() {
+    setLoading(true);
+    const API = editMode ? GET_USER_FOR_UPDATE_FASILITATOR(item?.fasilitatorCode) : GET_USER_FOR_ADD_FASILITATOR();
+    API.then((res) => {
+      const list =
+        res &&
+        res.data.data.map((p) => {
+          if (editMode && item.userCode === p.userCode) {
+            setUserC({ value: p.userCode, title: p.email });
+          }
+          return { value: p.userCode, title: p.email };
+        });
+      setUser(list);
+    }).catch((e) => {
+      setUser();
+      console.log(e);
+    });
+    setLoading(false);
+  }
+  async function getPro() {
+    const idWil = editMode && item.wilayahCode.split('.')[0];
+    setLoading(true);
+    GET_ALL_PROVINSI()
+      .then((res) => {
+        const list =
+          res &&
+          res.data.data.map((p) => {
+            if (editMode && idWil === p.wilayahCode) {
+              setProvinsiS({ value: p.wilayahCode, title: p.wilayah });
+            }
+            return { value: p.wilayahCode, title: p.wilayah };
+          });
+        if (editMode) {
+          getKab(idWil);
+        }
+        setProvinsi(list);
+      })
+      .catch((e) => {
+        setProvinsi();
+        console.log(e);
+      });
+    setKabupaten();
+    setKecamatan();
+    setDesa();
+    setLoading(false);
+  }
+  async function getKab(id) {
+    const idWil = editMode && `${item.wilayahCode.split('.')[0]}.${item.wilayahCode.split('.')[1]}`;
+    setLoading(true);
+    GET_KABUPATEN(id)
+      .then((res) => {
+        const list =
+          res &&
+          res.data.data.map((p) => {
+            if (editMode && idWil === p.wilayahCode) {
+              setKabupatenS({ value: p.wilayahCode, title: p.wilayah });
+            }
+            return { value: p.wilayahCode, title: p.wilayah };
+          });
+        if (editMode) {
+          getKec(idWil);
+        }
+        setKabupaten(list);
+      })
+      .catch((e) => {
+        setKabupaten();
+        console.log(e);
+      });
+    setKecamatan();
+    setDesa();
+    setLoading(false);
+  }
+  async function getKec(id) {
+    const idWil =
+      editMode &&
+      `${item.wilayahCode.split('.')[0]}.${item.wilayahCode.split('.')[1]}.${item.wilayahCode.split('.')[2]}`;
+    setLoading(true);
+    GET_KECAMATAN(id)
+      .then((res) => {
+        const list =
+          res &&
+          res.data.data.map((p) => {
+            if (editMode && idWil === p.wilayahCode) {
+              setKecamatanS({ value: p.wilayahCode, title: p.wilayah });
+            }
+            return { value: p.wilayahCode, title: p.wilayah };
+          });
+        if (editMode) {
+          getDesa(idWil);
+        }
+        setKecamatan(list);
+      })
+      .catch((e) => {
+        setKecamatan();
+        console.log(e);
+      });
+    setDesa();
+    setLoading(false);
+  }
+  async function getDesa(id) {
+    const idWil = editMode && item.wilayahCode;
+    setLoading(true);
+    GET_DESA(id)
+      .then((res) => {
+        const list =
+          res &&
+          res.data.data.map(async (p) => {
+            if (editMode && idWil === p.wilayahCode) {
+              await formik.setValues({
+                ...formik.values,
+                wilayahCode: { value: p.wilayahCode, title: p.wilayah },
+                userCode: userC,
+              });
+            }
+            return { value: p.wilayahCode, title: p.wilayah };
+          });
+        setDesa(list);
+      })
+      .catch((e) => {
+        setDesa();
+        console.log(e);
+      });
+    setLoading(false);
+  }
+
   const handleChangeProvinsi = (_, v) => {
+    setProvinsiS(v);
     getKab(v.value);
   };
   const handleChangeKabupaten = (_, v) => {
+    setKabupatenS(v);
     getKec(v.value);
   };
   const handleChangeKecamatan = (_, v) => {
+    setKecamatanS(v);
     getDesa(v.value);
   };
   const handleChangeDesa = (_, v) => {
@@ -193,6 +226,13 @@ export default function DialogComponent(props) {
   const handleChangeUser = (_, v) => {
     formik.setValues({ ...formik.values, userCode: v });
   };
+  useEffect(() => {
+    function eff() {
+      getUser();
+      getPro();
+    }
+    eff();
+  }, []);
   return (
     <div>
       <Dialog fullWidth maxWidth="sm" open={open}>
@@ -200,7 +240,7 @@ export default function DialogComponent(props) {
         <form onSubmit={formik.handleSubmit}>
           <DialogContent>
             <AutoCompleteLoading
-              value={formik.values.userCode}
+              value={formik.values.userCode || userC}
               onChange={handleChangeUser}
               options={user}
               name="userCode"
@@ -224,6 +264,7 @@ export default function DialogComponent(props) {
             />
             <AutoCompleteLoading
               onChange={handleChangeProvinsi}
+              value={provinsiS}
               options={provinsi}
               loading={loading}
               label="Provinsi"
@@ -231,12 +272,14 @@ export default function DialogComponent(props) {
             <AutoCompleteLoading
               onChange={handleChangeKabupaten}
               options={kabupaten}
+              value={kabupatenS}
               loading={loading}
               label="Kabupaten"
             />
             <AutoCompleteLoading
               onChange={handleChangeKecamatan}
               options={kecamatan}
+              value={kecamatanS}
               loading={loading}
               label="Kecamatan"
             />

@@ -10,7 +10,6 @@ const RequireAuth = ({ allowedRoles = null, children }) => {
   // if (!auth?.user) {
   //   return <Navigate to="/unauthorized" state={{ from: location }} replace />;
   // }
-  console.log(auth, 'asss');
 
   if (!auth.user) {
     return <Navigate to="/login" state={{ from: location }} replace />;

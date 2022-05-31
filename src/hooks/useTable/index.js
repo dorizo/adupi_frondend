@@ -76,7 +76,6 @@ const useTable = ({ header, rows, loading }) => {
     }
     return stabilizedThis.map((el) => el[0]);
   }
-  console.log(loading);
   if (loading) {
     const SkeletonLoad = (
       <>

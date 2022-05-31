@@ -33,7 +33,7 @@ const POST_REGISTRASI_MITRA = async ({
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.post('master/jenisSampah/all', data, { headers });
+    const response = await axios.post('registrasi/mitra', data, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);

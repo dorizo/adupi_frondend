@@ -54,15 +54,16 @@ export const AuthProvider = ({ children }) => {
           isAuthenticated: localStorage.getItem('accessToken') ? true : false,
         });
       } catch (err) {
-        await setAuth(initialState);
         if (!err?.response) {
           console.log('No Server Response');
         } else if (err.response?.status === 400) {
-          console.log('Missing Username or Password');
+          console.log('Failed');
         } else if (err.response?.status === 401) {
-          console.log('Unauthorized');
+          logout();
+        } else if (err.response?.status === 403) {
+          logout();
         } else {
-          console.log('Login Failed');
+          console.log('Failed');
         }
       }
     } else {
@@ -77,7 +78,6 @@ export const AuthProvider = ({ children }) => {
   if ((localStorage.getItem('accessToken') && auth.user === null) || l) {
     return <LoadingPage />;
   }
-  console.log(auth);
   return <AuthContext.Provider value={{ auth, setAuth, logout, updateAuth }}>{children}</AuthContext.Provider>;
 };
 

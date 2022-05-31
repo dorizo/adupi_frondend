@@ -1,34 +1,59 @@
+import { Typography } from '@mui/material';
+import { format } from 'date-fns';
+import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
-import { InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
-import BarMobile from '../../components/BarMobile';
+import { POST_REGISTRASI_MITRA } from '../../api/mitra';
 import anggota from '../../assets/illustation/anggota.png';
 import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
-import useDrawer from '../../hooks/useDrawer';
+import BarMobile from '../../components/BarMobile';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
-import TextInput from '../../components/TextInput';
-import SelectInput from '../../components/SelectInput';
+import useDrawer from '../../hooks/useDrawer';
+import Form from './form';
 
 export default function TambahMitra() {
-  const { onOpen, Drawer } = useDrawer();
+  const { onOpen, onClose, Drawer } = useDrawer();
   const [drawerTitle, setDrawerTitle] = useState('');
   const [selectedImg, setSelectedImg] = useState(null);
   const [step, setStep] = useState(0);
+  const [values, setValues] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
+  const handleAdd = async (val) => {
+    let newVal = {};
+    val.forEach((obj) => {
+      Object.keys(obj).forEach((key) => {
+        if (obj[key] === '') {
+          delete obj[key];
+        }
+      });
+      newVal = { ...newVal, ...obj, ktp: btoa(selectedImg) };
+    });
+    const response = await POST_REGISTRASI_MITRA({
+      ...newVal,
+      tanggalLahir: format(newVal?.tanggalLahir, 'yyyy-MM-dd'),
+    });
+    if (response.status === 422) {
+      const asdf = response.data.errors;
+      const keys = asdf && Object.keys(asdf);
+      keys.forEach((key) => {
+        enqueueSnackbar(asdf[key].msg, { variant: 'warning' });
+      });
+    }
+    if (response.status === 200) {
+      await enqueueSnackbar(response.data.message, { variant: 'success' });
+    }
+    if (response.status === 400) {
+      await enqueueSnackbar(response.data.message, { variant: 'error' });
+    }
+    if (response.status === 500) {
+      await enqueueSnackbar('Internal server error', 'error');
+    }
+    setStep(0);
+    onClose(false);
+  };
   const handleOpen = (a, s) => {
     setDrawerTitle(a);
     setStep(s);
-    onOpen();
-  };
-  const handleUploadClick = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    const url = reader.readAsDataURL(file);
-    reader.onloadend = function (e) {
-      setSelectedImg(reader.result);
-    };
-  };
-  const removeImg = () => {
-    setSelectedImg(null);
   };
   return (
     <>
@@ -42,65 +67,18 @@ export default function TambahMitra() {
         <Typography align="center" variant="h2">
           Mitra
         </Typography>
-        <ButtonPrimary
-          onClick={() => handleOpen('Tambah Mitra', 0)}
-          style={{ marginTop: 40, marginBottom: 5 }}
-          label={'Tambah'}
-        />
+        <ButtonPrimary onClick={() => onOpen()} style={{ marginTop: 40, marginBottom: 5 }} label={'Tambah'} />
       </div>
-      <Drawer title={drawerTitle}>
-        {step === 0 && (
-          <>
-            <SelectInput
-              label="Jenis Mitra"
-              option={[
-                { value: 'Lapak Press', label: 'Lapak Press' },
-                { value: 'Lapak Bodong', label: 'Lapak Bodong' },
-                { value: 'Lapak Giling', label: 'Lapak Giling' },
-                { value: 'Bank Sampah', label: 'Bank Sampah' },
-              ]}
-            />
-            <TextInput label={'NIK'} type="number" placeholder="Masukkan Nomor Induk Kependudukan" />
-            <TextInput label={'No. HP'} type="number" placeholder="Masukkan Nomor Handphone" />
-            <TextInput label={'Nama'} placeholder="Masukkan Nama" />
-            <InputLabel sx={{ marginTop: 2 }} id="jenis-kelamin">
-              Jenis Kelamin
-            </InputLabel>
-            <SelectInput
-              label="Jenis Mitra"
-              option={[
-                { value: 'Laki-laki', label: 'Laki-laki' },
-                { value: 'Perempuan', label: 'Perempuan' },
-              ]}
-            />
-            <ButtonPrimary
-              onClick={() => handleOpen('Alamat Mitra', 1)}
-              style={{ marginTop: 30, marginBottom: 5 }}
-              label={'Selanjutnya'}
-            />
-          </>
-        )}
-        {step === 1 && (
-          <>
-            <SelectInput label="Provinsi" option={[{ value: 'Lampung', label: 'Lampung' }]} />
-            <SelectInput label="Kota/Kabupaten" option={[{ value: 'Lampung Selatan', label: 'Lampung Selatan' }]} />
-            <SelectInput label="Kecamatan" option={[{ value: 'Natar', label: 'Natar' }]} />
-            <SelectInput label="Kelurahan" option={[{ value: 'Sidosari', label: 'Sidosari' }]} />
-            <TextInput label={'Alamat'} placeholde="Masukkan Alamat" rows={3} multiline />
-            <ButtonPrimary
-              onClick={() => handleOpen('Daftar Akun', 2)}
-              style={{ marginTop: 30, marginBottom: 5 }}
-              label={'Selanjutnya'}
-            />
-          </>
-        )}
-        {step === 2 && (
-          <>
-            <TextInput label={'Atur Usermname'} Placeholder="Masukan username" />
-            <TextInput label={'Atur Password'} Placeholder="Masukan password" type="password" />
-            <ButtonPrimary disabled type="submit" label="Selesai" />
-          </>
-        )}
+      <Drawer title={drawerTitle || 'Tambah Mitra'}>
+        <Form
+          step={step}
+          selectedImg={selectedImg}
+          setSelectedImg={setSelectedImg}
+          next={handleOpen}
+          values={values}
+          handleAdd={handleAdd}
+          setValues={setValues}
+        />
       </Drawer>
     </>
   );
