@@ -13,6 +13,7 @@ import GoogleMaps from './pages/GoogleMaps';
 import Register from './pages/Register';
 import Role from './pages/Role';
 import JenisSampah from './pages/JenisSampah';
+import Mitra from './pages/Mitra';
 import Fasilitator from './pages/Fasilitator';
 import RoleDetail from './pages/RoleDetail';
 import DashboardApp from './pages/DashboardApp';
@@ -108,7 +109,7 @@ export default function Router() {
           path: 'list-mitra',
           element: (
             <RequireAuth allowedRoles={['admin']}>
-              <ComingSoon />
+              <Mitra />
             </RequireAuth>
           ),
         },

@@ -229,7 +229,7 @@ export default function Index() {
                   key={i}
                   style={{ marginTop: 10 }}
                   label={p.description}
-                  onDelete={() => handleDeletePermission(p.rpCode)}
+                  onDelete={() => handleDeletePermission(p.upCode)}
                 />
               ))}
           </Stack>

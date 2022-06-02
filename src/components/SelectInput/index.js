@@ -18,7 +18,7 @@ export default function SelectInput({ option = [], label, placeholder = '', sx, 
         {...props}
       >
         <MenuItem value="">
-          <em>None</em>
+          <em>--PILIH--</em>
         </MenuItem>
         {option && option.map((op) => <MenuItem value={op.value}>{op.label}</MenuItem>)}
       </Select>
