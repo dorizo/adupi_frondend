@@ -37,6 +37,11 @@ const navConfig = [
     icon: getIcon('eva:list-outline'),
   },
   {
+    title: 'validasi-mitra',
+    path: '/dashboard/validasi-mitra',
+    icon: getIcon('eva:person-add-outline'),
+  },
+  {
     title: 'masalah',
     path: '/dashboard/masalah',
     icon: getIcon('eva:settings-2-outline'),
@@ -60,11 +65,6 @@ const navConfig = [
     title: 'peta-sebaran',
     path: '/dashboard/peta-sebaran',
     icon: getIcon('eva:map-outline'),
-  },
-  {
-    title: 'validasi-mitra',
-    path: '/dashboard/validasi-mitra',
-    icon: getIcon('eva:person-add-outline'),
   },
 ];
 
