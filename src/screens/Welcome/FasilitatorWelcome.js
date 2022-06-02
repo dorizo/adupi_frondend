@@ -3,17 +3,13 @@ import React, { useState } from 'react';
 import adupi from '../../assets/logo/adupi.png';
 import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
-import ButtonSecondary from '../../components/Button/ButtonSecondary';
 import useDrawer from '../../hooks/useDrawer';
 import Masuk from './Masuk';
-import Register from './Register';
 
 export default function FasilitatorWelcome() {
   const { onOpen, Drawer } = useDrawer();
-  const [action, setAction] = useState('Masuk');
   const [drawerTitle, setDrawerTitle] = useState('');
   const handleOpen = (a) => {
-    setAction(a);
     setDrawerTitle(a);
     onOpen();
   };

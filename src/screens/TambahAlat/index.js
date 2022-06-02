@@ -1,12 +1,11 @@
+import { InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
-import { StaticTimePicker } from '@mui/x-date-pickers';
-import BarMobile from '../../components/BarMobile';
 import masalah from '../../assets/illustation/masalah.png';
 import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
-import useDrawer from '../../hooks/useDrawer';
+import BarMobile from '../../components/BarMobile';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import TextInput from '../../components/TextInput';
+import useDrawer from '../../hooks/useDrawer';
 
 export default function TambahAlat() {
   const { onOpen, Drawer } = useDrawer();

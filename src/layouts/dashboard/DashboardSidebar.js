@@ -1,20 +1,20 @@
+import { Avatar, Box, Drawer, Link, Typography } from '@mui/material';
+// material
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-// material
-import { styled } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
-// mock
-import account from '../../_mock/account';
-// hooks
-import useResponsive from '../../hooks/useResponsive';
 // components
 import Logo from '../../components/Logo';
-import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
+import Scrollbar from '../../components/Scrollbar';
+import useAuth from '../../hooks/useAuth';
+// hooks
+import useResponsive from '../../hooks/useResponsive';
+// mock
+import account from '../../_mock/account';
 //
 import navConfig from './NavConfig';
-import useAuth from '../../hooks/useAuth';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;

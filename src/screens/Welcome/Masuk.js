@@ -8,7 +8,7 @@ import axios from '../../api';
 const LOGIN_URL = '/login';
 
 export default function Masuk() {
-  const { setAuth } = useAuth();
+  const { setAuth, updateAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/mobile';
@@ -45,6 +45,7 @@ export default function Masuk() {
       setAuth({ accessToken });
       setUser('');
       setPwd('');
+      updateAuth();
       navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {

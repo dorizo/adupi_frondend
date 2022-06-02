@@ -1,6 +1,5 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import InfoIcon from '@mui/icons-material/Info';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
 import PropTypes from 'prop-types';

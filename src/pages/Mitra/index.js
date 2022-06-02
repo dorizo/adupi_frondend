@@ -1,16 +1,11 @@
-import { Button, Card, Container, Stack, TableCell, TableRow } from '@mui/material';
+import { Card, Container, Stack, TableCell, TableRow } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 // import { useMee } from 'contexts/MeContext';
 import * as React from 'react';
 import { useMutation, useQuery } from 'react-query';
+import { ADD_JENIS_SAMPAH, DELETE_JENIS_SAMPAH, UPDATE_JENIS_SAMPAH } from '../../api/jenis_sampah';
 import { GET_MITRA_NV_BY_FASILITATOR } from '../../api/mitra';
-import {
-  ADD_JENIS_SAMPAH,
-  DELETE_JENIS_SAMPAH,
-  GET_ALL_JENIS_SAMPAH,
-  UPDATE_JENIS_SAMPAH,
-} from '../../api/jenis_sampah';
 import DialogConfirm from '../../components/DialogConfirm';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
@@ -19,10 +14,40 @@ import DialogComponent from './DialogComponent';
 
 const headCells = [
   {
-    id: 'jenis',
+    id: 'nama',
     numeric: false,
     disablePadding: true,
-    label: 'Mitra',
+    label: 'Nama',
+  },
+  {
+    id: 'nik',
+    numeric: false,
+    disablePadding: true,
+    label: 'NIK',
+  },
+  {
+    id: 'jenisKelamin',
+    numeric: false,
+    disablePadding: true,
+    label: 'Jenis Kelamin',
+  },
+  {
+    id: 'tanggalLahir',
+    numeric: false,
+    disablePadding: true,
+    label: 'Tanggal Lahir',
+  },
+  {
+    id: 'tempatLahir',
+    numeric: false,
+    disablePadding: true,
+    label: 'Tempat Lahir',
+  },
+  {
+    id: 'alamat',
+    numeric: false,
+    disablePadding: true,
+    label: 'Alamat',
   },
 ];
 
@@ -145,7 +170,22 @@ export default function Index() {
                   <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
                     <TableCell>{row.no}</TableCell>
                     <TableCell id={labelId} scope="row">
-                      {row.jenis}
+                      {row.nama}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                      {row.nik}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                      {row.jenisKelamin}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                      {row.tanggalLahir}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                      {row.tempatLahir}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                      {row.alamat}
                     </TableCell>
                   </TableRow>
                 );

@@ -16,7 +16,7 @@ import JenisSampah from './pages/JenisSampah';
 import Mitra from './pages/Mitra';
 import Fasilitator from './pages/Fasilitator';
 import RoleDetail from './pages/RoleDetail';
-import DashboardApp from './pages/DashboardApp';
+// import DashboardApp from './pages/DashboardApp';
 import Welcome from './screens/Welcome';
 import MobileLayout from './layouts/MobileLayout';
 import Home from './screens/Home';
@@ -170,7 +170,7 @@ export default function Router() {
         {
           path: '',
           element: (
-            <MobileGuard allowedRoles={['admin']}>
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
               <Home />
             </MobileGuard>
           ),
@@ -178,11 +178,46 @@ export default function Router() {
         { path: 'fasilitator', element: <FasilitatorHome /> },
         { path: 'welcome', element: <Welcome /> },
         { path: 'login', element: <FasilitatorWelcome /> },
-        { path: 'beli-sampah', element: <BeliSampah /> },
-        { path: 'jual-sampah', element: <JualSampah /> },
-        { path: 'masalah', element: <Masalah /> },
-        { path: 'anggota', element: <Anggota /> },
-        { path: 'tambah-alat', element: <TambahAlat /> },
+        {
+          path: 'beli-sampah',
+          element: (
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+              <BeliSampah />
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'jual-sampah',
+          element: (
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+              <JualSampah />{' '}
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'masalah',
+          element: (
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+              <Masalah />
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'anggota',
+          element: (
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+              <Anggota />
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'tambah-alat',
+          element: (
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+              <TambahAlat />
+            </MobileGuard>
+          ),
+        },
         { path: 'tambah-mitra', element: <TambahMitra /> },
         { path: 'list-mitra', element: <ListMitra /> },
         { path: 'list-kehadiran', element: <ListKehadiran /> },

@@ -1,29 +1,25 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { format } from 'date-fns';
+import { Box, Button, Card, CardContent, Grid, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useFormik } from 'formik';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import { format } from 'date-fns';
+import { useFormik } from 'formik';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ButtonPrimary from '../../components/Button/ButtonPrimary';
-import TextInput from '../../components/TextInput';
-import SelectInput from '../../components/SelectInput';
 import { GET_ALL_PROVINSI, GET_DESA, GET_KABUPATEN, GET_KECAMATAN } from '../../api/wilayah';
+import ButtonPrimary from '../../components/Button/ButtonPrimary';
+import SelectInput from '../../components/SelectInput';
+import TextInput from '../../components/TextInput';
+
+const containerStyle = {
+  width: '400%',
+  height: '400px',
+};
+
+const center = {
+  lat: -6.258752,
+  lng: 106.6201363,
+};
 
 export default function Register({ handleNext, step }) {
   return (
@@ -38,12 +34,16 @@ export default function Register({ handleNext, step }) {
   );
 }
 const Step1 = ({ handleNext }) => {
-  const [jenisMitraList, setJenisMitraList] = useState([
+  // const [jenisMitraList, setJenisMitraList] = useState([
+  //   { value: 'PT', label: 'PT' },
+  //   { value: 'CV', label: 'CV' },
+  //   { value: 'Lapak Giling', label: 'Lapak Giling' },
+  //   { value: 'Bank Sampah', label: 'Bank Sampah' },
+  // ]);
+  const jenisMitraList = [
     { value: 'PT', label: 'PT' },
     { value: 'CV', label: 'CV' },
-    { value: 'Lapak Giling', label: 'Lapak Giling' },
-    { value: 'Bank Sampah', label: 'Bank Sampah' },
-  ]);
+  ];
   const [provinsi, setProvinsi] = useState();
   const [kabupaten, setKabupaten] = useState();
   const [kecamatan, setKecamatan] = useState();
@@ -57,7 +57,8 @@ const Step1 = ({ handleNext }) => {
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         setProvinsi(list);
       })
@@ -77,7 +78,8 @@ const Step1 = ({ handleNext }) => {
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         console.log(res);
         setKabupaten(list);
@@ -97,7 +99,8 @@ const Step1 = ({ handleNext }) => {
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         console.log(res);
         setKecamatan(list);
@@ -116,7 +119,8 @@ const Step1 = ({ handleNext }) => {
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         console.log(res);
         setDesa(list);
@@ -290,7 +294,7 @@ const Step1 = ({ handleNext }) => {
         rows={3}
         multiline
       />
-      <ButtonPrimary type="submit" label="Selanjutnya" />
+      <ButtonPrimary disabled={loading} type="submit" label="Selanjutnya" />
     </form>
   );
 };
@@ -299,12 +303,12 @@ const Step2 = ({ handleNext }) => {
   const handleUploadClick = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    const url = reader.readAsDataURL(file);
-    reader.onloadend = function (e) {
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
       setSelectedImg(reader.result);
     };
   };
-  const removeImg = (index) => {
+  const removeImg = () => {
     setSelectedImg(null);
   };
   return (
@@ -315,7 +319,7 @@ const Step2 = ({ handleNext }) => {
             <img style={{ margin: 10 }} src={selectedImg} alt={`img-nota`} />
           </a>
         )}
-        <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah File" />
+        <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah File KTP" />
       </div>
       <ButtonPrimary
         disabled={selectedImg === null}
@@ -439,38 +443,32 @@ const Step4 = ({ handleNext }) => {
   const handleUploadClick = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    const url = reader.readAsDataURL(file);
-    reader.onloadend = function (e) {
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
       setSelectedImg(reader.result);
     };
   };
-  const removeImg = (index) => {
+  const removeImg = () => {
     setSelectedImg(null);
   };
 
-  const containerStyle = {
-    width: '400%',
-    height: '400px',
-  };
-
-  const center = {
-    lat: -6.258752,
-    lng: 106.6201363,
-  };
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.REACT_APP_MAP_KEY,
   });
 
-  const onLoad = React.useCallback((map) => {
+  const onLoad = React.useCallback((m) => {
     const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-    setMap(map);
+    m.fitBounds(bounds);
+    setMap(m);
   }, []);
 
-  const onUnmount = React.useCallback((map) => {
+  const onUnmount = React.useCallback((m) => {
     setMap(null);
+    console.log(m);
   }, []);
+
+  console.log(map);
 
   const onMapClick = (val) => {
     setMarker(val.latLng);
@@ -483,7 +481,8 @@ const Step4 = ({ handleNext }) => {
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         setProvinsi(list);
       })
@@ -503,7 +502,8 @@ const Step4 = ({ handleNext }) => {
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         console.log(res);
         setKabupaten(list);
@@ -523,7 +523,8 @@ const Step4 = ({ handleNext }) => {
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         console.log(res);
         setKecamatan(list);
@@ -542,7 +543,8 @@ const Step4 = ({ handleNext }) => {
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         console.log(res);
         setDesa(list);
@@ -627,14 +629,13 @@ const Step4 = ({ handleNext }) => {
             <img style={{ margin: 10 }} src={selectedImg} alt={`img-nota`} />
           </a>
         )}
-        {!selectedImg && <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah File" />}
+        {!selectedImg && <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah Foto Gudang" />}
       </div>
-      <ButtonPrimary type="submit" disabled={!marker || !selectedImg} label="Selanjutnya" />
+      <ButtonPrimary type="submit" disabled={!marker || !selectedImg || loading} label="Selanjutnya" />
     </form>
   );
 };
 const Step5 = ({ handleNext }) => {
-  const navigate = useNavigate();
   const [selectedImg, setSelectedImg] = useState(null);
   const [showForm, setShowFrom] = useState(false);
   const [form, setForm] = useState({ statusKepemilikanMesin: '', jenisMesin: '', kapasitas: '' });
@@ -642,12 +643,12 @@ const Step5 = ({ handleNext }) => {
   const handleUploadClick = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    const url = reader.readAsDataURL(file);
-    reader.onloadend = function (e) {
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
       setSelectedImg(reader.result);
     };
   };
-  const removeImg = (index) => {
+  const removeImg = () => {
     setSelectedImg(null);
   };
   const removeListMesin = (index) => {
@@ -666,7 +667,7 @@ const Step5 = ({ handleNext }) => {
     <>
       {mesin &&
         mesin.map((m, i) => (
-          <Card style={{ marginBottom: 10 }}>
+          <Card key={i} style={{ marginBottom: 10 }}>
             <CardContent>
               <Grid container spacing={1}>
                 <Grid item xs={6}>
@@ -725,7 +726,7 @@ const Step5 = ({ handleNext }) => {
                   <img style={{ margin: 10 }} src={selectedImg} alt={`img-nota`} />
                 </a>
               )}
-              {!selectedImg && <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah File" />}
+              {!selectedImg && <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah Foto Mesin" />}
               <ButtonPrimary onClick={handelSimpan} label="Simpan" disabled={!selectedImg} style={{ marginTop: 5 }} />
             </div>
           </>
@@ -741,7 +742,6 @@ const Step5 = ({ handleNext }) => {
   );
 };
 const Step6 = ({ handleNext }) => {
-  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       password: '',
@@ -788,4 +788,27 @@ const Step6 = ({ handleNext }) => {
       <ButtonPrimary type="submit" label="Daftar" />
     </form>
   );
+};
+
+Step1.propTypes = {
+  handleNext: PropTypes.func,
+};
+Step2.propTypes = {
+  handleNext: PropTypes.func,
+};
+Step3.propTypes = {
+  handleNext: PropTypes.func,
+};
+Step4.propTypes = {
+  handleNext: PropTypes.func,
+};
+Step5.propTypes = {
+  handleNext: PropTypes.func,
+};
+Step6.propTypes = {
+  handleNext: PropTypes.func,
+};
+Register.propTypes = {
+  handleNext: PropTypes.func,
+  step: PropTypes.any,
 };

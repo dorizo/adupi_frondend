@@ -13,7 +13,11 @@ import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 import { AuthProvider } from './contexts/AuthProvider';
 
 // ----------------------------------------------------------------------
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { refetchOnMount: false, refetchOnWindowFocus: false },
+  },
+});
 
 export default function App() {
   return (

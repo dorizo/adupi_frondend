@@ -3,10 +3,11 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
+import { GET_ALL_PROVINSI, GET_DESA, GET_KABUPATEN, GET_KECAMATAN } from '../../api/wilayah';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import SelectInput from '../../components/SelectInput';
 import TextInput from '../../components/TextInput';
-import { GET_ALL_PROVINSI, GET_DESA, GET_KABUPATEN, GET_KECAMATAN } from '../../api/wilayah';
 
 const initialVal = {
   nama: '',
@@ -25,7 +26,6 @@ const initialVal = {
 /* eslint-disable no-nested-ternary */
 export default function Form({ next, setSelectedImg, step, values, selectedImg, setValues, handleAdd }) {
   const [isNext, setIsNext] = useState({ a: '', s: '' });
-  const [date, setDate] = useState(new Date());
   const [provinsi, setProvinsi] = useState();
   const [kabupaten, setKabupaten] = useState();
   const [kecamatan, setKecamatan] = useState();
@@ -39,7 +39,8 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         setProvinsi(list);
       })
@@ -59,7 +60,8 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         console.log(res);
         setKabupaten(list);
@@ -79,7 +81,8 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         console.log(res);
         setKecamatan(list);
@@ -98,7 +101,8 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
         const list =
           res &&
           res.data.data.map((p) => {
-            return { value: p.wilayahCode, label: p.wilayah };
+            const wil = { value: p.wilayahCode, label: p.wilayah };
+            return wil;
           });
         console.log(res);
         setDesa(list);
@@ -159,9 +163,9 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
   const handleUploadClick = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    const url = reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
     console.log(reader);
-    reader.onloadend = function (e) {
+    reader.onloadend = () => {
       setSelectedImg(reader.result);
     };
   };
@@ -169,7 +173,6 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
     setSelectedImg(null);
   };
   const handleChangeProvinsi = (e) => {
-    console.log(e);
     getKab(e.target.value);
   };
   const handleChangeKabupaten = (e) => {
@@ -275,6 +278,7 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
             ]}
           />
           <ButtonPrimary
+            disabled={loading}
             onClick={() => handleOpen('Upload KTP', 1)}
             style={{ marginTop: 30, marginBottom: 5 }}
             label={'Selanjutnya'}
@@ -292,7 +296,7 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
             <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah File" />
           </div>
           <ButtonPrimary
-            disabled={selectedImg === null}
+            disabled={selectedImg === null || loading}
             onClick={() => handleOpen('Alamat Mitra', 2)}
             style={{ marginTop: 30, marginBottom: 5 }}
             label={'Selanjutnya'}
@@ -326,6 +330,7 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
             multiline
           />
           <ButtonPrimary
+            disabled={loading}
             onClick={() => handleOpen('Daftar Akun', 3)}
             style={{ marginTop: 30, marginBottom: 5 }}
             label={'Selanjutnya'}
@@ -355,9 +360,18 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
             Placeholder="Masukan password"
             type="password"
           />
-          <ButtonPrimary type="submit" label="Selesai" />
+          <ButtonPrimary disabled={loading} type="submit" label="Selesai" />
         </>
       )}
     </form>
   );
 }
+Form.propTypes = {
+  next: PropTypes.any,
+  setSelectedImg: PropTypes.any,
+  step: PropTypes.any,
+  values: PropTypes.any,
+  selectedImg: PropTypes.any,
+  setValues: PropTypes.any,
+  handleAdd: PropTypes.any,
+};

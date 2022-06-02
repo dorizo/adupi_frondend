@@ -26,6 +26,12 @@ export const AuthProvider = ({ children }) => {
     await localStorage.removeItem('refreshToken');
     navigate('/login');
   };
+  const logoutMobile = async () => {
+    await setAuth(initialState);
+    await localStorage.removeItem('accessToken');
+    await localStorage.removeItem('refreshToken');
+    navigate('/mobile/welcome');
+  };
 
   async function updateAuth() {
     setL(true);
@@ -78,7 +84,9 @@ export const AuthProvider = ({ children }) => {
   if ((localStorage.getItem('accessToken') && auth.user === null) || l) {
     return <LoadingPage />;
   }
-  return <AuthContext.Provider value={{ auth, setAuth, logout, updateAuth }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ auth, setAuth, logout, updateAuth, logoutMobile }}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthContext;

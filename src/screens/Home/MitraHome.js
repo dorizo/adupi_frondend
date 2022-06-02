@@ -1,30 +1,48 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { BottomNavigation, BottomNavigationAction, Button } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import kehadiran from '../../assets/illustation/kehadiran.png';
-import listMitra from '../../assets/illustation/list-mitra.png';
+import { GET_SELF_MITRA } from '../../api/mitra';
 import menuAnggota from '../../assets/illustation/menu-anggota.png';
+import menuBeli from '../../assets/illustation/menu-beli-sampah.png';
+import menuJual from '../../assets/illustation/menu-jual-sampah.png';
+import menuMasalah from '../../assets/illustation/menu-masalah.png';
 import adupi from '../../assets/logo/adupi-w.png';
 
 const menuList = [
-  { title: 'Tambah Mitra', desc: 'Tambah Mitra ADUPI', icon: menuAnggota, link: '/mobile/tambah-mitra' },
-  { title: 'List Mitra', desc: 'Daftar Mitra ADUPI', icon: listMitra, link: '/mobile/list-mitra' },
-  { title: 'Kehadiran Mitra', desc: 'Cek Kehadiran Mitra Disini', icon: kehadiran, link: '/mobile/list-kehadiran' },
+  { title: 'Beli Sampah', desc: 'Masukkan Data Sampah yang Dibeli', icon: menuBeli, link: '/mobile/beli-sampah' },
+  { title: 'Jual Sampah', desc: 'Masukkan Data Sampah yang Dijual', icon: menuJual, link: '/mobile/jual-sampah' },
+  { title: 'Masalah', desc: 'Laporkan Masalah Mesin/Kendaraan', icon: menuMasalah, link: '/mobile/masalah' },
+  {
+    title: 'Tambah Anggota/Sumber',
+    desc: 'Tambah Anggota/Sumber Sampah',
+    icon: menuAnggota,
+    link: '/mobile/anggota',
+  },
 ];
-export default function FasilitatorHome() {
-  const { logoutMobile, auth } = useAuth();
+export default function MitraHome() {
   const navigate = useNavigate();
+  const { logoutMobile } = useAuth();
+
   const [value, setValue] = React.useState(0);
+  const { data } = useQuery('GET_SELF_MITRA', GET_SELF_MITRA, {
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+  });
+
+  const self = data && data.data.data;
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }} position="static">
@@ -47,23 +65,26 @@ export default function FasilitatorHome() {
             <AccountCircleIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Hai, {auth && auth.user}
+            Hai, {self?.nama}
           </Typography>
-          <Typography style={{ wordWrap: 'break-word', width: 100, textAlign: 'right' }}>
-            {' '}
-            {auth.role && auth.role.join()}
-          </Typography>
+          <Typography style={{ wordWrap: 'break-word', width: 100, textAlign: 'right' }}>{self?.alamat}</Typography>
           <LocationOnIcon />
         </Toolbar>
       </AppBar>
       <Box sx={{ padding: 3 }}>
         <Typography variant="h3">Selamat Datang,</Typography>
-        <Typography>Selamat Pagi!, Semangat Selalu</Typography>
+        <Typography variant="h3">{self?.nama}</Typography>
+        <Typography>Selamat bergabung sebagai mitra</Typography>
+        <br />
+        {!self?.gudang && (
+          <Button color="error" variant="contained">
+            Lengkapi Pendaftaran
+          </Button>
+        )}
         <Button onClick={logoutMobile} color="error" variant="contained">
           Logout
         </Button>
       </Box>
-
       <Grid sx={{ padding: 3 }} container spacing={2}>
         {menuList.map((m, i) => (
           <Grid
