@@ -323,7 +323,8 @@ const Step2 = ({ handleNext }) => {
       </div>
       <ButtonPrimary
         disabled={selectedImg === null}
-        onClick={() => handleNext(3, 'Data Usaha', { ktp: selectedImg })}
+        onClick={() => handleNext(3, 'Data Usaha', { ktp: '-' })}
+        // onClick={() => handleNext(3, 'Data Usaha', { ktp: selectedImg })}
         label="Selanjutnya"
       />
     </>
@@ -577,7 +578,8 @@ const Step4 = ({ handleNext }) => {
     }),
     onSubmit: (values) => {
       console.log(values);
-      handleNext(5, 'Data Mesin', { ...values, lat: marker?.lat(), lang: marker?.lng(), foto: selectedImg });
+      handleNext(5, 'Data Mesin', { ...values, lat: marker?.lat(), lang: marker?.lng(), foto: '-' });
+      // handleNext(5, 'Data Mesin', { ...values, lat: marker?.lat(), lang: marker?.lng(), foto: selectedImg });
     },
   });
   useEffect(() => {
@@ -658,6 +660,7 @@ const Step5 = ({ handleNext }) => {
     setMesin(values);
   };
   const handelSimpan = () => {
+    setMesin([...mesin, { ...form, foto: selectedImg }]);
     setMesin([...mesin, { ...form, foto: selectedImg }]);
     setForm({ statusKepemilikanMesin: '', jenisMesin: '', kapasitas: '' });
     setSelectedImg(null);

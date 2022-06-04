@@ -27,7 +27,8 @@ export default function Anggota() {
 
   const handleAdd = async () => {
     setLoading(true);
-    const response = await ADD_ANGGOTA({ ...values, ktp: selectedImg });
+    const response = await ADD_ANGGOTA({ ...values, ktp: '-' });
+    // const response = await ADD_ANGGOTA({ ...values, ktp: selectedImg });
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -51,7 +52,8 @@ export default function Anggota() {
   };
   const handleUpdate = async () => {
     setLoading(true);
-    const response = await UPDATE_ANGGOTA({ ...values, ktp: selectedImg }, item.anggotaCode);
+    const response = await UPDATE_ANGGOTA({ ...values, ktp: '-' }, item.anggotaCode);
+    // const response = await UPDATE_ANGGOTA({ ...values, ktp: selectedImg }, item.anggotaCode);
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);

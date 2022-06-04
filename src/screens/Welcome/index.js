@@ -28,7 +28,12 @@ export default function Welcome() {
       setValues({ ...values, ...val });
     }
     if (s === 0) {
-      const response = await REGISTRASI_MITRA_NEW({ ...values, ...val });
+      // failed base 64 image only
+      const mesin = values?.mesin.map((n) => {
+        const newww = { ...n, foto: '-' };
+        return newww;
+      });
+      const response = await REGISTRASI_MITRA_NEW({ ...values, ...val, mesin });
       if (response.status === 422) {
         const asdf = response.data.errors;
         const keys = asdf && Object.keys(asdf);
