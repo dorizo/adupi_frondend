@@ -33,7 +33,7 @@ export default function Welcome() {
         const newww = { ...n, foto: '-' };
         return newww;
       });
-      const response = await REGISTRASI_MITRA_NEW({ ...values, ...val, mesin });
+      const response = await REGISTRASI_MITRA_NEW({ ...values, ...val, mesin, ktp: '-', foto: '-' });
       if (response.status === 422) {
         const asdf = response.data.errors;
         const keys = asdf && Object.keys(asdf);
@@ -43,6 +43,7 @@ export default function Welcome() {
       }
       if (response.status === 200) {
         await enqueueSnackbar(response.data.message, { variant: 'success' });
+        onClose();
       }
       if (response.status === 400) {
         await enqueueSnackbar(response.data.message, { variant: 'error' });
@@ -51,7 +52,6 @@ export default function Welcome() {
         await enqueueSnackbar('Internal server error', 'error');
       }
       setStep(1);
-      onClose();
     }
   };
   const handleOpen = (a) => {
@@ -59,7 +59,6 @@ export default function Welcome() {
     setDrawerTitle(a);
     onOpen();
   };
-  console.log(values, 'cvaa');
   return (
     <Page title="Welcome">
       <AdupiXMayoraHead />
@@ -90,7 +89,7 @@ export default function Welcome() {
           </a>
         </Typography>
         <Drawer closeable={closeAble} title={drawerTitle}>
-          {action === 'Masuk' ? <Masuk /> : <Register handleNext={handleNext} step={step} />}
+          {action === 'Masuk' ? <Masuk /> : <Register values={values} handleNext={handleNext} step={step} />}
         </Drawer>
       </div>
     </Page>

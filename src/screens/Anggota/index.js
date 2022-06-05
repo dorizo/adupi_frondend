@@ -10,6 +10,7 @@ import DialogConfirm from '../../components/DialogConfirm';
 import useDrawer from '../../hooks/useDrawer';
 import Form from './form';
 import MoreMenu from './MoreMenu';
+import dummyKtp from '../../assets/dummy-ktp.jpg';
 
 export default function Anggota() {
   const { onOpen, Drawer, onClose } = useDrawer();
@@ -109,6 +110,7 @@ export default function Anggota() {
   const handleOnAdd = () => {
     setDrawerTitle('Tambah Anggota');
     onOpen();
+    setStep(0);
     setItem(null);
   };
   const handleOnDelete = (item) => {
@@ -141,33 +143,36 @@ export default function Anggota() {
                   <MoreMenu handleOnUpdate={() => handleOnUpdate(li)} handleOnDelete={() => handleOnDelete(li)} />
                 }
                 title={li.nama}
-                subheader={li.alamat}
+                subheader={`NIK :  ${li.nik}`}
               />
               <CardContent>
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
                     <Box sx={{ display: 'flex' }}>
                       <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
-                        NIK :{' '}
+                        JK :{' '}
                       </Typography>
-                      <Typography variant="caption">{li.nik}</Typography>
+                      <Typography variant="caption">{li.jenisKelamin}</Typography>
                     </Box>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Box sx={{ display: 'flex' }}>
                       <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
                         No HP :{' '}
                       </Typography>
                       <Typography variant="caption">{li.noHp}</Typography>
                     </Box>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
+                        Alamat :{' '}
+                      </Typography>
+                      <Typography variant="caption">{li.alamat}</Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <img style={{ width: '50%' }} src={li?.ktp || dummyKtp} alt={`img-ktp`} />
+                    </Box>
                   </Grid>
                 </Grid>
-                <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
-                    Aktivitas terakhir :{' '}
-                  </Typography>
-                  <Typography variant="caption">2022-05-12 10:20</Typography>
-                </Box>
               </CardContent>
             </Card>
           ))}

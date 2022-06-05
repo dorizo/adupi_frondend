@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
@@ -63,16 +64,15 @@ export default function Masuk() {
   };
   return (
     <>
-      <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live="assertive">
+      <Typography color="red" ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live="assertive">
         {errMsg}
-      </p>
+      </Typography>
       <form onSubmit={handleSubmit}>
         <TextInput
           id="email"
           name="email"
           type="email"
           ref={userRef}
-          autoComplete="off"
           onChange={(e) => setUser(e.target.value)}
           value={user}
           required

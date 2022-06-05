@@ -1,11 +1,10 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import InfoIcon from '@mui/icons-material/Info';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
 import PropTypes from 'prop-types';
 
 export default function Action(props) {
-  const { actionOpen, actionClose, anchorEl, handelDelete, handleEdit } = props;
+  const { actionOpen, actionClose, anchorEl, handleDetail } = props;
   return (
     <Menu
       id="basic-menu"
@@ -24,17 +23,11 @@ export default function Action(props) {
         'aria-labelledby': 'basic-button',
       }}
     >
-      <MenuItem onClick={handleEdit}>
+      <MenuItem onClick={handleDetail}>
         <ListItemIcon>
-          <EditIcon fontSize="small" />
+          <InfoIcon fontSize="small" />
         </ListItemIcon>
-        <ListItemText>Edit</ListItemText>
-      </MenuItem>
-      <MenuItem onClick={handelDelete}>
-        <ListItemIcon>
-          <DeleteIcon fontSize="small" />
-        </ListItemIcon>
-        <ListItemText>Delete</ListItemText>
+        <ListItemText>Detail</ListItemText>
       </MenuItem>
     </Menu>
   );
@@ -43,7 +36,6 @@ export default function Action(props) {
 Action.propTypes = {
   actionOpen: PropTypes.any,
   actionClose: PropTypes.any,
-  handelDelete: PropTypes.any,
-  handleEdit: PropTypes.any,
+  handleDetail: PropTypes.any,
   anchorEl: PropTypes.any,
 };

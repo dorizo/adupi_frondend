@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Iconify from '../../components/Iconify';
 // ----------------------------------------------------------------------
 
-export default function MoreMenu({ handleApprove, handleDetail }) {
+export default function MoreMenu({ handleOnDelete }) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,24 +26,22 @@ export default function MoreMenu({ handleApprove, handleDetail }) {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem onClick={handleApprove} sx={{ color: 'text.secondary' }}>
+        <MenuItem
+          onClick={() => {
+            handleOnDelete();
+            setIsOpen(false);
+          }}
+          sx={{ color: 'text.secondary' }}
+        >
           <ListItemIcon>
-            <Iconify icon="eva:checkmark-outline" width={24} height={24} />
+            <Iconify icon="eva:trash-2-outline" width={24} height={24} />
           </ListItemIcon>
-          <ListItemText primary="Approve" primaryTypographyProps={{ variant: 'body2' }} />
-        </MenuItem>
-
-        <MenuItem onClick={handleDetail} sx={{ color: 'text.secondary' }}>
-          <ListItemIcon>
-            <Iconify icon="eva:maximize-outline" width={24} height={24} />
-          </ListItemIcon>
-          <ListItemText primary="Detail" primaryTypographyProps={{ variant: 'body2' }} />
+          <ListItemText primary="Hapus" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
       </Menu>
     </>
   );
 }
 MoreMenu.propTypes = {
-  handleApprove: PropTypes.func,
-  handleDetail: PropTypes.func,
+  handleOnDelete: PropTypes.func,
 };

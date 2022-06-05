@@ -15,7 +15,7 @@ import { AuthProvider } from './contexts/AuthProvider';
 // ----------------------------------------------------------------------
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: { refetchOnMount: false, refetchOnWindowFocus: false },
+    queries: { refetchOnWindowFocus: false },
   },
 });
 

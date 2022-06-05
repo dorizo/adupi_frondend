@@ -110,7 +110,7 @@ export default function Router() {
           path: 'list-mitra',
           element: (
             <RequireAuth allowedRoles={['admin']}>
-              <ComingSoon />
+              <Mitra />
             </RequireAuth>
           ),
         },

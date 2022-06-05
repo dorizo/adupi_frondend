@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 import * as React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { ADD_JENIS_SAMPAH, DELETE_JENIS_SAMPAH, UPDATE_JENIS_SAMPAH } from '../../api/jenis_sampah';
-import { GET_MITRA_NV_BY_FASILITATOR, VERIF_MITRA_BY_FASILITATOR } from '../../api/mitra';
+import { AKTIFASI_AKUN_MITRA, GET_MITRA_ALL_BY_SU_NO } from '../../api/mitra';
 import DialogConfirm from '../../components/DialogConfirm';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
@@ -59,7 +59,7 @@ export default function Index() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [itemSelected, setItemSelected] = React.useState(null);
   //   const { checkPermision } = useMee();
-  const { data, isLoading, refetch } = useQuery('GET_MITRA_NV_BY_FASILITATOR', GET_MITRA_NV_BY_FASILITATOR);
+  const { data, isLoading, refetch } = useQuery('GET_MITRA_ALL_BY_SU_NO', GET_MITRA_ALL_BY_SU_NO);
   const { enqueueSnackbar } = useSnackbar();
 
   const rows = data && data.data.data;
@@ -151,7 +151,7 @@ export default function Index() {
   };
 
   const handleVerifikasi = async () => {
-    const response = await VERIF_MITRA_BY_FASILITATOR(itemSelected.mitraCode);
+    const response = await AKTIFASI_AKUN_MITRA({ mitraCode: itemSelected.mitraCode, roleCode: '3' });
 
     if (response.status === 200) {
       await enqueueSnackbar(response.data.message, { variant: 'success' });
