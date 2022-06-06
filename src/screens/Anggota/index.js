@@ -169,7 +169,7 @@ export default function Anggota() {
                   </Grid>
                   <Grid item xs={6}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <img style={{ width: '50%' }} src={li?.ktp || dummyKtp} alt={`img-ktp`} />
+                      <img style={{ width: '50%' }} src={li?.ktp.length > 100 ? li?.ktp : dummyKtp} alt={`img-ktp`} />
                     </Box>
                   </Grid>
                 </Grid>
