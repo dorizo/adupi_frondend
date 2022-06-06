@@ -33,7 +33,7 @@ const navConfig = [
   },
   {
     title: 'list-mitra',
-    path: '/dashboard/list-mitra',
+    path: '/dashboard/mitra',
     icon: getIcon('eva:list-outline'),
   },
   {

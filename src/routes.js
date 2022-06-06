@@ -33,6 +33,7 @@ import ListMitra from './screens/ListMitra';
 import ListKehadiran from './screens/ListKehadiran';
 import RequireAuth from './Guard/RequiredAuth';
 import MobileGuard from './Guard/MobileGuard';
+import MitraDetail from './pages/MitraDetail';
 
 // ----------------------------------------------------------------------
 
@@ -107,10 +108,18 @@ export default function Router() {
           ),
         },
         {
-          path: 'list-mitra',
+          path: 'mitra',
           element: (
             <RequireAuth allowedRoles={['admin']}>
               <Mitra />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'mitra/:mitraCode',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <MitraDetail />
             </RequireAuth>
           ),
         },
