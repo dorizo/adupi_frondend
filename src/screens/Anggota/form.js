@@ -8,6 +8,8 @@ import SelectInput from '../../components/SelectInput';
 import TextInput from '../../components/TextInput';
 
 /* eslint-disable no-nested-ternary */
+/* eslint-disable radix */
+
 export default function Form({ next, setSelectedImg, step, onUpdate, selectedImg, setValues, handleAdd, item }) {
   const editAble = (item?.anggotaCode && true) || false;
   const [isNext, setIsNext] = useState({ a: '', s: '' });
@@ -177,6 +179,9 @@ export default function Form({ next, setSelectedImg, step, onUpdate, selectedImg
           />
           <TextInput
             name="nik"
+            onInput={(e) => {
+              e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 16);
+            }}
             id="nik"
             value={formik.values.nik}
             onChange={formik.handleChange}

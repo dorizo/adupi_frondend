@@ -24,6 +24,8 @@ const initialVal = {
   password: '',
 };
 /* eslint-disable no-nested-ternary */
+/* eslint-disable radix */
+
 export default function Form({ next, setSelectedImg, step, values, selectedImg, setValues, handleAdd }) {
   const [isNext, setIsNext] = useState({ a: '', s: '' });
   const [provinsi, setProvinsi] = useState();
@@ -191,7 +193,6 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
           <SelectInput
             label="Jenis Mitra"
             name="jenisMitra"
-            id="jenisMitra"
             value={formik.values.jenisMitra}
             onChange={formik.handleChange}
             error={formik.touched.jenisMitra && Boolean(formik.errors.jenisMitra)}
@@ -204,6 +205,9 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
           />
           <TextInput
             name="nik"
+            onInput={(e) => {
+              e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 16);
+            }}
             id="nik"
             value={formik.values.nik}
             onChange={formik.handleChange}
