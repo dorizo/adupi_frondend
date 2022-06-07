@@ -19,6 +19,7 @@ import Fasilitator from './pages/Fasilitator';
 import RoleDetail from './pages/RoleDetail';
 // import DashboardApp from './pages/DashboardApp';
 import Welcome from './screens/Welcome';
+import Akun from './screens/Akun';
 import MobileLayout from './layouts/MobileLayout';
 import Home from './screens/Home';
 import BeliSampah from './screens/BeliSampah';
@@ -185,7 +186,14 @@ export default function Router() {
             </MobileGuard>
           ),
         },
-        { path: 'fasilitator', element: <FasilitatorHome /> },
+        {
+          path: 'fasilitator',
+          element: (
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+              <FasilitatorHome />
+            </MobileGuard>
+          ),
+        },
         { path: 'welcome', element: <Welcome /> },
         { path: 'login', element: <FasilitatorWelcome /> },
         {
@@ -228,9 +236,38 @@ export default function Router() {
             </MobileGuard>
           ),
         },
-        { path: 'tambah-mitra', element: <TambahMitra /> },
-        { path: 'list-mitra', element: <ListMitra /> },
-        { path: 'list-kehadiran', element: <ListKehadiran /> },
+        {
+          path: 'tambah-mitra',
+          element: (
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+              <TambahMitra />
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'list-mitra',
+          element: (
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+              <ListMitra />
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'list-kehadiran',
+          element: (
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+              <ListKehadiran />
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'akun',
+          element: (
+            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+              <Akun />
+            </MobileGuard>
+          ),
+        },
       ],
     },
     {
