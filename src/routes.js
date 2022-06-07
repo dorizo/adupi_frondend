@@ -40,7 +40,7 @@ import MitraDetail from './pages/MitraDetail';
 
 export default function Router() {
   return useRoutes([
-    {
+    !process.env.REACT_APP_MOBILE && {
       path: '/dashboard',
       element: (
         <RequireAuth allowedRoles={['admin']}>
@@ -182,6 +182,7 @@ export default function Router() {
         },
       ],
     },
+
     {
       path: '/mobile',
       element: <MobileLayout />,
@@ -278,12 +279,13 @@ export default function Router() {
         },
       ],
     },
+
     {
       path: '/',
       element: <LogoOnlyLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard" /> },
-        { path: 'login', element: <Login /> },
+        { path: '/', element: <Navigate to={process.env.REACT_APP_MOBILE ? '/mobile' : '/dashboard'} /> },
+        !process.env.REACT_APP_MOBILE && { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" /> },
