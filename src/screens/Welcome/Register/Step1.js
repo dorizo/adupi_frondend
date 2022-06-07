@@ -11,6 +11,8 @@ import ButtonPrimary from '../../../components/Button/ButtonPrimary';
 import SelectInput from '../../../components/SelectInput';
 import TextInput from '../../../components/TextInput';
 
+/* eslint-disable radix */
+
 export default function Step1({ handleNext, values }) {
   // const [jenisMitraList, setJenisMitraList] = useState([
   //   { value: 'PT', label: 'PT' },
@@ -146,7 +148,9 @@ export default function Step1({ handleNext, values }) {
     },
     validationSchema: Yup.object({
       nama: Yup.string().required('Harus Disisi'),
-      nik: Yup.number().required('Harus Disisi'),
+      nik: Yup.number()
+        .test('len', 'NIK harus 16', (val) => val.length === 16)
+        .required('Harus Disisi'),
       noHp: Yup.string().required('Harus Disisi'),
       jenisKelamin: Yup.string().required('Harus Disisi'),
       jenisMitra: Yup.string().required('Harus Disisi'),
@@ -194,6 +198,9 @@ export default function Step1({ handleNext, values }) {
       <TextInput
         name="nik"
         id="nik"
+        onInput={(e) => {
+          e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 16);
+        }}
         value={formik.values.nik}
         onChange={formik.handleChange}
         error={formik.touched.nik && Boolean(formik.errors.nik)}
