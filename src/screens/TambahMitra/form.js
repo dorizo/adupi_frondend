@@ -135,7 +135,9 @@ export default function Form({ next, setSelectedImg, step, values, selectedImg, 
       step === 0
         ? {
             nama: Yup.string().required('Harus Disisi'),
-            nik: Yup.number().required('Harus Disisi'),
+            nik: Yup.number()
+              .test('len', 'NIK harus 16', (val) => val.toString().length === 16)
+              .required('Harus Disisi'),
             noHp: Yup.string().required('Harus Disisi'),
             jenisKelamin: Yup.string().required('Harus Disisi'),
             jenisMitra: Yup.string().required('Harus Disisi'),

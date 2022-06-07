@@ -149,7 +149,7 @@ export default function Step1({ handleNext, values }) {
     validationSchema: Yup.object({
       nama: Yup.string().required('Harus Disisi'),
       nik: Yup.number()
-        .test('len', 'NIK harus 16', (val) => val.length === 16)
+        .test('len', 'NIK harus 16', (val) => val.toString().length === 16)
         .required('Harus Disisi'),
       noHp: Yup.string().required('Harus Disisi'),
       jenisKelamin: Yup.string().required('Harus Disisi'),

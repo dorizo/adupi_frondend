@@ -126,7 +126,9 @@ export default function Form({ next, setSelectedImg, step, onUpdate, selectedImg
     },
     validationSchema: Yup.object({
       nama: Yup.string().required('Harus Disisi'),
-      nik: Yup.string().required('Harus Disisi'),
+      nik: Yup.string()
+        .test('len', 'NIK harus 16', (val) => val.toString().length === 16)
+        .required('Harus Disisi'),
       noHp: Yup.string().required('Harus Disisi'),
       jenisKelamin: Yup.string().required('Harus Disisi'),
       wilayahCode: Yup.string().required('Harus Disisi'),
