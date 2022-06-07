@@ -165,10 +165,18 @@ export default function Router() {
           ),
         },
         {
-          path: 'validasi-mitra',
+          path: 'verifikasi-mitra',
           element: (
             <RequireAuth allowedRoles={['admin']}>
               <VarifikasiMitra />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'verifikasi-anggota',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <ComingSoon />
             </RequireAuth>
           ),
         },

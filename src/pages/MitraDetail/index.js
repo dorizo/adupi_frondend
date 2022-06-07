@@ -12,10 +12,10 @@ import {
 } from '@mui/material';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
+import LoadingComponent from '../../components/LoadingComponent';
 import { GET_MITRA_DETAIL_BY_SU } from '../../api/mitra';
 import dummybarang from '../../assets/dummy-barang.jpg';
 import dummyKtp from '../../assets/dummy-ktp.jpg';
-import LoadingPage from '../../components/Loading';
 import Page from '../../components/Page';
 
 export default function MitraDetail() {
@@ -25,7 +25,7 @@ export default function MitraDetail() {
   );
   const mitraDetail = data && data?.data?.data;
   if (isLoading) {
-    return <LoadingPage />;
+    return <LoadingComponent />;
   }
   console.log(mitraDetail);
   return (

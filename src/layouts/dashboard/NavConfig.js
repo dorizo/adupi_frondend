@@ -32,14 +32,19 @@ const navConfig = [
     icon: getIcon('eva:person-done-outline'),
   },
   {
-    title: 'list-mitra',
+    title: 'list mitra',
     path: '/dashboard/mitra',
     icon: getIcon('eva:list-outline'),
   },
   {
-    title: 'validasi-mitra',
-    path: '/dashboard/validasi-mitra',
+    title: 'verifikasi mitra',
+    path: '/dashboard/verifikasi-mitra',
     icon: getIcon('eva:person-add-outline'),
+  },
+  {
+    title: 'verifikasi anggota',
+    path: '/dashboard/verifikasi-anggota',
+    icon: getIcon('eva:people-outline'),
   },
   {
     title: 'masalah',
