@@ -1,7 +1,6 @@
 /* eslint-disable no-unneeded-ternary */
 /* eslint-disable prefer-const */
 import { useNavigate } from 'react-router-dom';
-import { set } from 'lodash';
 import { createContext, useEffect, useState } from 'react';
 import LoadingPage from '../components/Loading';
 import axios from '../api';
@@ -14,12 +13,16 @@ const initialState = {
   permission: [],
   role: [],
   user: null,
+  mitra: null,
 };
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(initialState);
   const [l, setL] = useState(false);
   const navigate = useNavigate();
 
+  const setMitra = async (data) => {
+    await setAuth({ ...auth, mitra: data });
+  };
   const logout = async () => {
     await setAuth(initialState);
     await localStorage.removeItem('accessToken');
@@ -52,11 +55,24 @@ export const AuthProvider = ({ children }) => {
         response.data.data.specialPermission.forEach((p) => {
           permission.push(p.permission);
         });
+        let mitra = null;
+        if (role.find((role) => ['Mitra'].includes(role))) {
+          try {
+            const response = await axios.get('mitra/self', {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            const self = response.data && response.data.data;
+            mitra = self;
+          } catch (err) {
+            mitra = null;
+          }
+        }
         await setAuth({
           role,
           permission,
           user,
           accessToken,
+          mitra,
           isAuthenticated: localStorage.getItem('accessToken') ? true : false,
         });
       } catch (err) {
@@ -65,10 +81,23 @@ export const AuthProvider = ({ children }) => {
         } else if (err.response?.status === 400) {
           console.log('Failed');
         } else if (err.response?.status === 401) {
-          logout();
+          if (process.env.REACT_APP_MOBILE) {
+            logoutMobile();
+          } else {
+            logout();
+          }
         } else if (err.response?.status === 403) {
-          logout();
+          if (process.env.REACT_APP_MOBILE) {
+            logoutMobile();
+          } else {
+            logout();
+          }
         } else {
+          if (process.env.REACT_APP_MOBILE) {
+            logoutMobile();
+          } else {
+            logout();
+          }
           console.log('Failed');
         }
       }
@@ -85,7 +114,9 @@ export const AuthProvider = ({ children }) => {
     return <LoadingPage />;
   }
   return (
-    <AuthContext.Provider value={{ auth, setAuth, logout, updateAuth, logoutMobile }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ auth, setMitra, setAuth, logout, updateAuth, logoutMobile }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

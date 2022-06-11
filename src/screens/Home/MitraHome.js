@@ -17,30 +17,33 @@ import menuAnggota from '../../assets/illustation/menu-anggota.png';
 import menuBeli from '../../assets/illustation/menu-beli-sampah.png';
 import menuJual from '../../assets/illustation/menu-jual-sampah.png';
 import menuMasalah from '../../assets/illustation/menu-masalah.png';
+import menuAlat from '../../assets/illustation/recyle.png';
 import adupi from '../../assets/logo/adupi-w.png';
+import useAuth from '../../hooks/useAuth';
 import Akun from '../Akun';
+import TransaksiPembelian from '../Transaksi/pembelian';
 
-const menuList = [
-  { title: 'Beli Sampah', desc: 'Masukkan Data Sampah yang Dibeli', icon: menuBeli, link: '/mobile/beli-sampah' },
-  { title: 'Jual Sampah', desc: 'Masukkan Data Sampah yang Dijual', icon: menuJual, link: '/mobile/jual-sampah' },
-  { title: 'Masalah', desc: 'Laporkan Masalah Mesin/Kendaraan', icon: menuMasalah, link: '/mobile/masalah' },
-  {
-    title: 'Tambah Anggota/Sumber',
-    desc: 'Tambah Anggota/Sumber Sampah',
-    icon: menuAnggota,
-    link: '/mobile/anggota',
-  },
-];
 export default function MitraHome() {
   const navigate = useNavigate();
+  const { setMitra } = useAuth();
   const [value, setValue] = React.useState(0);
   const { data } = useQuery('GET_SELF_MITRA', GET_SELF_MITRA, {
     refetchOnMount: true,
     refetchOnWindowFocus: true,
   });
   const self = data && data.data.data;
+  const menuList = [
+    { title: 'Beli Sampah', desc: 'Masukkan Data Sampah yang Dibeli', icon: menuBeli, link: '/mobile/beli-sampah' },
+    { title: 'Jual Sampah', desc: 'Masukkan Data Sampah yang Dijual', icon: menuJual, link: '/mobile/jual-sampah' },
+    { title: 'Masalah', desc: 'Laporkan Masalah Mesin/Kendaraan', icon: menuMasalah, link: '/mobile/masalah' },
+    { title: 'Anggota / Sumber', desc: 'Tambah Anggota/Sumber Sampah', icon: menuAnggota, link: '/mobile/anggota' },
+    { title: 'Alat', desc: 'Tambah Alat', icon: menuAlat, link: `/mobile/alat` },
+  ];
+  React.useEffect(() => {
+    setMitra(self);
+  }, [self, setMitra]);
   return (
-    <div style={{ paddingBottom: 20 }}>
+    <div style={{ paddingBottom: 40 }}>
       {value === 0 && (
         <Box sx={{ flexGrow: 1 }}>
           <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }} position="static">
@@ -65,7 +68,7 @@ export default function MitraHome() {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Hai, {self?.nama}
               </Typography>
-              <Typography style={{ wordWrap: 'break-word', width: 100, textAlign: 'right' }}>{self?.alamat}</Typography>
+              <Typography style={{ wordWrap: 'break-word', width: 200, textAlign: 'right' }}>{self?.alamat}</Typography>
               <LocationOnIcon />
             </Toolbar>
           </AppBar>
@@ -97,6 +100,7 @@ export default function MitraHome() {
           </Grid>
         </Box>
       )}
+      <TransaksiPembelian />
       {value === 1 && <Akun />}
       <BottomNavigation
         sx={{ position: 'fixed', bottom: 0, margin: '0 auto', left: 0, right: 0 }}

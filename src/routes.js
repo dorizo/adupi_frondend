@@ -238,7 +238,7 @@ export default function Router() {
           ),
         },
         {
-          path: 'tambah-alat',
+          path: 'alat',
           element: (
             <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
               <TambahAlat />
@@ -248,7 +248,7 @@ export default function Router() {
         {
           path: 'tambah-mitra',
           element: (
-            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+            <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
               <TambahMitra />
             </MobileGuard>
           ),
@@ -256,7 +256,7 @@ export default function Router() {
         {
           path: 'list-mitra',
           element: (
-            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+            <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
               <ListMitra />
             </MobileGuard>
           ),
@@ -264,7 +264,7 @@ export default function Router() {
         {
           path: 'list-kehadiran',
           element: (
-            <MobileGuard allowedRoles={['Mitra']} allowedPermission={['']}>
+            <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
               <ListKehadiran />
             </MobileGuard>
           ),

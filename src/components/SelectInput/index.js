@@ -1,7 +1,7 @@
 import { InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
 
-export default function SelectInput({ option = [], label, placeholder = '', sx, ...props }) {
+export default function SelectInput({ option = [], label, placeholder = '', sx, pilih = true, ...props }) {
   return (
     <>
       <InputLabel sx={{ marginTop: 2 }} id={`${label.split(' ').join('_')}_id`}>
@@ -17,9 +17,11 @@ export default function SelectInput({ option = [], label, placeholder = '', sx, 
         label={label}
         {...props}
       >
-        <MenuItem value="">
-          <em>--PILIH--</em>
-        </MenuItem>
+        {pilih && (
+          <MenuItem value="">
+            <em>--PILIH--</em>
+          </MenuItem>
+        )}
         {option && option.map((op) => <MenuItem value={op.value}>{op.label}</MenuItem>)}
       </Select>
     </>
