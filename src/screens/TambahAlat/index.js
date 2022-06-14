@@ -37,7 +37,7 @@ export default function TambahAlat() {
   const handleAdd = async () => {
     setLoading(true);
     // const response = await ADD_MESIN({ ...values, foto: '-' });
-    const response = await ADD_MESIN({ ...values, ktp: selectedImg });
+    const response = await ADD_MESIN({ ...values, foto: selectedImg });
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
