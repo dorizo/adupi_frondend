@@ -70,7 +70,7 @@ export default function Akun() {
             v 0.1
           </Typography>
           <Button onClick={logoutMobile} fullWidth color="error" variant="contained">
-            Keluar
+            KELUAR
           </Button>
         </CardContent>
       </Card>
