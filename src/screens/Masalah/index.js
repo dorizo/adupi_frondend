@@ -1,8 +1,9 @@
-import { Box, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardHeader, Chip, Grid, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { ADD_MASALAH, DELETE_MASALAH, GET_ALL_MASALAH, UPDATE_MASALAH } from '../../api/masalah';
+import { fDateTime } from '../../utils/formatTime';
+import { ADD_MASALAH, CHANGE_STATUS_MASALAH, DELETE_MASALAH, GET_ALL_MASALAH, UPDATE_MASALAH } from '../../api/masalah';
 import dummyMasalah from '../../assets/dummy-masalah.png';
 import masalah from '../../assets/illustation/masalah.png';
 import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
@@ -29,8 +30,8 @@ export default function Masalah() {
 
   const handleAdd = async () => {
     setLoading(true);
-    const response = await ADD_MASALAH({ ...values, foto: '-' });
-    // const response = await ADD_MASALAH({ ...values, ktp: selectedImg });
+    // const response = await ADD_MASALAH({ ...values, foto: '-' });
+    const response = await ADD_MASALAH({ ...values, foto: selectedImg });
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -54,8 +55,8 @@ export default function Masalah() {
   };
   const handleUpdate = async () => {
     setLoading(true);
-    const response = await UPDATE_MASALAH({ ...values, foto: '-' }, item.masalahCode);
-    // const response = await UPDATE_MASALAH({ ...values, ktp: selectedImg }, item.masalahCode);
+    // const response = await UPDATE_MASALAH({ ...values, foto: '-' }, item.masalahCode);
+    const response = await UPDATE_MASALAH({ ...values, foto: selectedImg }, item.masalahCode);
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -94,6 +95,21 @@ export default function Masalah() {
     setItem(null);
     setLoading(false);
     setAlertOpen(false);
+  };
+  const handleChangeStatus = async (id) => {
+    setLoading(true);
+    const response = await CHANGE_STATUS_MASALAH(id);
+    if (response.status === 200) {
+      await enqueueSnackbar(response.data.message, { variant: 'success' });
+      refetch();
+    }
+    if (response.status === 400) {
+      await enqueueSnackbar(response.data.message, { variant: 'error' });
+    }
+    if (response.status === 500) {
+      await enqueueSnackbar('Internal server error', 'error');
+    }
+    setLoading(false);
   };
 
   const handleOpen = (a, s) => {
@@ -148,7 +164,9 @@ export default function Masalah() {
                   <MoreMenu handleOnUpdate={() => handleOnUpdate(li)} handleOnDelete={() => handleOnDelete(li)} />
                 }
                 title={li?.jenisMasalah}
-                subheader={`Tanggal :  ${li?.createAt}`}
+                subheader={
+                  <Chip label={li?.status} color={li?.status === 'Dalam peninjauan' ? 'warning' : 'success'} />
+                }
               />
               <CardContent>
                 <Grid container spacing={1}>
@@ -157,14 +175,33 @@ export default function Masalah() {
                       Deskripsi :{' '}
                     </Typography>
                     <Typography variant="caption">{li?.deskripsi}</Typography>
+                    <br />
+                    {li?.status === 'Dalam peninjauan' && (
+                      <Button
+                        style={{ marginTop: 5 }}
+                        onClick={() => handleChangeStatus(li.masalahCode)}
+                        variant="outlined"
+                        size="small"
+                        color="success"
+                      >
+                        Selesai
+                      </Button>
+                    )}
                   </Grid>
                   <Grid item xs={6}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                       <img
                         style={{ width: '50%' }}
-                        src={li?.foto.length > 100 ? li?.foto : dummyMasalah}
-                        alt={`img-ktp`}
+                        src={`${process.env.REACT_APP_API_URL_SSL}assets/masalah/${li?.foto}`}
+                        alt={`img-barang`}
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null;
+                          currentTarget.src = dummyMasalah;
+                        }}
                       />
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <Typography variant="caption">{fDateTime(li?.createAt)}</Typography>
                     </Box>
                   </Grid>
                 </Grid>
@@ -180,6 +217,7 @@ export default function Masalah() {
           setSelectedImg={setSelectedImg}
           next={handleOpen}
           values={values}
+          isLoading={loading}
           handleAdd={handleAdd}
           onUpdate={handleUpdate}
           setValues={setValues}

@@ -21,6 +21,7 @@ export default function BeliSampah() {
   const handleAdd = async () => {
     setLoading(true);
     const response = await BELI_SAMPAH({ ...values, nota: '-' });
+    // const response = await BELI_SAMPAH({ ...values, nota: selectedImg });
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);

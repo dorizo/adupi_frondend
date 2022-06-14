@@ -2,6 +2,7 @@ import { Box, Card, CardContent, CardHeader, Grid, Typography } from '@mui/mater
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import { fDateTime } from '../../utils/formatTime';
 import { ADD_MESIN, DELETE_MESIN, GET_ALL_MESIN_MITRA, UPDATE_MESIN } from '../../api/mesin';
 import dummybarang from '../../assets/dummy-barang.jpg';
 import alat from '../../assets/illustation/recyle.png';
@@ -35,8 +36,8 @@ export default function TambahAlat() {
 
   const handleAdd = async () => {
     setLoading(true);
-    const response = await ADD_MESIN({ ...values, foto: '-' });
-    // const response = await ADD_MESIN({ ...values, ktp: selectedImg });
+    // const response = await ADD_MESIN({ ...values, foto: '-' });
+    const response = await ADD_MESIN({ ...values, ktp: selectedImg });
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -60,7 +61,7 @@ export default function TambahAlat() {
   };
   const handleUpdate = async () => {
     setLoading(true);
-    const response = await UPDATE_MESIN({ ...values, foto: '-' }, item.mesinCode);
+    const response = await UPDATE_MESIN({ ...values, foto: selectedImg }, item.mesinCode);
     // const response = await UPDATE_MESIN({ ...values, ktp: selectedImg }, item.mesinCode);
     if (response.status === 422) {
       const asdf = response.data.errors;
@@ -151,7 +152,7 @@ export default function TambahAlat() {
               <CardHeader
                 action={<MoreMenu handleOnUpdate={() => handleOnUpdate(m)} handleOnDelete={() => handleOnDelete(m)} />}
                 title={m?.jenisMesin}
-                subheader={`Tanggal :  ${m?.createAt}`}
+                subheader={`Tanggal :  ${fDateTime(m?.createAt)}`}
               />
               <CardContent>
                 <Grid container spacing={1}>
@@ -164,8 +165,12 @@ export default function TambahAlat() {
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                       <img
                         style={{ width: '40%' }}
-                        src={m?.foto.length > 100 ? m?.foto : dummybarang}
+                        src={`${process.env.REACT_APP_API_URL_SSL}assets/mesin/${m?.foto}`}
                         alt={`img-barang`}
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null;
+                          currentTarget.src = dummybarang;
+                        }}
                       />
                     </Box>
                   </Grid>

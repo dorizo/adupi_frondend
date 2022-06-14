@@ -9,7 +9,17 @@ import TextInput from '../../components/TextInput';
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 
-export default function Form({ next, setSelectedImg, step, onUpdate, selectedImg, setValues, handleAdd, item }) {
+export default function Form({
+  next,
+  setSelectedImg,
+  step,
+  isLoading,
+  onUpdate,
+  selectedImg,
+  setValues,
+  handleAdd,
+  item,
+}) {
   const editAble = (item?.masalahCode && true) || false;
   const [isNext, setIsNext] = useState({ a: '', s: '' });
   const [loading, setLoading] = useState(false);
@@ -101,7 +111,7 @@ export default function Form({ next, setSelectedImg, step, onUpdate, selectedImg
             <ButtonPrimary disabled={selectedImg} upload={handleUploadClick} component="label" label="Unggah File" />
           </div>
           <ButtonPrimary
-            disabled={selectedImg === null || loading}
+            disabled={selectedImg === null || loading || isLoading}
             onClick={editAble ? onUpdate : handleAdd}
             style={{ marginTop: 30, marginBottom: 5 }}
             label={editAble ? 'Update' : 'Tambah'}
@@ -116,6 +126,7 @@ Form.propTypes = {
   next: PropTypes.any,
   setSelectedImg: PropTypes.any,
   step: PropTypes.any,
+  isLoading: PropTypes.any,
   item: PropTypes.any,
   onUpdate: PropTypes.func,
   selectedImg: PropTypes.any,

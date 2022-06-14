@@ -10,11 +10,11 @@ import SelectInput from '../../../components/SelectInput';
 import TextInput from '../../../components/TextInput';
 
 const containerStyle = {
-  width: '400%',
+  width: '100%',
   height: '400px',
 };
 
-export default function Step4({ handleNext, values }) {
+export default function Step4({ handleNext, values, isLoading }) {
   const mlg = values?.lang ? { lat: values?.lat, lng: values?.lang } : null;
   const [provinsi, setProvinsi] = useState();
   const [kabupaten, setKabupaten] = useState();
@@ -252,11 +252,12 @@ export default function Step4({ handleNext, values }) {
         )}
         {!selectedImg && <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah Foto Gudang" />}
       </div>
-      <ButtonPrimary type="submit" disabled={!marker || !selectedImg || loading} label="Selanjutnya" />
+      <ButtonPrimary type="submit" disabled={!marker || !selectedImg || loading || isLoading} label="Selanjutnya" />
     </form>
   );
 }
 Step4.propTypes = {
   handleNext: PropTypes.func,
+  isLoading: PropTypes.any,
   values: PropTypes.any,
 };

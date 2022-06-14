@@ -19,13 +19,11 @@ import menuJual from '../../assets/illustation/menu-jual-sampah.png';
 import menuMasalah from '../../assets/illustation/menu-masalah.png';
 import menuAlat from '../../assets/illustation/recyle.png';
 import adupi from '../../assets/logo/adupi-w.png';
-import useAuth from '../../hooks/useAuth';
 import Akun from '../Akun';
 import TransaksiPembelian from '../Transaksi/pembelian';
 
 export default function MitraHome() {
   const navigate = useNavigate();
-  const { setMitra } = useAuth();
   const [value, setValue] = React.useState(0);
   const { data } = useQuery('GET_SELF_MITRA', GET_SELF_MITRA, {
     refetchOnMount: true,
@@ -39,9 +37,7 @@ export default function MitraHome() {
     { title: 'Anggota / Sumber', desc: 'Tambah Anggota/Sumber Sampah', icon: menuAnggota, link: '/mobile/anggota' },
     { title: 'Alat', desc: 'Tambah Alat', icon: menuAlat, link: `/mobile/alat` },
   ];
-  React.useEffect(() => {
-    setMitra(self);
-  }, [self, setMitra]);
+
   return (
     <div style={{ paddingBottom: 40 }}>
       {value === 0 && (
@@ -98,9 +94,9 @@ export default function MitraHome() {
               </Grid>
             ))}
           </Grid>
+          <TransaksiPembelian />
         </Box>
       )}
-      <TransaksiPembelian />
       {value === 1 && <Akun />}
       <BottomNavigation
         sx={{ position: 'fixed', bottom: 0, margin: '0 auto', left: 0, right: 0 }}

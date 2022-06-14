@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import ButtonPrimary from '../../../components/Button/ButtonPrimary';
 
-export default function Step2({ handleNext, values }) {
+export default function Step2({ handleNext, values, isLoading }) {
   const [selectedImg, setSelectedImg] = useState(values?.ktp || null);
   const handleUploadClick = (event) => {
     const file = event.target.files[0];
@@ -26,7 +26,7 @@ export default function Step2({ handleNext, values }) {
         <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah File KTP" />
       </div>
       <ButtonPrimary
-        disabled={selectedImg === null}
+        disabled={selectedImg === null || isLoading}
         // onClick={() => handleNext(3, 'Data Usaha', { ktp: '-' })}
         onClick={() => handleNext(3, 'Data Usaha', { ktp: selectedImg })}
         label="Selanjutnya"
@@ -37,5 +37,6 @@ export default function Step2({ handleNext, values }) {
 
 Step2.propTypes = {
   handleNext: PropTypes.func,
+  isLoading: PropTypes.any,
   values: PropTypes.any,
 };

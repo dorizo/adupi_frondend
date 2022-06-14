@@ -13,7 +13,7 @@ import TextInput from '../../../components/TextInput';
 
 /* eslint-disable radix */
 
-export default function Step1({ handleNext, values }) {
+export default function Step1({ handleNext, values, isLoading }) {
   // const [jenisMitraList, setJenisMitraList] = useState([
   //   { value: 'PT', label: 'PT' },
   //   { value: 'CV', label: 'CV' },
@@ -322,7 +322,7 @@ export default function Step1({ handleNext, values }) {
         rows={3}
         multiline
       />
-      <ButtonPrimary disabled={loading} type="submit" label="Selanjutnya" />
+      <ButtonPrimary disabled={loading || isLoading} type="submit" label="Selanjutnya" />
     </form>
   );
 }
@@ -330,4 +330,5 @@ export default function Step1({ handleNext, values }) {
 Step1.propTypes = {
   handleNext: PropTypes.func,
   values: PropTypes.any,
+  isLoading: PropTypes.any,
 };

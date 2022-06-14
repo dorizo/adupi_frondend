@@ -16,11 +16,13 @@ export default function Welcome() {
   const { onOpen, Drawer, onClose } = useDrawer();
   const [action, setAction] = useState('Masuk');
   const [closeAble, setCloseAble] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [drawerTitle, setDrawerTitle] = useState('');
   const [step, setStep] = useState(1);
   const [values, setValues] = useState({});
 
   const handleNext = async (s, t, val) => {
+    setLoading(true);
     if (s !== 0) {
       setStep(s);
       setCloseAble(false);
@@ -29,11 +31,12 @@ export default function Welcome() {
     }
     if (s === 0) {
       // failed base 64 image only
-      const mesin = values?.mesin.map((n) => {
-        const newww = { ...n, foto: '-' };
-        return newww;
-      });
-      const response = await REGISTRASI_MITRA_NEW({ ...values, ...val, mesin, ktp: '-', foto: '-' });
+      // const mesin = values?.mesin.map((n) => {
+      //   const newww = { ...n, foto: '-' };
+      //   return newww;
+      // });
+      const response = await REGISTRASI_MITRA_NEW({ ...values, ...val });
+      // const response = await REGISTRASI_MITRA_NEW({ ...values, ...val, mesin, ktp: '-', foto: '-' });
       if (response.status === 422) {
         const asdf = response.data.errors;
         const keys = asdf && Object.keys(asdf);
@@ -53,6 +56,7 @@ export default function Welcome() {
       }
       setStep(1);
     }
+    setLoading(false);
   };
   const handleOpen = (a) => {
     setAction(a);
@@ -89,7 +93,11 @@ export default function Welcome() {
           </a>
         </Typography>
         <Drawer closeable={closeAble} title={drawerTitle}>
-          {action === 'Masuk' ? <Masuk /> : <Register values={values} handleNext={handleNext} step={step} />}
+          {action === 'Masuk' ? (
+            <Masuk />
+          ) : (
+            <Register values={values} isLoading={loading} handleNext={handleNext} step={step} />
+          )}
         </Drawer>
       </div>
     </Page>

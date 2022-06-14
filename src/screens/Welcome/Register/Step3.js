@@ -6,7 +6,7 @@ import ButtonPrimary from '../../../components/Button/ButtonPrimary';
 import SelectInput from '../../../components/SelectInput';
 import TextInput from '../../../components/TextInput';
 
-export default function Step3({ handleNext, values }) {
+export default function Step3({ handleNext, values, isLoading }) {
   const formik = useFormik({
     initialValues: {
       namaUsaha: values?.namaUsaha || '',
@@ -37,7 +37,6 @@ export default function Step3({ handleNext, values }) {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.namaUsaha}
-        autoFocus
         error={formik.touched.namaUsaha && Boolean(formik.errors.namaUsaha)}
         helperText={formik.touched.namaUsaha && formik.errors.namaUsaha}
         label={'Nama Usaha'}
@@ -50,7 +49,6 @@ export default function Step3({ handleNext, values }) {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.noSuratIzinUsaha}
-        autoFocus
         error={formik.touched.noSuratIzinUsaha && Boolean(formik.errors.noSuratIzinUsaha)}
         helperText={formik.touched.noSuratIzinUsaha && formik.errors.noSuratIzinUsaha}
         label={'Nomor Surat Izin Usaha'}
@@ -62,7 +60,6 @@ export default function Step3({ handleNext, values }) {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.lamaOperasional}
-        autoFocus
         error={formik.touched.lamaOperasional && Boolean(formik.errors.lamaOperasional)}
         helperText={formik.touched.lamaOperasional && formik.errors.lamaOperasional}
         label={'Lama Operasional (Tahun)'}
@@ -75,7 +72,6 @@ export default function Step3({ handleNext, values }) {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.luasGudang}
-        autoFocus
         error={formik.touched.luasGudang && Boolean(formik.errors.luasGudang)}
         helperText={formik.touched.luasGudang && formik.errors.luasGudang}
         label={'Luas Gudang (M2)'}
@@ -88,7 +84,6 @@ export default function Step3({ handleNext, values }) {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.jumlahPekerja}
-        autoFocus
         error={formik.touched.jumlahPekerja && Boolean(formik.errors.jumlahPekerja)}
         helperText={formik.touched.jumlahPekerja && formik.errors.jumlahPekerja}
         label={'Jumlah Pekerja'}
@@ -102,14 +97,17 @@ export default function Step3({ handleNext, values }) {
         value={formik.values.statusKepemilikanGudang}
         onChange={formik.handleChange}
         error={formik.touched.statusKepemilikanGudang && Boolean(formik.errors.statusKepemilikanGudang)}
-        option={[{ value: 'Milik Sendiri', label: 'Milik Sendiri' }]}
+        option={['Milik Pribadi', 'Milik Negara', 'Sewa', 'Hak Guna Pakai'].map((a) => {
+          return { value: a, label: a };
+        })}
       />
-      <ButtonPrimary type="submit" label="Selanjutnya" />
+      <ButtonPrimary disabled={isLoading} type="submit" label="Selanjutnya" />
     </form>
   );
 }
 
 Step3.propTypes = {
   handleNext: PropTypes.func,
+  isLoading: PropTypes.any,
   values: PropTypes.any,
 };

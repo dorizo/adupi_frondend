@@ -28,8 +28,8 @@ export default function Anggota() {
 
   const handleAdd = async () => {
     setLoading(true);
-    const response = await ADD_ANGGOTA({ ...values, ktp: '-' });
-    // const response = await ADD_ANGGOTA({ ...values, ktp: selectedImg });
+    // const response = await ADD_ANGGOTA({ ...values, ktp: '-' });
+    const response = await ADD_ANGGOTA({ ...values, ktp: selectedImg });
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -53,8 +53,8 @@ export default function Anggota() {
   };
   const handleUpdate = async () => {
     setLoading(true);
-    const response = await UPDATE_ANGGOTA({ ...values, ktp: '-' }, item.anggotaCode);
-    // const response = await UPDATE_ANGGOTA({ ...values, ktp: selectedImg }, item.anggotaCode);
+    // const response = await UPDATE_ANGGOTA({ ...values, ktp: '-' }, item.anggotaCode);
+    const response = await UPDATE_ANGGOTA({ ...values, ktp: selectedImg }, item.anggotaCode);
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -169,7 +169,15 @@ export default function Anggota() {
                   </Grid>
                   <Grid item xs={6}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <img style={{ width: '50%' }} src={li?.ktp.length > 100 ? li?.ktp : dummyKtp} alt={`img-ktp`} />
+                      <img
+                        style={{ width: '50%' }}
+                        src={`${process.env.REACT_APP_API_URL_SSL}assets/anggota/${li?.ktp}`}
+                        alt={`img-barang`}
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null;
+                          currentTarget.src = dummyKtp;
+                        }}
+                      />
                     </Box>
                   </Grid>
                 </Grid>
@@ -185,6 +193,7 @@ export default function Anggota() {
           setSelectedImg={setSelectedImg}
           next={handleOpen}
           values={values}
+          isLoading={loading}
           handleAdd={handleAdd}
           onUpdate={handleUpdate}
           setValues={setValues}

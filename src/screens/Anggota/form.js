@@ -10,7 +10,17 @@ import TextInput from '../../components/TextInput';
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 
-export default function Form({ next, setSelectedImg, step, onUpdate, selectedImg, setValues, handleAdd, item }) {
+export default function Form({
+  next,
+  setSelectedImg,
+  step,
+  onUpdate,
+  selectedImg,
+  setValues,
+  handleAdd,
+  item,
+  isLoading,
+}) {
   const editAble = (item?.anggotaCode && true) || false;
   const [isNext, setIsNext] = useState({ a: '', s: '' });
   const [provinsi, setProvinsi] = useState();
@@ -258,7 +268,7 @@ export default function Form({ next, setSelectedImg, step, onUpdate, selectedImg
           />
           <ButtonPrimary
             type="submit"
-            loading={loading}
+            loading={loading || isLoading}
             onClick={() => handleOpen('Upload KTP', 1)}
             style={{ marginTop: 30, marginBottom: 5 }}
             label={'Selanjutnya'}
@@ -276,7 +286,7 @@ export default function Form({ next, setSelectedImg, step, onUpdate, selectedImg
             <ButtonPrimary disabled={selectedImg} upload={handleUploadClick} component="label" label="Unggah File" />
           </div>
           <ButtonPrimary
-            disabled={selectedImg === null || loading}
+            disabled={selectedImg === null || loading || isLoading}
             onClick={editAble ? onUpdate : handleAdd}
             style={{ marginTop: 30, marginBottom: 5 }}
             label={editAble ? 'Update' : 'Tambah'}
@@ -291,6 +301,7 @@ Form.propTypes = {
   next: PropTypes.any,
   setSelectedImg: PropTypes.any,
   step: PropTypes.any,
+  isLoading: PropTypes.any,
   item: PropTypes.any,
   onUpdate: PropTypes.func,
   selectedImg: PropTypes.any,

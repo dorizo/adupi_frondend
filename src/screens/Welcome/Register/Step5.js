@@ -5,7 +5,7 @@ import ButtonPrimary from '../../../components/Button/ButtonPrimary';
 import SelectInput from '../../../components/SelectInput';
 import TextInput from '../../../components/TextInput';
 
-export default function Step5({ handleNext, values }) {
+export default function Step5({ handleNext, values, isLoading }) {
   const [selectedImg, setSelectedImg] = useState(null);
   const [showForm, setShowFrom] = useState(false);
   const [form, setForm] = useState({ statusKepemilikanMesin: '', jenisMesin: '', kapasitas: '' });
@@ -104,16 +104,17 @@ export default function Step5({ handleNext, values }) {
         )}
         <ButtonPrimary
           type="submit"
-          disabled={mesin.length === 0}
+          disabled={mesin.length === 0 || isLoading}
           onClick={() => handleNext(6, 'Daftar Akun', { mesin })}
           label="Selanjutnya"
         />
       </form>
     </>
   );
-};
+}
 
 Step5.propTypes = {
   handleNext: PropTypes.func,
+  isLoading: PropTypes.any,
   values: PropTypes.any,
 };

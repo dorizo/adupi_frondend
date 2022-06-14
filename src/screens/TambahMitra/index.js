@@ -16,12 +16,14 @@ import Step6 from '../Welcome/Register/Step6';
 export default function TambahMitra() {
   const { enqueueSnackbar } = useSnackbar();
   const { onOpen, Drawer, onClose } = useDrawer();
+  const [loading, setLoading] = useState(false);
   const [closeAble, setCloseAble] = useState(true);
   const [drawerTitle, setDrawerTitle] = useState('');
   const [step, setStep] = useState(1);
   const [values, setValues] = useState({});
 
   const handleNext = async (s, t, val) => {
+    setLoading(true);
     if (s !== 0) {
       setStep(s);
       setCloseAble(false);
@@ -29,7 +31,8 @@ export default function TambahMitra() {
       setValues({ ...values, ...val });
     }
     if (s === 0) {
-      const response = await POST_REGISTRASI_MITRA({ ...values, ...val, ktp: '-', foto: '-' });
+      const response = await POST_REGISTRASI_MITRA({ ...values, ...val });
+      // const response = await POST_REGISTRASI_MITRA({ ...values, ...val, ktp: '-', foto: '-' });
       if (response.status === 422) {
         const asdf = response.data.errors;
         const keys = asdf && Object.keys(asdf);
@@ -49,6 +52,7 @@ export default function TambahMitra() {
       }
       setStep(1);
     }
+    setLoading(false);
   };
   const handleOpen = (a) => {
     setDrawerTitle(a);
@@ -73,11 +77,11 @@ export default function TambahMitra() {
         />
       </div>
       <Drawer closeable={closeAble} title={drawerTitle || 'Tambah Mitra'}>
-        {step === 1 && <Step1 values={values} handleNext={handleNext} />}
-        {step === 2 && <Step2 values={values} handleNext={handleNext} />}
-        {step === 3 && <Step3 values={values} handleNext={handleNext} />}
-        {step === 4 && <Step4 values={values} handleNext={handleNext} />}
-        {step === 5 && <Step6 values={values} handleNext={handleNext} />}
+        {step === 1 && <Step1 values={values} isLoading={loading} handleNext={handleNext} />}
+        {step === 2 && <Step2 values={values} isLoading={loading} handleNext={handleNext} />}
+        {step === 3 && <Step3 values={values} isLoading={loading} handleNext={handleNext} />}
+        {step === 4 && <Step4 values={values} isLoading={loading} handleNext={handleNext} />}
+        {step === 5 && <Step6 values={values} isLoading={loading} handleNext={handleNext} />}
       </Drawer>
     </>
   );

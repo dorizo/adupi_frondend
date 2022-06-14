@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import ButtonPrimary from '../../../components/Button/ButtonPrimary';
 import TextInput from '../../../components/TextInput';
 
-export default function Step6({ handleNext }) {
+export default function Step6({ handleNext, isLoading }) {
   const formik = useFormik({
     initialValues: {
       password: '',
@@ -32,7 +32,6 @@ export default function Step6({ handleNext }) {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.password}
-        autoFocus
         error={formik.touched.password && Boolean(formik.errors.password)}
         helperText={formik.touched.password && formik.errors.password}
         label={'Atur Password Anda'}
@@ -44,16 +43,16 @@ export default function Step6({ handleNext }) {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.password2}
-        autoFocus
         error={formik.touched.password2 && Boolean(formik.errors.password2)}
         helperText={formik.touched.password2 && formik.errors.password2}
         label={'Masukkan Lagi Password'}
       />
-      <ButtonPrimary type="submit" label="Daftar" />
+      <ButtonPrimary disabled={isLoading} type="submit" label="Daftar" />
     </form>
   );
 }
 
 Step6.propTypes = {
   handleNext: PropTypes.func,
+  isLoading: PropTypes.any,
 };
