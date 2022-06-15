@@ -78,16 +78,6 @@ export default function Index() {
     setItemSelected(null);
     setAnchorEl(null);
   };
-  // HANDLE MODAL
-  const handleEdit = () => {
-    setDialogOpen(true);
-  };
-
-  // HANDLE ALERT
-  const handleAlertOpen = (text) => {
-    setAlertText(text);
-    setAlertOpen(true);
-  };
   const handleAlertClose = () => {
     setAlertText('');
     setAlertOpen(false);

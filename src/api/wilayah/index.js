@@ -1,4 +1,3 @@
-import qs from 'qs';
 import axios, { catchCallBack } from '../index';
 
 const GET_ALL_PROVINSI = async () => {

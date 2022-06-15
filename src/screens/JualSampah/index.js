@@ -1,47 +1,61 @@
+import { Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
-import {
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  Table,
-  TableCell,
-  TableContainer,
-  TableRow,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { StaticTimePicker } from '@mui/x-date-pickers';
-import BarMobile from '../../components/BarMobile';
+import { JUAL_SAMPAH } from '../../api/sampah';
 import jualsampah from '../../assets/illustation/jual-sampah.png';
+
 import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
-import useDrawer from '../../hooks/useDrawer';
+import BarMobile from '../../components/BarMobile';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
-import TextInput from '../../components/TextInput';
+import useDrawer from '../../hooks/useDrawer';
+import Form from './form';
 
 export default function JualSampah() {
-  const { onOpen, Drawer } = useDrawer();
+  const { onOpen, Drawer, onClose } = useDrawer();
   const [drawerTitle, setDrawerTitle] = useState('');
-  const [beliTime, setBeliTime] = useState(new Date());
-  const [selectedImg, setSelectedImg] = useState(null);
+  const [selectedImg, setSelectedImg] = useState('');
+  const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(0);
+  const [values, setValues] = useState({});
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleAdd = async () => {
+    setLoading(true);
+    // const response = await JUAL_SAMPAH({ ...values, nota: '-' });
+    const response = await JUAL_SAMPAH({ ...values, nota: selectedImg });
+    if (response.status === 422) {
+      const asdf = response.data.errors;
+      const keys = asdf && Object.keys(asdf);
+      keys.forEach((key) => {
+        enqueueSnackbar(asdf[key].msg, { variant: 'warning' });
+      });
+    }
+    if (response.status === 200) {
+      await enqueueSnackbar(response.data.message, { variant: 'success' });
+      setStep(0);
+      onClose();
+      // refetch();
+    }
+    if (response.status === 400) {
+      await enqueueSnackbar(response.data.message, { variant: 'error' });
+    }
+    if (response.status === 500) {
+      await enqueueSnackbar('Internal server error', 'error');
+    }
+    setLoading(false);
+  };
 
   const handleOpen = (a, s) => {
     setDrawerTitle(a);
     setStep(s);
+  };
+
+  const handleOnAdd = () => {
+    setDrawerTitle('Pilih Anggota');
     onOpen();
+    setStep(0);
   };
-  const handleUploadClick = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    const url = reader.readAsDataURL(file);
-    reader.onloadend = function (e) {
-      setSelectedImg(reader.result);
-    };
-  };
-  const removeImg = () => {
-    setSelectedImg(null);
-  };
+
   return (
     <>
       <BarMobile title={'Jual Sampah'} />
@@ -54,75 +68,19 @@ export default function JualSampah() {
         <Typography align="center" variant="h2">
           Sampah Dijual
         </Typography>
-        <ButtonPrimary
-          onClick={() => handleOpen('Sampah Dijual', 0)}
-          style={{ marginTop: 50, marginBottom: 5 }}
-          label={'Masukkan Data'}
-        />
+        <ButtonPrimary onClick={handleOnAdd} style={{ marginTop: 50, marginBottom: 5 }} label={'Jual sampah'} />
       </div>
       <Drawer title={drawerTitle}>
-        {step === 0 && (
-          <>
-            <TextInput label={'Berat Sampah'} type="number" />
-            <TextInput label={'Pembeli'} />
-            <TextInput label={'Jenis Sampah'} />
-            <ButtonPrimary
-              onClick={() => handleOpen('Struk Penjualan', 1)}
-              style={{ marginTop: 30, marginBottom: 5 }}
-              label={'Selanjutnya'}
-            />
-          </>
-        )}
-        {step === 1 && (
-          <>
-            <div
-              style={{
-                paddingLeft: 5,
-                paddingRight: 5,
-                marginLeft: 15,
-                marginRight: 15,
-                marginBottom: 20,
-                border: '1px solid rgba(0, 0, 0, 0.7)',
-              }}
-            >
-              <TableContainer component={Paper}>
-                <Table aria-label="simple table">
-                  <TableRow>
-                    <TableCell align="center" colSpan={2}>
-                      <Typography>BANK SAMPAH A</Typography>
-                      <Typography>Jl asdfg 12 </Typography>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      2022-03-08 <br /> 12:10:00 <br /> No. 10809a
-                    </TableCell>
-                    <TableCell align="right">PT ASDF</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Typography sx={{ fontWeight: 'bold' }}>Bodong Mix</Typography>
-                      <Typography>1000 KG x 500</Typography>
-                    </TableCell>
-                    <TableCell align="right">RP. 500.000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Typography sx={{ fontWeight: 'bold' }}>Total</Typography>
-                    </TableCell>
-                    <TableCell align="right">RP. 500.000</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="center" colSpan={2}>
-                      Terima Kasih
-                    </TableCell>
-                  </TableRow>
-                </Table>
-              </TableContainer>
-            </div>
-            <ButtonPrimary type="submit" label="Selesai" />
-          </>
-        )}
+        <Form
+          isLoading={loading}
+          step={step}
+          selectedImg={selectedImg}
+          setSelectedImg={setSelectedImg}
+          next={handleOpen}
+          values={values}
+          handleAdd={handleAdd}
+          setValues={setValues}
+        />
       </Drawer>
     </>
   );

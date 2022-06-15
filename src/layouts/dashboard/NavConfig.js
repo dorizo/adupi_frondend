@@ -66,11 +66,6 @@ const navConfig = [
     path: '/dashboard/report',
     icon: getIcon('eva:archive-outline'),
   },
-  {
-    title: 'peta-sebaran',
-    path: '/dashboard/peta-sebaran',
-    icon: getIcon('eva:map-outline'),
-  },
 ];
 
 export default navConfig;

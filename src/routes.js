@@ -9,7 +9,6 @@ import UserDetail from './pages/UserDetail';
 import Login from './pages/Login';
 import NotFound from './pages/Page404';
 import ComingSoon from './pages/ComingSoon';
-import GoogleMaps from './pages/GoogleMaps';
 import Register from './pages/Register';
 import Role from './pages/Role';
 import JenisSampah from './pages/JenisSampah';
@@ -31,10 +30,11 @@ import FasilitatorHome from './screens/Home/FasilitatorHome';
 import FasilitatorWelcome from './screens/Welcome/FasilitatorWelcome';
 import TambahMitra from './screens/TambahMitra';
 import ListMitra from './screens/ListMitra';
-import ListKehadiran from './screens/ListKehadiran';
 import RequireAuth from './Guard/RequiredAuth';
 import MobileGuard from './Guard/MobileGuard';
 import MitraDetail from './pages/MitraDetail';
+import PetaSebaran from './pages/PetaSebaran';
+import Kunjungan from './screens/Kunjungan';
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +48,8 @@ export default function Router() {
         </RequireAuth>
       ),
       children: [
-        { path: 'app', element: <ComingSoon /> },
+        { path: '', element: <Navigate to={'/dashboard/app'} /> },
+        { path: 'app', element: <PetaSebaran /> },
         {
           path: 'role',
           children: [
@@ -156,14 +157,7 @@ export default function Router() {
             </RequireAuth>
           ),
         },
-        {
-          path: 'peta-sebaran',
-          element: (
-            <RequireAuth allowedRoles={['admin']}>
-              <GoogleMaps />
-            </RequireAuth>
-          ),
-        },
+
         {
           path: 'verifikasi-mitra',
           element: (
@@ -265,7 +259,7 @@ export default function Router() {
           path: 'list-kehadiran',
           element: (
             <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
-              <ListKehadiran />
+              <Kunjungan />
             </MobileGuard>
           ),
         },

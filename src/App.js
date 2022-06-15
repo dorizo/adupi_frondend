@@ -11,6 +11,7 @@ import ScrollToTop from './components/ScrollToTop';
 
 import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 import { AuthProvider } from './contexts/AuthProvider';
+import { ImageViewerProvider } from './contexts/ImageViewerProvider';
 
 // ----------------------------------------------------------------------
 const queryClient = new QueryClient({
@@ -24,19 +25,21 @@ export default function App() {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <SnackbarProvider
-            maxSnack={3}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
-            <ThemeProvider>
-              <ScrollToTop />
-              <BaseOptionChartStyle />
-              <Router />
-            </ThemeProvider>
-          </SnackbarProvider>
+          <ImageViewerProvider>
+            <SnackbarProvider
+              maxSnack={3}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <ThemeProvider>
+                <ScrollToTop />
+                <BaseOptionChartStyle />
+                <Router />
+              </ThemeProvider>
+            </SnackbarProvider>
+          </ImageViewerProvider>
         </AuthProvider>
       </QueryClientProvider>
     </LocalizationProvider>

@@ -17,6 +17,22 @@ const GET_BELI_SAMPAH = async ({ page, size, date }) => {
     return catchCallBack(error);
   }
 };
+const GET_JUAL_SAMPAH = async ({ page, size, date }) => {
+  const params = {
+    page,
+    size,
+    date,
+  };
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get('jual/sampah', { headers, params });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const BELI_SAMPAH = async ({ anggotaCode, nota, detail }) => {
   const data = qs.stringify({
     anggotaCode,
@@ -33,5 +49,21 @@ const BELI_SAMPAH = async ({ anggotaCode, nota, detail }) => {
     return catchCallBack(error);
   }
 };
+const JUAL_SAMPAH = async ({ pembeli, nota, detail }) => {
+  const data = qs.stringify({
+    pembeli,
+    nota,
+    detail,
+  });
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.post(`jual/sampah`, data, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 
-export { BELI_SAMPAH, GET_BELI_SAMPAH };
+export { BELI_SAMPAH, GET_BELI_SAMPAH, GET_JUAL_SAMPAH, JUAL_SAMPAH };

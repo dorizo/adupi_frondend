@@ -1,17 +1,13 @@
 import { Card, Container, Stack, TableCell, TableRow } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { useSnackbar } from 'notistack';
 // import { useMee } from 'contexts/MeContext';
-import { useNavigate } from 'react-router-dom';
 import * as React from 'react';
-import { useMutation, useQuery } from 'react-query';
-import { ADD_JENIS_SAMPAH, DELETE_JENIS_SAMPAH, UPDATE_JENIS_SAMPAH } from '../../api/jenis_sampah';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { GET_MITRA_ALL_BY_SU_YES } from '../../api/mitra';
-import DialogConfirm from '../../components/DialogConfirm';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
 import Action from './Action';
-import DialogComponent from './DialogComponent';
 
 const headCells = [
   {
@@ -53,12 +49,9 @@ const headCells = [
 ];
 
 export default function Index() {
-  const [loading, setLoading] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [itemSelected, setItemSelected] = React.useState(null);
-  //   const { checkPermision } = useMee();
   const { data, isLoading } = useQuery('GET_MITRA_ALL_BY_SU_YES', GET_MITRA_ALL_BY_SU_YES);
-  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const rows = data && data.data.data;
 
@@ -79,7 +72,6 @@ export default function Index() {
     setAnchorEl(null);
   };
   const actionOpen = Boolean(anchorEl);
-  const processing = loading || isLoading;
   return (
     <Page title="Mitra">
       <Container>

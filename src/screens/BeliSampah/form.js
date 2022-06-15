@@ -7,11 +7,22 @@ import { GET_ALL_JENIS_SAMPAH } from '../../api/jenis_sampah';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import SelectInput from '../../components/SelectInput';
 import TextInput from '../../components/TextInput';
+import Struck from './Struck';
 
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 
-export default function Form({ next, setSelectedImg, step, selectedImg, values, setValues, isLoading, handleAdd }) {
+export default function Form({
+  next,
+  mitra,
+  dataStruck,
+  setDataStruck,
+  step,
+  values,
+  setValues,
+  isLoading,
+  handleAdd,
+}) {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowFrom] = useState(false);
   const [form, setForm] = useState({ sumber: '', jsCode: '', harga: '', berat: '', jenis: '' });
@@ -32,23 +43,15 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
 
   const handleOpen = (a, s, val) => {
     setLoading(true);
-    setValues({ ...values, ...val });
-    next(a, s);
+    if (s === 2) {
+      handleAdd({ ...values, ...val });
+    } else {
+      setValues({ ...values, ...val });
+      next(a, s);
+    }
     setLoading(false);
   };
-  const handleUploadClick = (event) => {
-    setLoading(true);
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setSelectedImg(reader.result);
-    };
-    setLoading(false);
-  };
-  const removeImg = () => {
-    setSelectedImg(null);
-  };
+
   const removeListSampah = (index) => {
     const valuess = [...sampah];
     valuess.splice(index);
@@ -64,6 +67,18 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
     const jenis = optionJs.find((j) => j.value === e.target.value);
     setForm({ ...form, jsCode: e.target.value, jenis: jenis.label });
   };
+  const handlePilihAnggota = (anggota) => {
+    setDataStruck({
+      ...dataStruck,
+      anggota,
+      mitra: { alamat: mitra?.alamat, namaUsaha: mitra?.gudang[0]?.namaUsaha },
+    });
+    handleOpen('Sampah', 1, { anggotaCode: anggota?.anggotaCode });
+  };
+  const handleTambahSampah = async () => {
+    await setDataStruck({ ...dataStruck, detail: sampah, createAt: new Date() });
+    await handleOpen('Struck', 2, { detail: sampah });
+  };
   return (
     <form>
       {step === 0 && (
@@ -71,7 +86,7 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
           <Grid sx={{ padding: 3 }} container spacing={2}>
             {anggota &&
               anggota.map((m, i) => (
-                <Grid onClick={() => handleOpen('Sampah', 1, { anggotaCode: m?.anggotaCode })} key={i} item xs={6}>
+                <Grid onClick={() => handlePilihAnggota(m)} key={i} item xs={6}>
                   <Card
                     style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
                   >
@@ -161,35 +176,26 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
                   value={form.berat}
                   label={'Berat'}
                 />
-                <ButtonPrimary onClick={handelSimpan} style={{ marginTop: 30, marginBottom: 5 }} label={'Tambah'} />
+                <ButtonPrimary
+                  onClick={handelSimpan}
+                  disabled={form.berat === '' || form.harga === '' || form.jsCode === '' || form.sumber === ''}
+                  style={{ marginTop: 30, marginBottom: 5 }}
+                  label={'Tambah'}
+                />
               </>
             )}
             <ButtonPrimary
               type="submit"
-              disabled={sampah.length === 0}
-              onClick={() =>
-                handleOpen('Upload Nota', 2, {
-                  detail: sampah.map((s) => {
-                    delete s.jenis;
-                    return s;
-                  }),
-                })
-              }
-              label="Selanjutnya"
+              disabled={sampah.length === 0 || loading || isLoading}
+              onClick={handleTambahSampah}
+              label={isLoading ? 'Proses' : 'Simpan Pembelian'}
             />
           </form>
         </>
       )}
       {step === 2 && (
         <>
-          <div style={{ paddingLeft: 40, paddingRight: 40, marginBottom: 20 }}>
-            {selectedImg && (
-              <a role="button" tabIndex={0} onKeyDown={removeImg} onClick={removeImg}>
-                <img style={{ margin: 10 }} src={selectedImg} alt={`img-nota`} />
-              </a>
-            )}
-            <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah File" />
-          </div>
+          <Struck data={dataStruck} />
           <ButtonPrimary disabled={loading || isLoading} onClick={handleAdd} label="Selesai" />
         </>
       )}
@@ -199,11 +205,12 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
 
 Form.propTypes = {
   next: PropTypes.any,
-  setSelectedImg: PropTypes.any,
   step: PropTypes.any,
-  selectedImg: PropTypes.any,
+  mitra: PropTypes.any,
   setValues: PropTypes.any,
   isLoading: PropTypes.any,
   values: PropTypes.any,
+  dataStruck: PropTypes.func,
+  setDataStruck: PropTypes.func,
   handleAdd: PropTypes.func,
 };

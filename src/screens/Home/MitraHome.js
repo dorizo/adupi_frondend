@@ -20,7 +20,7 @@ import menuMasalah from '../../assets/illustation/menu-masalah.png';
 import menuAlat from '../../assets/illustation/recyle.png';
 import adupi from '../../assets/logo/adupi-w.png';
 import Akun from '../Akun';
-import TransaksiPembelian from '../Transaksi/pembelian';
+import Transaksi from '../Transaksi';
 
 export default function MitraHome() {
   const navigate = useNavigate();
@@ -94,7 +94,7 @@ export default function MitraHome() {
               </Grid>
             ))}
           </Grid>
-          <TransaksiPembelian />
+          <Transaksi />
         </Box>
       )}
       {value === 1 && <Akun />}
