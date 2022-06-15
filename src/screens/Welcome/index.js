@@ -10,6 +10,7 @@ import useDrawer from '../../hooks/useDrawer';
 import Masuk from './Masuk';
 import Register from './Register';
 import { REGISTRASI_MITRA_NEW } from '../../api/mitra';
+import LoadingOverlayComponent from '../../components/LoadingOverlay';
 
 export default function Welcome() {
   const { enqueueSnackbar } = useSnackbar();
@@ -17,6 +18,7 @@ export default function Welcome() {
   const [action, setAction] = useState('Masuk');
   const [closeAble, setCloseAble] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [loadingRegister, setLoadingRegister] = useState(false);
   const [drawerTitle, setDrawerTitle] = useState('');
   const [step, setStep] = useState(1);
   const [values, setValues] = useState({});
@@ -30,6 +32,7 @@ export default function Welcome() {
       setValues({ ...values, ...val });
     }
     if (s === 0) {
+      setLoadingRegister(true);
       // failed base 64 image only
       // const mesin = values?.mesin.map((n) => {
       //   const newww = { ...n, foto: '-' };
@@ -55,6 +58,7 @@ export default function Welcome() {
         await enqueueSnackbar('Internal server error', 'error');
       }
       setStep(1);
+      setLoadingRegister(false);
     }
     setLoading(false);
   };
@@ -100,6 +104,7 @@ export default function Welcome() {
           )}
         </Drawer>
       </div>
+      <LoadingOverlayComponent loading={loadingRegister} />
     </Page>
   );
 }

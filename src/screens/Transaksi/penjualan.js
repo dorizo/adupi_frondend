@@ -6,7 +6,7 @@ import { GET_JUAL_SAMPAH } from '../../api/sampah';
 import { fDateTime } from '../../utils/formatTime';
 
 export default function TransaksiPenjualan() {
-  const { openImageViewer, ImageViewerComponent } = useImageViewer();
+  const { handleOpen, ImageViewerComponent } = useImageViewer();
 
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(0);
@@ -69,9 +69,7 @@ export default function TransaksiPenjualan() {
                 <Typography>Harga : {li?.totalHarga}</Typography>
                 {li?.nota && (
                   <Button
-                    onClick={() =>
-                      openImageViewer([`${process.env.REACT_APP_API_URL_SSL}assets/penjualan/${li?.nota}`])
-                    }
+                    onClick={() => handleOpen(`${process.env.REACT_APP_API_URL_SSL}assets/penjualan/${li?.nota}`, '')}
                     variant="text"
                   >
                     Nota

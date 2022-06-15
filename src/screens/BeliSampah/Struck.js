@@ -1,7 +1,7 @@
 import { Container, Paper, Table, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
-import html2canvas from 'html2canvas';
+import * as React from 'react';
+import { useReactToPrint } from 'react-to-print';
 import PropTypes from 'prop-types';
-import React, { useRef } from 'react';
 import { fDateTime } from '../../utils/formatTime';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import { fRupiah } from '../../utils/formatNumber';
@@ -24,7 +24,7 @@ const ComponentToPrint = React.forwardRef(({ data }, ref) => (
         <Table aria-label="simple table">
           <TableRow>
             <TableCell align="center" colSpan={2}>
-              <Typography>{data.mitra.namaUsaha}</Typography>
+              <Typography sx={{ fontWeight: 'bold' }}>{data.mitra.namaUsaha}</Typography>
               <Typography>{data.mitra.alamat} </Typography>
             </TableCell>
           </TableRow>
@@ -63,29 +63,83 @@ const ComponentToPrint = React.forwardRef(({ data }, ref) => (
 ));
 
 export default function Struck({ data }) {
-  const componentRef = useRef();
-  const handleDownloadImage = async () => {
-    const element = componentRef.current;
-    const canvas = await html2canvas(element);
+  // const handleDownloadImage = async () => {
+  //   const element = componentRef.current;
+  //   const canvas = await html2canvas(element);
 
-    const data = canvas.toDataURL('image/jpg');
-    const link = document.createElement('a');
+  //   const data = canvas.toDataURL('image/jpg');
+  //   const link = document.createElement('a');
 
-    if (typeof link.download === 'string') {
-      link.href = data;
-      link.download = `struck-${new Date().toDateString()}.jpg`;
+  //   if (typeof link.download === 'string') {
+  //     link.href = data;
+  //     link.download = `struck-${new Date().toDateString()}.jpg`;
 
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else {
-      window.open(data);
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //   } else {
+  //     window.open(data);
+  //   }
+  // };
+  const componentRef = React.useRef(null);
+
+  const onBeforeGetContentResolve = React.useRef(null);
+
+  const [loading, setLoading] = React.useState(false);
+  const [text, setText] = React.useState('old boring text');
+
+  const handleAfterPrint = React.useCallback(() => {
+    console.log('`onAfterPrint` called'); // tslint:disable-line no-console
+  }, []);
+
+  const handleBeforePrint = React.useCallback(() => {
+    console.log('`onBeforePrint` called'); // tslint:disable-line no-console
+  }, []);
+
+  const handleOnBeforeGetContent = React.useCallback(() => {
+    console.log('`onBeforeGetContent` called'); // tslint:disable-line no-console
+    setLoading(true);
+    setText('Loading new text...');
+
+    return new Promise((resolve) => {
+      onBeforeGetContentResolve.current = resolve;
+
+      setTimeout(() => {
+        setLoading(false);
+        setText('New, Updated Text!');
+        resolve();
+      }, 2000);
+    });
+  }, [setLoading, setText]);
+
+  const reactToPrintContent = React.useCallback(() => {
+    return componentRef.current;
+  }, [componentRef.current]);
+
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
+    documentTitle: 'AwesomeFileName',
+    onBeforeGetContent: handleOnBeforeGetContent,
+    onBeforePrint: handleBeforePrint,
+    onAfterPrint: handleAfterPrint,
+    removeAfterPrint: true,
+  });
+
+  React.useEffect(() => {
+    if (text === 'New, Updated Text!' && typeof onBeforeGetContentResolve.current === 'function') {
+      onBeforeGetContentResolve.current();
     }
-  };
+  }, [onBeforeGetContentResolve.current, text]);
+
   return (
     <>
       <ComponentToPrint data={data} ref={componentRef} />
-      <ButtonPrimary onClick={handleDownloadImage} style={{ marginBottom: 10, marginTop: 10 }} label="Download" />
+      <ButtonPrimary
+        disabled={loading}
+        onClick={handlePrint}
+        style={{ marginBottom: 10, marginTop: 10 }}
+        label={loading ? 'loading Print' : 'Print'}
+      />
     </>
   );
 }

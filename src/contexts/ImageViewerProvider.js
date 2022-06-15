@@ -1,46 +1,59 @@
-import React, { useState, useCallback } from 'react';
-import ImageViewer from 'react-simple-image-viewer';
+import Modal from '@mui/material/Modal';
+import React, { useState } from 'react';
 
 const ImageViewerContext = React.createContext({});
 
 export const ImageViewerProvider = ({ children }) => {
-  const [currentImage, setCurrentImage] = useState(0);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
-  const [img, setImg] = useState([]);
-
-  const openImageViewer = useCallback((image) => {
-    setImg(image);
-    setIsViewerOpen(true);
-  }, []);
-
-  const closeImageViewer = () => {
-    setCurrentImage(0);
-    setIsViewerOpen(false);
-    setImg([]);
+  const [src, setSrc] = useState(null);
+  const [dummy, setDummy] = useState(null);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = (src, dumy) => {
+    setSrc(src);
+    setDummy(dumy);
+    setOpen(true);
   };
 
+  const handleClose = () => {
+    setSrc(null);
+    setDummy(null);
+    setOpen(false);
+  };
   function ImageViewerComponent() {
     return (
       <>
-        {isViewerOpen && (
-          <ImageViewer
-            src={img}
-            backgroundStyle={{
-              backgroundColor: 'rgba(0,0,0,0.9)',
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              bgcolor: 'background.paper',
+              boxShadow: 24,
+              p: 4,
             }}
-            currentIndex={currentImage}
-            disableScroll={false}
-            closeOnClickOutside={Boolean(true)}
-            onClose={closeImageViewer}
-          />
-        )}
+          >
+            <img
+              src={src}
+              alt={`img-barang-asdas`}
+              width={700}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null;
+                currentTarget.src = dummy;
+              }}
+            />
+          </div>
+        </Modal>
       </>
     );
   }
   return (
-    <ImageViewerContext.Provider value={{ openImageViewer, ImageViewerComponent }}>
-      {children}
-    </ImageViewerContext.Provider>
+    <ImageViewerContext.Provider value={{ ImageViewerComponent, handleOpen }}>{children}</ImageViewerContext.Provider>
   );
 };
 

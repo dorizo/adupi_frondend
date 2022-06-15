@@ -13,6 +13,7 @@ import DialogConfirm from '../../components/DialogConfirm';
 import useDrawer from '../../hooks/useDrawer';
 import Form from './form';
 import MoreMenu from './MoreMenu';
+import Image from '../../components/Image';
 
 export default function Masalah() {
   const { onOpen, Drawer, onClose } = useDrawer();
@@ -189,15 +190,13 @@ export default function Masalah() {
                     )}
                   </Grid>
                   <Grid item xs={6}>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <img
-                        style={{ width: '50%' }}
-                        src={`${process.env.REACT_APP_API_URL_SSL}assets/masalah/${li?.foto}`}
-                        alt={`img-barang`}
-                        onError={({ currentTarget }) => {
-                          currentTarget.onerror = null;
-                          currentTarget.src = dummyMasalah;
-                        }}
+                    <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                      <Image
+                        style={{ width: 100 }}
+                        src={li?.foto}
+                        dummy={dummyMasalah}
+                        folder="masalah"
+                        alt={`img-masalah`}
                       />
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>

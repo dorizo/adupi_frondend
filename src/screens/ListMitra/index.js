@@ -32,6 +32,7 @@ import MoreMenu from './MoreMenu';
 import dummyKtp from '../../assets/dummy-ktp.jpg';
 import dummybarang from '../../assets/dummy-barang.jpg';
 import DialogConfirm from '../../components/DialogConfirm';
+import Image from '../../components/Image';
 
 export default function ListMitra() {
   const [mitraDetail, setMitraDetail] = useState(null);
@@ -197,7 +198,13 @@ export default function ListMitra() {
                   </Grid>
                   <Grid item xs={6}>
                     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                      <img style={{ width: '50%' }} src={li?.ktp.length > 100 ? li.ktp : dummyKtp} alt={`img-ktp`} />
+                      <Image
+                        style={{ width: 100 }}
+                        src={li?.ktp.length > 100 ? li.ktp : dummyKtp}
+                        dummy={dummyKtp}
+                        folder="mitra"
+                        alt={`img-ktp`}
+                      />
                     </Box>
                   </Grid>
                 </Grid>
@@ -242,9 +249,11 @@ export default function ListMitra() {
                               </Grid>
                               <Grid item xs={6}>
                                 <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                                  <img
-                                    style={{ width: '50%' }}
+                                  <Image
+                                    style={{ width: 100 }}
                                     src={li?.ktp.length > 100 ? li.ktp : dummyKtp}
+                                    dummy={dummyKtp}
+                                    folder="anggota"
                                     alt={`img-ktp`}
                                   />
                                 </Box>
@@ -295,9 +304,11 @@ export default function ListMitra() {
                                 </Grid>
                                 <Grid item xs={6}>
                                   <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                    <img
-                                      style={{ width: '40%' }}
+                                    <Image
+                                      style={{ width: 100 }}
                                       src={m?.foto.length > 100 ? m?.foto : dummybarang}
+                                      dummy={dummybarang}
+                                      folder="mesin"
                                       alt={`img-barang`}
                                     />
                                   </Box>

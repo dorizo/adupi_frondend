@@ -14,6 +14,8 @@ import Role from './pages/Role';
 import JenisSampah from './pages/JenisSampah';
 import Mitra from './pages/Mitra';
 import VarifikasiMitra from './pages/VarifikasiMitra';
+import VerifikasiAnggota from './pages/VerifikasiAnggota';
+import VerifikasiAnggotaDetail from './pages/VerifikasiAnggotaDetail';
 import Fasilitator from './pages/Fasilitator';
 import RoleDetail from './pages/RoleDetail';
 // import DashboardApp from './pages/DashboardApp';
@@ -170,7 +172,15 @@ export default function Router() {
           path: 'verifikasi-anggota',
           element: (
             <RequireAuth allowedRoles={['admin']}>
-              <ComingSoon />
+              <VerifikasiAnggota />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'verifikasi-anggota/:mitraCode',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <VerifikasiAnggotaDetail />
             </RequireAuth>
           ),
         },

@@ -11,6 +11,7 @@ import useDrawer from '../../hooks/useDrawer';
 import Form from './form';
 import MoreMenu from './MoreMenu';
 import dummyKtp from '../../assets/dummy-ktp.jpg';
+import Image from '../../components/Image';
 
 export default function Anggota() {
   const { onOpen, Drawer, onClose } = useDrawer();
@@ -169,15 +170,7 @@ export default function Anggota() {
                   </Grid>
                   <Grid item xs={6}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <img
-                        style={{ width: '50%' }}
-                        src={`${process.env.REACT_APP_API_URL_SSL}assets/anggota/${li?.ktp}`}
-                        alt={`img-barang`}
-                        onError={({ currentTarget }) => {
-                          currentTarget.onerror = null;
-                          currentTarget.src = dummyKtp;
-                        }}
-                      />
+                      <Image style={{ width: 100 }} src={li?.ktp} folder="anggota" alt={`img-ktp`} dummy={dummyKtp} />
                     </Box>
                   </Grid>
                 </Grid>

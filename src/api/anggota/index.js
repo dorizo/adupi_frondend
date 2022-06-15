@@ -12,6 +12,28 @@ const GET_ALL_ANGGOTA = async () => {
     return catchCallBack(error);
   }
 };
+const GET_NV_ANGGOTA_BY_MITRA_ID = async (id) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`anggota/all/${id}/notVerified`, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+const GET_VERIVY_ANGGOTA_BY_MITRA_ID = async (id) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`anggota/all/${id}/verified`, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_ONE_ANGGOTA = async (id) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -39,6 +61,21 @@ const ADD_ANGGOTA = async ({ nama, nik, noHp, jenisKelamin, wilayahCode, ktp, al
   };
   try {
     const response = await axios.post(`anggota/add`, data, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+const VERIFIKASI_ANGGOTA = async ({ lat, long }, id) => {
+  const data = qs.stringify({
+    lat,
+    long,
+  });
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.post(`su/activeAnggota/${id}`, data, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
@@ -76,4 +113,13 @@ const DELETE_ANGGOTA = async (id) => {
     return catchCallBack(error);
   }
 };
-export { ADD_ANGGOTA, GET_ALL_ANGGOTA, DELETE_ANGGOTA, UPDATE_ANGGOTA, GET_ONE_ANGGOTA };
+export {
+  ADD_ANGGOTA,
+  GET_ALL_ANGGOTA,
+  DELETE_ANGGOTA,
+  UPDATE_ANGGOTA,
+  GET_ONE_ANGGOTA,
+  GET_NV_ANGGOTA_BY_MITRA_ID,
+  GET_VERIVY_ANGGOTA_BY_MITRA_ID,
+  VERIFIKASI_ANGGOTA,
+};

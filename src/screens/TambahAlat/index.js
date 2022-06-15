@@ -14,6 +14,7 @@ import useAuth from '../../hooks/useAuth';
 import useDrawer from '../../hooks/useDrawer';
 import Form from './form';
 import MoreMenu from './MoreMenu';
+import Image from '../../components/Image';
 
 export default function TambahAlat() {
   const { auth } = useAuth();
@@ -163,14 +164,12 @@ export default function TambahAlat() {
                   </Grid>
                   <Grid item xs={6}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <img
-                        style={{ width: '40%' }}
-                        src={`${process.env.REACT_APP_API_URL_SSL}assets/mesin/${m?.foto}`}
+                      <Image
+                        style={{ width: 100 }}
+                        src={m?.foto}
                         alt={`img-barang`}
-                        onError={({ currentTarget }) => {
-                          currentTarget.onerror = null;
-                          currentTarget.src = dummybarang;
-                        }}
+                        folder="mesin"
+                        dummy={dummybarang}
                       />
                     </Box>
                   </Grid>
