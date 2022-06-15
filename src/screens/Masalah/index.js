@@ -30,7 +30,7 @@ export default function Masalah() {
 
   const handleAdd = async () => {
     setLoading(true);
-    // const response = await ADD_MASALAH({ ...values, foto: '-' });
+    //     const response = await ADD_MASALAH({ ...values, foto: '-' });
     const response = await ADD_MASALAH({ ...values, foto: selectedImg });
     if (response.status === 422) {
       const asdf = response.data.errors;
