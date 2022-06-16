@@ -3,8 +3,7 @@ import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 // import { useMee } from 'contexts/MeContext';
 import * as React from 'react';
-import { useMutation, useQuery } from 'react-query';
-import { ADD_JENIS_SAMPAH, DELETE_JENIS_SAMPAH, UPDATE_JENIS_SAMPAH } from '../../api/jenis_sampah';
+import { useQuery } from 'react-query';
 import { AKTIFASI_AKUN_MITRA, GET_MITRA_ALL_BY_SU_NO } from '../../api/mitra';
 import DialogConfirm from '../../components/DialogConfirm';
 import Page from '../../components/Page';
@@ -55,7 +54,7 @@ export default function Index() {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [alertText, setAlertText] = React.useState('');
+  const [alertText, setAlertText] = React.useState('Yakin Ingin Verifikasi?');
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [itemSelected, setItemSelected] = React.useState(null);
   //   const { checkPermision } = useMee();
@@ -83,64 +82,12 @@ export default function Index() {
     setAlertOpen(false);
   };
 
-  const deleteMutation = useMutation((params) => DELETE_JENIS_SAMPAH(params.id), {
-    onSuccess: async (res) => {
-      const variant = res.status === 200 ? 'success' : 'warning';
-      await enqueueSnackbar(res.data.message, { variant });
-      await refetch();
-      handleActionClose();
-      handleAlertClose();
-      setItemSelected(null);
-    },
-    onError: async (e) => {
-      await enqueueSnackbar(e.message, 'error');
-    },
-  });
-  // HANDLE ACTION
-  const onAdd = async (data, callbackSetError) => {
-    setLoading(true);
-    const response = await ADD_JENIS_SAMPAH(data);
-    if (response.status === 400) {
-      callbackSetError(response.data.error.form);
-    }
-    if (response.status === 422) {
-      const asdf = response.data.errors;
-      const keys = asdf && Object.keys(asdf);
-      keys.forEach((key) => {
-        enqueueSnackbar(asdf[key].msg, { variant: 'warning' });
-      });
-    }
-    if (response.status === 200) {
-      await refetch();
-      await enqueueSnackbar(response.data.message, { variant: 'success' });
-      setDialogOpen(false);
-      handleActionClose();
-    }
-    await setLoading(false);
-  };
-  const onUpdate = async (data, id, callbackSetError) => {
-    setLoading(true);
-    const response = await UPDATE_JENIS_SAMPAH(data, id);
-    if (response.data.status === 400) {
-      callbackSetError(response.data.error.form);
-    }
-    if (response.data.status === 200) {
-      await refetch();
-      await enqueueSnackbar(response.data.message, { variant: 'success' });
-      handleActionClose();
-      setDialogOpen(false);
-      setItemSelected(null);
-    }
-    await setLoading(false);
-  };
-  const onDelete = async () => {
-    deleteMutation.mutate({ id: itemSelected.jsCode });
-  };
   const handleConfirm = async () => {
-    await onDelete();
+    await handleVerifikasi();
   };
 
   const handleVerifikasi = async () => {
+    setLoading(true);
     const response = await AKTIFASI_AKUN_MITRA({ mitraCode: itemSelected.mitraCode, roleCode: '3' });
 
     if (response.status === 200) {
@@ -156,15 +103,18 @@ export default function Index() {
     if (response.status === 500) {
       await enqueueSnackbar('Internal server error', 'error');
     }
+    setLoading(false);
+    handleAlertClose();
+    handleActionClose();
   };
   const actionOpen = Boolean(anchorEl);
-  const processing = loading || isLoading || deleteMutation.isLoading;
+  const processing = loading || isLoading;
   return (
-    <Page title="Mitra">
+    <Page title="Verifikasi Mitra">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Mitra
+            Verifikasi Mitra
           </Typography>
         </Stack>
 
@@ -203,8 +153,6 @@ export default function Index() {
       {dialogOpen && (
         <DialogComponent
           processing={processing}
-          onAdd={onAdd}
-          onUpdate={onUpdate}
           onClose={() => setDialogOpen(false)}
           item={itemSelected}
           open={dialogOpen}
@@ -213,7 +161,7 @@ export default function Index() {
       {actionOpen && (
         <Action
           actionOpen={actionOpen}
-          handleVerifikasi={handleVerifikasi}
+          handleVerifikasi={() => setAlertOpen(true)}
           anchorEl={anchorEl}
           actionClose={handleActionClose}
         />

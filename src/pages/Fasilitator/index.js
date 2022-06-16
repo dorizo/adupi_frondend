@@ -8,6 +8,7 @@ import { ADD_FASILITATOR, DELETE_FASILITATOR, GET_ALL_FASILITATOR, UPDATE_FASILI
 import DialogConfirm from '../../components/DialogConfirm';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
+import { fDateTime } from '../../utils/formatTime';
 import Action from './Action';
 import DialogComponent from './DialogComponent';
 
@@ -161,7 +162,7 @@ export default function Index() {
                       {row.alamat}
                     </TableCell>
                     <TableCell id={labelId} scope="row">
-                      {Date(row.createAt)}
+                      {fDateTime(row.createAt)}
                     </TableCell>
                   </TableRow>
                 );

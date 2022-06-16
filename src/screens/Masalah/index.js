@@ -14,6 +14,8 @@ import useDrawer from '../../hooks/useDrawer';
 import Form from './form';
 import MoreMenu from './MoreMenu';
 import Image from '../../components/Image';
+import TidakAdaData from '../../components/TidakAdaData';
+import LoadingCard from '../../components/LoadingCard';
 
 export default function Masalah() {
   const { onOpen, Drawer, onClose } = useDrawer();
@@ -25,7 +27,7 @@ export default function Masalah() {
   const [step, setStep] = useState(0);
   const [values, setValues] = useState({});
   const { enqueueSnackbar } = useSnackbar();
-  const { data, refetch } = useQuery('GET_ALL_MASALAH', GET_ALL_MASALAH, {
+  const { data, refetch, isLoading } = useQuery('GET_ALL_MASALAH', GET_ALL_MASALAH, {
     refetchOnWindowFocus: false,
   });
 
@@ -157,6 +159,10 @@ export default function Masalah() {
       </div>
 
       <div style={{ marginTop: 5, paddingLeft: 20, paddingRight: 20 }}>
+        {isLoading && <LoadingCard />}
+
+        {list && list?.length === 0 && <TidakAdaData />}
+
         {list &&
           list.map((li, i) => (
             <Card key={i} style={{ marginBottom: 10 }}>

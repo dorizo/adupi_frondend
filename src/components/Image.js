@@ -14,13 +14,13 @@ export default function Image({
       <div
         style={{ padding: 0, margin: 0 }}
         role="button"
-        onClick={() => handleOpen(`${process.env.REACT_APP_API_URL_SSL}asset/${folder}/${src}`, dummy)}
-        onKeyPress={() => handleOpen(`${process.env.REACT_APP_API_URL_SSL}asset/${folder}/${src}`, dummy)}
+        onClick={() => handleOpen(`${process.env.REACT_APP_API_URL_SSL}assets/${folder}/${src}`, dummy)}
+        onKeyPress={() => handleOpen(`${process.env.REACT_APP_API_URL_SSL}assets/${folder}/${src}`, dummy)}
         tabIndex="0"
       >
         <img
           {...props}
-          src={`${process.env.REACT_APP_API_URL_SSL}asset/${folder}/${src}`}
+          src={`${process.env.REACT_APP_API_URL_SSL}assets/${folder}/${src}`}
           alt={`img-barang`}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null;

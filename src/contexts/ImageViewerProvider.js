@@ -5,9 +5,9 @@ const ImageViewerContext = React.createContext({});
 
 export const ImageViewerProvider = ({ children }) => {
   const [src, setSrc] = useState(null);
-  const [dummy, setDummy] = useState(null);
+  const [dummy, setDummy] = useState('https://dummyimage.com/400x400/000000/fff&text=blank');
   const [open, setOpen] = React.useState(false);
-  const handleOpen = (src, dumy) => {
+  const handleOpen = (src, dumy = 'https://dummyimage.com/400x400/000000/fff&text=blank') => {
     setSrc(src);
     setDummy(dumy);
     setOpen(true);
@@ -15,7 +15,7 @@ export const ImageViewerProvider = ({ children }) => {
 
   const handleClose = () => {
     setSrc(null);
-    setDummy(null);
+    setDummy('https://dummyimage.com/400x400/000000/fff&text=blank');
     setOpen(false);
   };
   function ImageViewerComponent() {

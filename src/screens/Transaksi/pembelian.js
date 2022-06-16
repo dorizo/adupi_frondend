@@ -62,7 +62,7 @@ export default function TransaksiPembelian() {
               <Typography>Berat : {li?.totalBerat}</Typography>
               <Box sx={{ justifyContent: 'space-between', flexGrow: 1, display: 'flex' }}>
                 <Typography>Harga : {li?.totalHarga}</Typography>
-                <Button variant="text">Nota</Button>
+                {/* <Button variant="text">Nota</Button> */}
               </Box>
               {li?.detail_beli_sampahs && (
                 <Button variant="text" onClick={() => handleDetail(i)} size="small" style={{ fontSize: 11 }}>

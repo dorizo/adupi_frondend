@@ -46,21 +46,13 @@ const navConfig = [
     path: '/dashboard/verifikasi-anggota',
     icon: getIcon('eva:people-outline'),
   },
-  {
-    title: 'masalah',
-    path: '/dashboard/masalah',
-    icon: getIcon('eva:settings-2-outline'),
-  },
+
   {
     title: 'kunjungan-fasilitator',
     path: '/dashboard/kunjungan-fasilitator',
     icon: getIcon('eva:corner-up-right-outline'),
   },
-  {
-    title: 'log',
-    path: '/dashboard/log',
-    icon: getIcon('eva:bookmark-outline'),
-  },
+
   {
     title: 'report',
     path: '/dashboard/report',

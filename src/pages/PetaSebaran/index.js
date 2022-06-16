@@ -1,10 +1,10 @@
-import { Button, Container, Drawer, Stack, Typography } from '@mui/material';
+import { Button, Container, Drawer, List, Stack, Typography } from '@mui/material';
 import { Icon } from 'leaflet';
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
 import { MapContainer, Marker, TileLayer, Tooltip } from 'react-leaflet';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { GET_ALL_ANGGOTA, GET_ALL_ANGGOTA_BY_WILAYAH } from '../../api/dashboard';
 import { GET_ALL_PROVINSI, GET_KABUPATEN, GET_KECAMATAN } from '../../api/wilayah';
 import AutoCompleteLoading from '../../components/AutoCompleteLoading';
@@ -16,24 +16,6 @@ import DetailAnggota from './DetailAnggota';
 // import { jakartaPusat } from '../../kml/jakarta/pusat';
 
 const center = [-6.258752, 106.6201363];
-
-const dummyAnggota = [
-  {
-    name: 'Lancelot',
-    lat: '-6.258752',
-    lng: '106.6201363',
-  },
-  {
-    name: 'Brodi',
-    lat: '-6.250603',
-    lng: '106.651325',
-  },
-  {
-    name: 'Balmon',
-    lat: '-6.246945',
-    lng: '106.644823',
-  },
-];
 
 const setOption = (data) => {
   const list =
@@ -170,7 +152,7 @@ export default function PetaSebaran() {
         {/* <Button onClick={() => setDrawerOpen(true)} size="small" variant="text" color="info">
           Lihat transaksi
         </Button> */}
-        <MapContainer style={{ height: '746px', width: '100%' }} center={center} zoom={2} scrollWheelZoom={false}>
+        <MapContainer style={{ height: '746px', width: '100%' }} center={center} zoom={10} scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -194,12 +176,18 @@ export default function PetaSebaran() {
       <Drawer
         anchor="right"
         PaperProps={{
-          sx: { width: 900 },
+          sx: {
+            width: 900,
+            overflow: 'auto',
+            height: '100%',
+          },
         }}
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
       >
-        <DetailAnggota anggota={anggota} />
+        <List>
+          <DetailAnggota anggota={anggota} />
+        </List>
       </Drawer>
     </Page>
   );

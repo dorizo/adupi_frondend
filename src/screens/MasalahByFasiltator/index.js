@@ -1,21 +1,29 @@
-import { Box, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardHeader, Chip, Grid, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { ADD_ANGGOTA, DELETE_ANGGOTA, GET_ALL_ANGGOTA, UPDATE_ANGGOTA } from '../../api/anggota';
+import { useParams } from 'react-router-dom';
+import TidakAdaData from '../../components/TidakAdaData';
+import {
+  ADD_MASALAH,
+  CHANGE_STATUS_MASALAH,
+  DELETE_MASALAH,
+  GET_ALL_MASALAH_BY_MITRA,
+  UPDATE_MASALAH,
+} from '../../api/masalah';
+import dummyMasalah from '../../assets/dummy-masalah.png';
 import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
 import BarMobile from '../../components/BarMobile';
-import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import DialogConfirm from '../../components/DialogConfirm';
+import Image from '../../components/Image';
 import useDrawer from '../../hooks/useDrawer';
+import { fDateTime } from '../../utils/formatTime';
 import Form from './form';
 import MoreMenu from './MoreMenu';
-import dummyKtp from '../../assets/dummy-ktp.jpg';
-import Image from '../../components/Image';
-import TidakAdaData from '../../components/TidakAdaData';
 import LoadingCard from '../../components/LoadingCard';
 
-export default function Anggota() {
+export default function MasalahByFasilitator() {
+  const params = useParams();
   const { onOpen, Drawer, onClose } = useDrawer();
   const [drawerTitle, setDrawerTitle] = useState('');
   const [selectedImg, setSelectedImg] = useState('');
@@ -25,14 +33,18 @@ export default function Anggota() {
   const [step, setStep] = useState(0);
   const [values, setValues] = useState({});
   const { enqueueSnackbar } = useSnackbar();
-  const { data, refetch, isLoading } = useQuery('GET_ALL_ANGGOTA', GET_ALL_ANGGOTA, {
-    refetchOnWindowFocus: false,
-  });
+  const { data, refetch, isLoading } = useQuery(
+    ['GET_ALL_MASALAH', params.mitraCode],
+    () => GET_ALL_MASALAH_BY_MITRA(params?.mitraCode),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const handleAdd = async () => {
     setLoading(true);
-    // const response = await ADD_ANGGOTA({ ...values, ktp: '-' });
-    const response = await ADD_ANGGOTA({ ...values, ktp: selectedImg });
+    //     const response = await ADD_MASALAH({ ...values, foto: '-' });
+    const response = await ADD_MASALAH({ ...values, foto: selectedImg });
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -56,8 +68,8 @@ export default function Anggota() {
   };
   const handleUpdate = async () => {
     setLoading(true);
-    // const response = await UPDATE_ANGGOTA({ ...values, ktp: '-' }, item.anggotaCode);
-    const response = await UPDATE_ANGGOTA({ ...values, ktp: selectedImg }, item.anggotaCode);
+    // const response = await UPDATE_MASALAH({ ...values, foto: '-' }, item.masalahCode);
+    const response = await UPDATE_MASALAH({ ...values, foto: selectedImg }, item.masalahCode);
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -82,7 +94,7 @@ export default function Anggota() {
   };
   const handleDelete = async () => {
     setLoading(true);
-    const response = await DELETE_ANGGOTA(item.anggotaCode);
+    const response = await DELETE_MASALAH(item.masalahCode);
     if (response.status === 200) {
       await enqueueSnackbar(response.data.message, { variant: 'success' });
       refetch();
@@ -97,6 +109,21 @@ export default function Anggota() {
     setLoading(false);
     setAlertOpen(false);
   };
+  const handleChangeStatus = async (id) => {
+    setLoading(true);
+    const response = await CHANGE_STATUS_MASALAH(id);
+    if (response.status === 200) {
+      await enqueueSnackbar(response.data.message, { variant: 'success' });
+      refetch();
+    }
+    if (response.status === 400) {
+      await enqueueSnackbar(response.data.message, { variant: 'error' });
+    }
+    if (response.status === 500) {
+      await enqueueSnackbar('Internal server error', 'error');
+    }
+    setLoading(false);
+  };
 
   const handleOpen = (a, s) => {
     setDrawerTitle(a);
@@ -106,12 +133,12 @@ export default function Anggota() {
     setItem(item);
     setStep(0);
     setSelectedImg(item.ktp);
-    setDrawerTitle('Edit Anggota');
+    setDrawerTitle('Edit Masalah');
     onOpen();
   };
 
   const handleOnAdd = () => {
-    setDrawerTitle('Tambah Anggota');
+    setDrawerTitle('Tambah Masalah');
     onOpen();
     setStep(0);
     setItem(null);
@@ -125,18 +152,11 @@ export default function Anggota() {
     setItem(null);
   };
   const list = data && data.data.data;
+
   return (
     <>
-      <BarMobile title={'Anggota'} />
+      <BarMobile title={'Masalah Mitra'} />
       <AdupiXMayoraHead />
-      {/* <img alt="recyle logo" width="100%" style={{ padding: 20 }} src={anggota} /> */}
-      <div style={{ textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
-        <Typography align="center" variant="h2">
-          Anggota / Sumber
-        </Typography>
-        <ButtonPrimary onClick={handleOnAdd} style={{ marginTop: 50, marginBottom: 5 }} label={'Tambah'} />
-      </div>
-
       <div style={{ marginTop: 5, paddingLeft: 20, paddingRight: 20 }}>
         {isLoading && <LoadingCard />}
 
@@ -148,34 +168,43 @@ export default function Anggota() {
                 action={
                   <MoreMenu handleOnUpdate={() => handleOnUpdate(li)} handleOnDelete={() => handleOnDelete(li)} />
                 }
-                title={li.nama}
-                subheader={`NIK :  ${li.nik}`}
+                title={li?.jenisMasalah}
+                subheader={
+                  <Chip label={li?.status} color={li?.status === 'Dalam peninjauan' ? 'warning' : 'success'} />
+                }
               />
               <CardContent>
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
-                    <Box sx={{ display: 'flex' }}>
-                      <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
-                        JK :{' '}
-                      </Typography>
-                      <Typography variant="caption">{li.jenisKelamin}</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex' }}>
-                      <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
-                        No HP :{' '}
-                      </Typography>
-                      <Typography variant="caption">{li.noHp}</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex' }}>
-                      <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
-                        Alamat :{' '}
-                      </Typography>
-                      <Typography variant="caption">{li.alamat}</Typography>
-                    </Box>
+                    <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                      Deskripsi :{' '}
+                    </Typography>
+                    <Typography variant="caption">{li?.deskripsi}</Typography>
+                    <br />
+                    {li?.status === 'Dalam peninjauan' && (
+                      <Button
+                        style={{ marginTop: 5 }}
+                        onClick={() => handleChangeStatus(li.masalahCode)}
+                        variant="outlined"
+                        size="small"
+                        color="success"
+                      >
+                        Selesai
+                      </Button>
+                    )}
                   </Grid>
                   <Grid item xs={6}>
+                    <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                      <Image
+                        style={{ width: 100 }}
+                        src={li?.foto}
+                        dummy={dummyMasalah}
+                        folder="masalah"
+                        alt={`img-masalah`}
+                      />
+                    </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <Image style={{ width: 100 }} src={li?.ktp} folder="anggota" alt={`img-ktp`} dummy={dummyKtp} />
+                      <Typography variant="caption">{fDateTime(li?.createAt)}</Typography>
                     </Box>
                   </Grid>
                 </Grid>

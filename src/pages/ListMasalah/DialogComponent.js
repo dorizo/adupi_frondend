@@ -9,7 +9,6 @@ import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import dummyKtp from '../../assets/dummy-ktp.jpg';
-import Image from '../../components/Image';
 
 export default function DialogComponent(props) {
   const { open, onClose, item, handleVerifikasi, processing } = props;
@@ -19,8 +18,8 @@ export default function DialogComponent(props) {
   };
   const formik = useFormik({
     initialValues: {
-      lat: item?.lat || '',
-      long: item?.long || '',
+      lat: '',
+      long: '',
     },
     validationSchema: Yup.object({
       lat: Yup.number().required('Harus Disisi'),
@@ -40,12 +39,11 @@ export default function DialogComponent(props) {
                   <Typography sx={{ fontSize: 12 }}>{item?.nama}</Typography>
                   <Typography sx={{ fontSize: 10 }}>NIK : {item?.nik}</Typography>
                   <Typography sx={{ fontSize: 10 }}>No Hp : {item?.noHp}</Typography>
-                  <Typography sx={{ fontSize: 10 }}>No Hp : {item?.noHp}</Typography>
                   <Typography sx={{ fontSize: 10 }}>Alamat : {item?.alamat}</Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                    <Image style={{ height: 100 }} folder="anggota" src={item?.ktp} dummy={dummyKtp} alt={`img-ktp`} />
+                    <img style={{ height: 100 }} src={item?.ktp.length > 100 ? item?.ktp : dummyKtp} alt={`img-ktp`} />
                   </Box>
                 </Grid>
               </Grid>

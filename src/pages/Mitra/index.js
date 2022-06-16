@@ -65,7 +65,13 @@ export default function Index() {
     setAnchorEl(event.currentTarget);
   };
   const handleDetail = () => {
-    navigate(`/dashboard/mitra/${itemSelected.mitraCode}`);
+    navigate(`/dashboard/mitra/detail/${itemSelected.mitraCode}`);
+  };
+  const handleVerifAnggota = () => {
+    navigate(`/dashboard/mitra/anggota/${itemSelected.mitraCode}`);
+  };
+  const handleMasalah = () => {
+    navigate(`/dashboard/mitra/masalah/${itemSelected.mitraCode}`);
   };
   const handleActionClose = () => {
     setItemSelected(null);
@@ -115,6 +121,8 @@ export default function Index() {
       </Container>
       {actionOpen && (
         <Action
+          handleVerifAnggota={handleVerifAnggota}
+          handleMasalah={handleMasalah}
           actionOpen={actionOpen}
           handleDetail={handleDetail}
           anchorEl={anchorEl}

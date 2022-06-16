@@ -4,7 +4,7 @@ import ListItemText from '@mui/material/ListItemText';
 import PropTypes from 'prop-types';
 
 export default function Action(props) {
-  const { actionOpen, actionClose, type, anchorEl, handleDetail } = props;
+  const { actionOpen, actionClose, anchorEl, handleDetail } = props;
   return (
     <Menu
       id="basic-menu"
@@ -27,7 +27,7 @@ export default function Action(props) {
         <ListItemIcon>
           <InfoIcon fontSize="small" />
         </ListItemIcon>
-        <ListItemText>{type === 'no' ? 'Verifikasi Anggota' : 'Edit Location '}</ListItemText>
+        <ListItemText>Verifikasi Anggota</ListItemText>
       </MenuItem>
     </Menu>
   );
@@ -37,6 +37,5 @@ Action.propTypes = {
   actionOpen: PropTypes.any,
   actionClose: PropTypes.any,
   handleDetail: PropTypes.any,
-  type: PropTypes.any,
   anchorEl: PropTypes.any,
 };

@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import TidakAdaData from '../../components/TidakAdaData';
 import { ADD_KUNJUNGAN, DELETE_KUNJUNGAN, GET_ALL_KUNJUNGAN, UPDATE_KUNJUNGAN } from '../../api/kunjungan';
 import { GET_MITRA_ALL_BY_FASILITATOR } from '../../api/mitra';
 import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
@@ -12,6 +13,7 @@ import useDrawer from '../../hooks/useDrawer';
 import { fDateTime } from '../../utils/formatTime';
 import Form from './form';
 import MoreMenu from './MoreMenu';
+import LoadingCard from '../../components/LoadingCard';
 
 export default function Kunjungan() {
   const { onOpen, Drawer, onClose } = useDrawer();
@@ -21,7 +23,7 @@ export default function Kunjungan() {
   const [item, setItem] = useState(null);
   const [step, setStep] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
-  const { data, refetch } = useQuery('GET_ALL_KUNJUNGAN', GET_ALL_KUNJUNGAN, {
+  const { data, refetch, isLoading } = useQuery('GET_ALL_KUNJUNGAN', GET_ALL_KUNJUNGAN, {
     refetchOnWindowFocus: false,
   });
   const { data: dataMitra } = useQuery('GET_MITRA_ALL_BY_FASILITATOR', GET_MITRA_ALL_BY_FASILITATOR, {
@@ -137,6 +139,10 @@ export default function Kunjungan() {
         <ButtonPrimary onClick={handleOnAdd} style={{ marginTop: 50, marginBottom: 5 }} label={'Tambah kunjungan'} />
       </div>
       <div style={{ marginTop: 5, paddingLeft: 20, paddingRight: 20 }}>
+        {isLoading && <LoadingCard />}
+
+        {list && list?.length === 0 && <TidakAdaData />}
+
         {list &&
           list.map((m, i) => (
             <Card key={i} style={{ marginBottom: 10 }}>

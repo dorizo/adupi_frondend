@@ -63,6 +63,7 @@ export default function MitraDetail() {
                     style={{ height: 110 }}
                     src={mitraDetail?.ktp.length > 100 ? mitraDetail?.ktp : dummyKtp}
                     dummy={dummyKtp}
+                    folder="mitra"
                     alt={`img-ktp`}
                   />
                 </Box>
@@ -110,6 +111,7 @@ export default function MitraDetail() {
                         <Grid item xs={6}>
                           <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                             <Image
+                              folder="anggota"
                               style={{ height: 110 }}
                               src={angg?.ktp.length > 100 ? angg?.ktp : dummyKtp}
                               dummy={dummyKtp}
@@ -164,6 +166,7 @@ export default function MitraDetail() {
                           <Grid item xs={6}>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                               <Image
+                                folder="mesin"
                                 style={{ height: 40 }}
                                 src={m?.foto.length > 100 ? m?.foto : dummybarang}
                                 alt={`img-barang`}

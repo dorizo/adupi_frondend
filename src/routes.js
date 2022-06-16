@@ -4,39 +4,41 @@ import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 import Blog from './pages/Blog';
-import User from './pages/User';
-import UserDetail from './pages/UserDetail';
-import Login from './pages/Login';
-import NotFound from './pages/Page404';
 import ComingSoon from './pages/ComingSoon';
+import Fasilitator from './pages/Fasilitator';
+import JenisSampah from './pages/JenisSampah';
+import ListMasalah from './pages/ListMasalah';
+import Login from './pages/Login';
+import Mitra from './pages/Mitra';
+import NotFound from './pages/Page404';
 import Register from './pages/Register';
 import Role from './pages/Role';
-import JenisSampah from './pages/JenisSampah';
-import Mitra from './pages/Mitra';
+import RoleDetail from './pages/RoleDetail';
+import User from './pages/User';
+import UserDetail from './pages/UserDetail';
 import VarifikasiMitra from './pages/VarifikasiMitra';
 import VerifikasiAnggota from './pages/VerifikasiAnggota';
 import VerifikasiAnggotaDetail from './pages/VerifikasiAnggotaDetail';
-import Fasilitator from './pages/Fasilitator';
-import RoleDetail from './pages/RoleDetail';
 // import DashboardApp from './pages/DashboardApp';
-import Welcome from './screens/Welcome';
-import Akun from './screens/Akun';
-import MobileLayout from './layouts/MobileLayout';
-import Home from './screens/Home';
-import BeliSampah from './screens/BeliSampah';
-import JualSampah from './screens/JualSampah';
-import Masalah from './screens/Masalah';
-import Anggota from './screens/Anggota';
-import TambahAlat from './screens/TambahAlat';
-import FasilitatorHome from './screens/Home/FasilitatorHome';
-import FasilitatorWelcome from './screens/Welcome/FasilitatorWelcome';
-import TambahMitra from './screens/TambahMitra';
-import ListMitra from './screens/ListMitra';
-import RequireAuth from './Guard/RequiredAuth';
 import MobileGuard from './Guard/MobileGuard';
+import RequireAuth from './Guard/RequiredAuth';
+import MobileLayout from './layouts/MobileLayout';
 import MitraDetail from './pages/MitraDetail';
 import PetaSebaran from './pages/PetaSebaran';
+import Akun from './screens/Akun';
+import Anggota from './screens/Anggota';
+import BeliSampah from './screens/BeliSampah';
+import Home from './screens/Home';
+import FasilitatorHome from './screens/Home/FasilitatorHome';
+import JualSampah from './screens/JualSampah';
 import Kunjungan from './screens/Kunjungan';
+import ListMitra from './screens/ListMitra';
+import Masalah from './screens/Masalah';
+import MasalahByFasilitator from './screens/MasalahByFasiltator';
+import TambahAlat from './screens/TambahAlat';
+import TambahMitra from './screens/TambahMitra';
+import Welcome from './screens/Welcome';
+import FasilitatorWelcome from './screens/Welcome/FasilitatorWelcome';
 
 // ----------------------------------------------------------------------
 
@@ -113,19 +115,40 @@ export default function Router() {
         },
         {
           path: 'mitra',
-          element: (
-            <RequireAuth allowedRoles={['admin']}>
-              <Mitra />
-            </RequireAuth>
-          ),
-        },
-        {
-          path: 'mitra/:mitraCode',
-          element: (
-            <RequireAuth allowedRoles={['admin']}>
-              <MitraDetail />
-            </RequireAuth>
-          ),
+          children: [
+            {
+              path: '',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <Mitra />
+                </RequireAuth>
+              ),
+            },
+            {
+              path: 'detail/:mitraCode',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <MitraDetail />
+                </RequireAuth>
+              ),
+            },
+            {
+              path: 'masalah/:mitraCode',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <ListMasalah />
+                </RequireAuth>
+              ),
+            },
+            {
+              path: 'anggota/:mitraCode',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <VerifikasiAnggotaDetail />
+                </RequireAuth>
+              ),
+            },
+          ],
         },
         {
           path: 'masalah',
@@ -262,6 +285,14 @@ export default function Router() {
           element: (
             <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
               <ListMitra />
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'list-mitra/masalah/:mitraCode',
+          element: (
+            <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
+              <MasalahByFasilitator />
             </MobileGuard>
           ),
         },

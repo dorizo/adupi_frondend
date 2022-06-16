@@ -69,7 +69,7 @@ export default function TransaksiPenjualan() {
                 <Typography>Harga : {li?.totalHarga}</Typography>
                 {li?.nota && (
                   <Button
-                    onClick={() => handleOpen(`${process.env.REACT_APP_API_URL_SSL}assets/penjualan/${li?.nota}`, '')}
+                    onClick={() => handleOpen(`${process.env.REACT_APP_API_URL_SSL}assets/penjualan/${li?.nota}`)}
                     variant="text"
                   >
                     Nota

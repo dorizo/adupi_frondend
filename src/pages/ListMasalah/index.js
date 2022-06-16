@@ -9,21 +9,19 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  ToggleButton,
-  ToggleButtonGroup,
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
-import Image from '../../components/Image';
 import { GET_MITRA_DETAIL_BY_SU } from '../../api/mitra';
 import dummyKtp from '../../assets/dummy-ktp.jpg';
+import Image from '../../components/Image';
 import LoadingComponent from '../../components/LoadingComponent';
 import Page from '../../components/Page';
-import ListAnggota from './ListAnggota';
+import ListAnggota from './List';
 
-export default function VerifikasiAnggotaDetail() {
+export default function ListMasalah() {
   const params = useParams();
   const [alignment, setAlignment] = useState('no');
 
@@ -39,10 +37,10 @@ export default function VerifikasiAnggotaDetail() {
     return <LoadingComponent />;
   }
   return (
-    <Page title="Mitra List Anggota">
+    <Page title="Mitra List Masalah">
       <Container>
         <Typography variant="h4" gutterBottom>
-          Mitra List Anggota
+          Mitra List Masalah
         </Typography>
         <Card style={{ marginBottom: 10 }}>
           <CardHeader title={mitraDetail?.nama} subheader={mitraDetail?.jenisMitra} />
@@ -97,10 +95,10 @@ export default function VerifikasiAnggotaDetail() {
               <Grid item xs={6}>
                 <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                   <Image
+                    folder="mitra"
                     style={{ height: 110 }}
                     src={mitraDetail?.ktp.length > 100 ? mitraDetail?.ktp : dummyKtp}
                     dummy={dummyKtp}
-                    folder="mitra"
                     alt={`img-ktp`}
                   />
                 </Box>
@@ -110,21 +108,6 @@ export default function VerifikasiAnggotaDetail() {
         </Card>
         <Card>
           <CardContent>
-            <ToggleButtonGroup
-              fullWidth
-              color="primary"
-              value={alignment}
-              style={{ marginBottom: 10 }}
-              exclusive
-              onChange={handleChange}
-            >
-              <ToggleButton color="primary" value="no">
-                Anggota Belum Verif
-              </ToggleButton>
-              <ToggleButton color="primary" value="yes">
-                Anggota Verif
-              </ToggleButton>
-            </ToggleButtonGroup>
             <ListAnggota type={alignment} mitraCode={mitraDetail?.mitraCode} />
           </CardContent>
         </Card>

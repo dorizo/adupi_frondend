@@ -2,7 +2,10 @@ import { Card, TableCell, TableRow } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import * as React from 'react';
 import { useQuery } from 'react-query';
-import { GET_NV_ANGGOTA_BY_MITRA_ID, GET_VERIVY_ANGGOTA_BY_MITRA_ID, VERIFIKASI_ANGGOTA } from '../../api/anggota';
+import { VERIFIKASI_ANGGOTA } from '../../api/anggota';
+import { GET_ALL_MASALAH_BY_MITRA } from '../../api/masalah';
+import Image from '../../components/Image';
+import Label from '../../components/Label';
 import useTable from '../../hooks/useTable/index';
 import { fDateTime } from '../../utils/formatTime';
 import Action from './Action';
@@ -10,36 +13,30 @@ import DialogComponent from './DialogComponent';
 
 const headCells = [
   {
-    id: 'nama',
+    id: 'jenisMasalah',
     numeric: false,
     disablePadding: true,
-    label: 'Nama',
+    label: 'Jenis Masalah',
   },
   {
-    id: 'nik',
+    id: 'deskripsi',
     numeric: false,
     disablePadding: true,
-    label: 'NIK',
+    label: 'Deskripsi',
   },
   {
-    id: 'jenisKelamin',
+    id: 'status',
     numeric: false,
     disablePadding: true,
-    label: 'Jenis Kelamin',
+    label: 'Status',
   },
   {
-    id: 'location',
+    id: 'foto',
     numeric: false,
     disablePadding: true,
-    label: 'Location',
+    label: 'Foto',
   },
 
-  {
-    id: 'alamat',
-    numeric: false,
-    disablePadding: true,
-    label: 'Alamat',
-  },
   {
     id: 'createAt',
     numeric: false,
@@ -55,9 +52,8 @@ export default function ListAnggota({ mitraCode, type = 'no' }) {
   const [loading, setLoading] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
-  const { data, isLoading, refetch } = useQuery(
-    [type === 'no' ? 'GET_NV_ANGGOTA_BY_MITRA_ID' : 'GET_VERIFY_ANGGOTA_BY_MITRA_ID', mitraCode],
-    () => (type === 'no' ? GET_NV_ANGGOTA_BY_MITRA_ID(mitraCode) : GET_VERIVY_ANGGOTA_BY_MITRA_ID(mitraCode))
+  const { data, isLoading, refetch } = useQuery(['GET_ALL_MASALAH_BY_MITRA', mitraCode], () =>
+    GET_ALL_MASALAH_BY_MITRA(mitraCode)
   );
   const rows = data && data.data.data;
 
@@ -67,8 +63,10 @@ export default function ListAnggota({ mitraCode, type = 'no' }) {
     loading: isLoading,
   });
   const handleActionOpen = (event, item) => {
-    setItemSelected(item);
-    setAnchorEl(event.currentTarget);
+    if (type === 'no') {
+      setItemSelected(item);
+      setAnchorEl(event.currentTarget);
+    }
   };
   const handleDetail = () => {
     setDialogOpen(true);
@@ -108,23 +106,22 @@ export default function ListAnggota({ mitraCode, type = 'no' }) {
             list.map((row, index) => {
               const labelId = `enhanced-table-checkbox-${index}`;
               return (
-                <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
+                <TableRow hover tabIndex={-1} key={index}>
                   <TableCell>{row.no}</TableCell>
                   <TableCell id={labelId} scope="row">
-                    {row.nama}
+                    {row.jenisMasalah}
                   </TableCell>
                   <TableCell id={labelId} scope="row">
-                    {row.nik}
+                    {row.deskripsi}
                   </TableCell>
                   <TableCell id={labelId} scope="row">
-                    {row.jenisKelamin}
+                    <Label variant="ghost" color={row.status === 'Selesai' ? 'success' : 'error'}>
+                      {row.status}
+                    </Label>
                   </TableCell>
+
                   <TableCell id={labelId} scope="row">
-                    {`Lat : ${row.lat}`} <br />
-                    {`Lng : ${row.long}`}
-                  </TableCell>
-                  <TableCell id={labelId} scope="row">
-                    {row.alamat}
+                    <Image src={row.foto} folder="masalah" style={{ width: 60 }} alt={`img-masalah-${index}`} />
                   </TableCell>
                   <TableCell id={labelId} scope="row">
                     {fDateTime(row.createAt)}
@@ -134,15 +131,14 @@ export default function ListAnggota({ mitraCode, type = 'no' }) {
             })
           )}
       </Card>
-      {
+      {actionOpen && type === 'no' && (
         <Action
-          type={type}
           actionOpen={actionOpen}
           handleDetail={handleDetail}
           anchorEl={anchorEl}
           actionClose={handleActionClose}
         />
-      }
+      )}
       {dialogOpen && (
         <DialogComponent
           processing={loading}

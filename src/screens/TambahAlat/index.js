@@ -1,8 +1,7 @@
 import { Box, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { fDateTime } from '../../utils/formatTime';
 import { ADD_MESIN, DELETE_MESIN, GET_ALL_MESIN_MITRA, UPDATE_MESIN } from '../../api/mesin';
 import dummybarang from '../../assets/dummy-barang.jpg';
 import alat from '../../assets/illustation/recyle.png';
@@ -10,11 +9,14 @@ import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
 import BarMobile from '../../components/BarMobile';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import DialogConfirm from '../../components/DialogConfirm';
+import Image from '../../components/Image';
+import LoadingCard from '../../components/LoadingCard';
+import TidakAdaData from '../../components/TidakAdaData';
 import useAuth from '../../hooks/useAuth';
 import useDrawer from '../../hooks/useDrawer';
+import { fDateTime } from '../../utils/formatTime';
 import Form from './form';
 import MoreMenu from './MoreMenu';
-import Image from '../../components/Image';
 
 export default function TambahAlat() {
   const { auth } = useAuth();
@@ -27,9 +29,13 @@ export default function TambahAlat() {
   const [step, setStep] = useState(0);
   const [values, setValues] = useState({});
   const { enqueueSnackbar } = useSnackbar();
-  const { data, refetch } = useQuery('GET_ALL_MESIN_MITRA', () => GET_ALL_MESIN_MITRA(auth?.mitra?.mitraCode), {
-    refetchOnWindowFocus: false,
-  });
+  const { data, refetch, isLoading } = useQuery(
+    'GET_ALL_MESIN_MITRA',
+    () => GET_ALL_MESIN_MITRA(auth?.mitra?.mitraCode),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const gudang = auth?.mitra?.gudang?.map((g) => {
     return { value: g?.usahaCode, label: g?.namaUsaha };
@@ -147,6 +153,10 @@ export default function TambahAlat() {
         <ButtonPrimary onClick={handleOnAdd} style={{ marginTop: 50, marginBottom: 5 }} label={'Tambah Alat'} />
       </div>
       <div style={{ marginTop: 5, paddingLeft: 20, paddingRight: 20 }}>
+        {isLoading && <LoadingCard />}
+
+        {list && list?.length === 0 && <TidakAdaData />}
+
         {list &&
           list.map((m, i) => (
             <Card key={i} style={{ marginBottom: 10 }}>

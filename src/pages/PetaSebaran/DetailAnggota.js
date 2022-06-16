@@ -30,8 +30,9 @@ export default function DetailAnggota({ anggota }) {
             <div>
               <Chip label={anggota?.mitra?.usahas[0]?.namaUsaha} color="info" style={{ marginBottom: 5 }} />
               <Image
+                folder="anggota"
                 width={200}
-                src="https://assets.pikiran-rakyat.com/crop/85x0:725x439/x/photo/2021/10/07/472467860.jpg"
+                src={anggota?.ktp}
                 dummy="https://assets.pikiran-rakyat.com/crop/85x0:725x439/x/photo/2021/10/07/472467860.jpg"
               />
             </div>

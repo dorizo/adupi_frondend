@@ -11,11 +11,14 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useQuery } from 'react-query';
+import TidakAdaData from '../../components/TidakAdaData';
 import { GET_DETAIL_TRANSAKSI } from '../../api/dashboard';
 import { fDateTime } from '../../utils/formatTime';
+import LoadingCard from '../../components/LoadingCard';
 
 export default function DetailTransaksi({ anggotaCode }) {
   const [alignment, setAlignment] = React.useState('pembelian');
+  const [detailOpen, setDetailOpen] = React.useState(null);
 
   const handleChange = (_, newAlignment) => {
     setAlignment(newAlignment);
@@ -25,7 +28,13 @@ export default function DetailTransaksi({ anggotaCode }) {
     refetchOnWindowFocus: true,
     refetchOnMount: true,
   });
-
+  const handleDetail = (index) => {
+    if (index === detailOpen) {
+      setDetailOpen(null);
+    } else {
+      setDetailOpen(index);
+    }
+  };
   if (isLoading) {
     return [...Array(5)].map((_, i) => (
       <Stack key={i} spacing={1}>
@@ -38,13 +47,7 @@ export default function DetailTransaksi({ anggotaCode }) {
   const list = data && data?.data?.data;
 
   if (list.length === 0) {
-    return (
-      <Stack spacing={1}>
-        <Typography style={{ marginTop: 10 }} align={'center'}>
-          Tidak ada data
-        </Typography>
-      </Stack>
-    );
+    return <TidakAdaData />;
   }
   return (
     <>
@@ -63,6 +66,10 @@ export default function DetailTransaksi({ anggotaCode }) {
         </ToggleButtonGroup>
         {alignment === 'pembelian' && (
           <>
+            {isLoading && <LoadingCard />}
+
+            {list && list?.length === 0 && <TidakAdaData />}
+
             {list &&
               list.map((li, i) => (
                 <Card key={i} style={{ marginBottom: 10 }}>
@@ -74,10 +81,16 @@ export default function DetailTransaksi({ anggotaCode }) {
                     <Typography>Berat : {li?.totalBerat}</Typography>
                     <Box sx={{ justifyContent: 'space-between', flexGrow: 1, display: 'flex' }}>
                       <Typography>Harga : {li?.totalHarga}</Typography>
-                      <Button variant="text">Nota</Button>
+                      {/* <Button variant="text">Nota</Button> */}
                     </Box>
                     <Typography style={{ fontSize: 11 }}>Detail </Typography>
-                    {li?.detail_beli_sampahs &&
+                    {li?.detail_beli_sampahs && (
+                      <Button variant="text" onClick={() => handleDetail(i)} size="small" style={{ fontSize: 11 }}>
+                        {i === detailOpen ? 'Tutup' : 'Detail'}
+                      </Button>
+                    )}
+                    {i === detailOpen &&
+                      li?.detail_beli_sampahs &&
                       li?.detail_beli_sampahs.map((di, ii) => (
                         <Card key={ii} style={{ marginBottom: 10 }}>
                           <CardContent style={{ padding: 10 }}>

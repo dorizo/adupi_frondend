@@ -17,8 +17,10 @@ import {
   Typography,
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import TidakAdaData from '../../components/TidakAdaData';
 import {
   DELETE_MITRA_BY_FASILITATOR,
   GET_MITRA_ALL_BY_FASILITATOR,
@@ -26,13 +28,14 @@ import {
   GET_MITRA_NV_BY_FASILITATOR,
   VERIF_MITRA_BY_FASILITATOR,
 } from '../../api/mitra';
+import dummybarang from '../../assets/dummy-barang.jpg';
+import dummyKtp from '../../assets/dummy-ktp.jpg';
 import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
 import BarMobile from '../../components/BarMobile';
-import MoreMenu from './MoreMenu';
-import dummyKtp from '../../assets/dummy-ktp.jpg';
-import dummybarang from '../../assets/dummy-barang.jpg';
 import DialogConfirm from '../../components/DialogConfirm';
 import Image from '../../components/Image';
+import MoreMenu from './MoreMenu';
+import LoadingCard from '../../components/LoadingCard';
 
 export default function ListMitra() {
   const [mitraDetail, setMitraDetail] = useState(null);
@@ -42,13 +45,13 @@ export default function ListMitra() {
   const [alignment, setAlignment] = useState('aktif');
   const [alertOpen, setAlertOpen] = useState(false);
   const [item, setItem] = useState(null);
-
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
-  const { data, refetch } = useQuery('GET_MITRA_NV_BY_FASILITATOR', GET_MITRA_NV_BY_FASILITATOR);
+  const { data, refetch, isLoading } = useQuery('GET_MITRA_NV_BY_FASILITATOR', GET_MITRA_NV_BY_FASILITATOR);
   const { data: dataAll, refetch: rfAll } = useQuery('GET_MITRA_ALL_BY_FASILITATOR', GET_MITRA_ALL_BY_FASILITATOR);
 
   const handleApprove = async (id) => {
@@ -127,7 +130,6 @@ export default function ListMitra() {
   const listNo = data && data.data.data;
   const listAll = dataAll && dataAll.data.data;
   const list = alignment === 'aktif' ? listAll : listNo;
-  console.log(mitraDetail);
   return (
     <>
       <BarMobile title={'List Mitra'} />
@@ -140,11 +142,8 @@ export default function ListMitra() {
             <ToggleButton value="verifikasi">Verifikasi</ToggleButton>
           </ToggleButtonGroup>
         </Box>
-        {list?.length === 0 && (
-          <Typography style={{ margin: 'auto', marginTop: '10%' }} align="center" variant="body1">
-            Tidak ada data..
-          </Typography>
-        )}
+        {isLoading && <LoadingCard />}
+        {list && list?.length === 0 && <TidakAdaData />}
         {list &&
           list.map((li, i) => (
             <Card key={i} style={{ marginBottom: 10 }}>
@@ -182,29 +181,30 @@ export default function ListMitra() {
                     >
                       {openDetail === li.mitraCode ? 'Tutup' : loading ? 'Loading ...' : 'Detail'}
                     </Button>
+                    <Button
+                      onClick={() => navigate(`/mobile/list-mitra/masalah/${li?.mitraCode}`)}
+                      sx={{ marginTop: 2, marginLeft: 2 }}
+                      size="sm"
+                      variant="outlined"
+                      color="warning"
+                    >
+                      Lihat masalah
+                    </Button>
                     {alignment === 'verifikasi' && (
-                      <>
-                        <Button
-                          onClick={() => handleApprove(li.mitraCode)}
-                          sx={{ marginTop: 2, marginLeft: 2 }}
-                          size="sm"
-                          variant="outlined"
-                          color="success"
-                        >
-                          Approve
-                        </Button>
-                      </>
+                      <Button
+                        onClick={() => handleApprove(li.mitraCode)}
+                        sx={{ marginTop: 2 }}
+                        size="sm"
+                        variant="outlined"
+                        color="success"
+                      >
+                        Approve
+                      </Button>
                     )}
                   </Grid>
                   <Grid item xs={6}>
                     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                      <Image
-                        style={{ width: 100 }}
-                        src={li?.ktp.length > 100 ? li.ktp : dummyKtp}
-                        dummy={dummyKtp}
-                        folder="mitra"
-                        alt={`img-ktp`}
-                      />
+                      <Image style={{ width: 100 }} src={li.ktp} dummy={dummyKtp} folder="mitra" alt={`img-ktp`} />
                     </Box>
                   </Grid>
                 </Grid>

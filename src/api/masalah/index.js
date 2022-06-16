@@ -12,6 +12,17 @@ const GET_ALL_MASALAH = async () => {
     return catchCallBack(error);
   }
 };
+const GET_ALL_MASALAH_BY_MITRA = async (id) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`masalah/all/${id}`, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_ONE_MASALAH = async (id) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -79,4 +90,12 @@ const DELETE_MASALAH = async (id) => {
     return catchCallBack(error);
   }
 };
-export { ADD_MASALAH, GET_ALL_MASALAH, DELETE_MASALAH, UPDATE_MASALAH, GET_ONE_MASALAH, CHANGE_STATUS_MASALAH };
+export {
+  ADD_MASALAH,
+  GET_ALL_MASALAH,
+  GET_ALL_MASALAH_BY_MITRA,
+  DELETE_MASALAH,
+  UPDATE_MASALAH,
+  GET_ONE_MASALAH,
+  CHANGE_STATUS_MASALAH,
+};
