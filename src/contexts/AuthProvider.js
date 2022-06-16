@@ -81,19 +81,19 @@ export const AuthProvider = ({ children }) => {
         } else if (err.response?.status === 400) {
           console.log('Failed');
         } else if (err.response?.status === 401) {
-          if (process.env.REACT_APP_MOBILE) {
+          if (process.env.REACT_APP_MOBILE === 'TRUE') {
             logoutMobile();
           } else {
             logout();
           }
         } else if (err.response?.status === 403) {
-          if (process.env.REACT_APP_MOBILE) {
+          if (process.env.REACT_APP_MOBILE === 'TRUE') {
             logoutMobile();
           } else {
             logout();
           }
         } else {
-          if (process.env.REACT_APP_MOBILE) {
+          if (process.env.REACT_APP_MOBILE === 'TRUE') {
             logoutMobile();
           } else {
             logout();
