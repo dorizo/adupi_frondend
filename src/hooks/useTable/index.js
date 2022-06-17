@@ -12,10 +12,11 @@ import TableToolbar from './Tool';
 
 const useTable = ({ header, rows, loading }) => {
   rows =
-    rows &&
-    rows.map((a, i) => {
-      return { ...a, no: i + 1 };
-    });
+    (rows &&
+      rows?.map((a, i) => {
+        return { ...a, no: i + 1 };
+      })) ||
+    [];
   const [search, setSearch] = React.useState('');
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');

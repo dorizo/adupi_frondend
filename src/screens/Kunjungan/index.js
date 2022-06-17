@@ -32,7 +32,7 @@ export default function Kunjungan() {
 
   const mitra =
     dataMitra &&
-    dataMitra?.data.data.map((g) => {
+    dataMitra?.data?.data?.map((g) => {
       return { value: g?.mitraCode, label: g?.nama };
     });
 
@@ -126,7 +126,7 @@ export default function Kunjungan() {
     setAlertOpen(false);
     setItem(null);
   };
-  const list = data && data.data.data;
+  const list = data && data?.data?.data;
 
   return (
     <>

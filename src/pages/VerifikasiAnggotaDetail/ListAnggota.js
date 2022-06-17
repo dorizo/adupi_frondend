@@ -59,11 +59,11 @@ export default function ListAnggota({ mitraCode, type = 'no' }) {
     [type === 'no' ? 'GET_NV_ANGGOTA_BY_MITRA_ID' : 'GET_VERIFY_ANGGOTA_BY_MITRA_ID', mitraCode],
     () => (type === 'no' ? GET_NV_ANGGOTA_BY_MITRA_ID(mitraCode) : GET_VERIVY_ANGGOTA_BY_MITRA_ID(mitraCode))
   );
-  const rows = data && data.data.data;
+  const rows = data && data?.data?.data;
 
   const { TableComponent, list } = useTable({
     header: headCells,
-    rows,
+    rows: rows || [],
     loading: isLoading,
   });
   const handleActionOpen = (event, item) => {

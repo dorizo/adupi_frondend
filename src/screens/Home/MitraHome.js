@@ -29,7 +29,7 @@ export default function MitraHome() {
     refetchOnMount: true,
     refetchOnWindowFocus: true,
   });
-  const self = data && data.data.data;
+  const self = data && data?.data?.data;
   const menuList = [
     { title: 'Beli Sampah', desc: 'Masukkan Data Sampah yang Dibeli', icon: menuBeli, link: '/mobile/beli-sampah' },
     { title: 'Jual Sampah', desc: 'Masukkan Data Sampah yang Dijual', icon: menuJual, link: '/mobile/jual-sampah' },

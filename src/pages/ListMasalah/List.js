@@ -55,11 +55,11 @@ export default function ListAnggota({ mitraCode, type = 'no' }) {
   const { data, isLoading, refetch } = useQuery(['GET_ALL_MASALAH_BY_MITRA', mitraCode], () =>
     GET_ALL_MASALAH_BY_MITRA(mitraCode)
   );
-  const rows = data && data.data.data;
+  const rows = data && data?.data?.data;
 
   const { TableComponent, list } = useTable({
     header: headCells,
-    rows,
+    rows: rows || [],
     loading: isLoading,
   });
   const handleActionOpen = (event, item) => {

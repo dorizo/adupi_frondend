@@ -102,7 +102,7 @@ export default function TransaksiPenjualan() {
       <TablePagination
         rowsPerPageOptions={[5, 10, 50]}
         component="div"
-        count={pagination?.totalItems || 0}
+        count={pagination?.totalAll || 0}
         page={page}
         onPageChange={handleChangePage}
         rowsPerPage={size}

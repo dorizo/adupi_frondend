@@ -47,12 +47,12 @@ export const AuthProvider = ({ children }) => {
         let permission = [];
         const role =
           response.data &&
-          response.data.data.role.map((r) => {
+          response.data?.data?.role.map((r) => {
             r.permission.forEach((p) => permission.push(p.permission));
             return r.role;
           });
-        const user = response.data.data.email;
-        response.data.data.specialPermission.forEach((p) => {
+        const user = response.data?.data?.email;
+        response.data?.data?.specialPermission.forEach((p) => {
           permission.push(p.permission);
         });
         let mitra = null;

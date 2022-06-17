@@ -36,6 +36,7 @@ import DialogConfirm from '../../components/DialogConfirm';
 import Image from '../../components/Image';
 import MoreMenu from './MoreMenu';
 import LoadingCard from '../../components/LoadingCard';
+import useImageViewer from '../../hooks/useImageViewer';
 
 export default function ListMitra() {
   const [mitraDetail, setMitraDetail] = useState(null);
@@ -47,6 +48,7 @@ export default function ListMitra() {
   const [item, setItem] = useState(null);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { handleOpen: handleOpenImage } = useImageViewer();
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -88,7 +90,7 @@ export default function ListMitra() {
           GET_MITRA_DETAIL_BY_FASILITATOR(m.mitraCode)
         );
         if (data.status === 200) {
-          setMitraDetail(data.data.data);
+          setMitraDetail(data?.data?.data);
           setOpenDetail(m.mitraCode);
         }
         setLoading(false);
@@ -127,7 +129,7 @@ export default function ListMitra() {
     setAlertOpen(false);
   };
 
-  const listNo = data && data.data.data;
+  const listNo = data && data?.data?.data;
   const listAll = dataAll && dataAll.data.data;
   const list = alignment === 'aktif' ? listAll : listNo;
   return (
@@ -251,7 +253,7 @@ export default function ListMitra() {
                                 <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                                   <Image
                                     style={{ width: 100 }}
-                                    src={li?.ktp.length > 100 ? li.ktp : dummyKtp}
+                                    src={li.ktp}
                                     dummy={dummyKtp}
                                     folder="anggota"
                                     alt={`img-ktp`}
@@ -265,7 +267,15 @@ export default function ListMitra() {
                     {mitraDetail[alignment === 'aktif' ? 'gudang' : 'usahas'].map((gud, i) => (
                       <div key={i}>
                         <Typography style={{ marginTop: 10, marginBottom: 10, fontWeight: 'bold' }} variant="body1">
-                          Usaha :
+                          Usaha :{' '}
+                          <Button
+                            variant="text"
+                            onClick={() =>
+                              handleOpenImage(`${process.env.REACT_APP_API_URL_SSL}assets/gudang/${gud?.foto}`)
+                            }
+                          >
+                            Lihat Foto Gudang
+                          </Button>
                         </Typography>
                         {[
                           { title: 'Nama Usaha', key: 'namaUsaha' },
@@ -306,7 +316,7 @@ export default function ListMitra() {
                                   <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                                     <Image
                                       style={{ width: 100 }}
-                                      src={m?.foto.length > 100 ? m?.foto : dummybarang}
+                                      src={m?.foto}
                                       dummy={dummybarang}
                                       folder="mesin"
                                       alt={`img-barang`}

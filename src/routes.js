@@ -39,6 +39,9 @@ import TambahAlat from './screens/TambahAlat';
 import TambahMitra from './screens/TambahMitra';
 import Welcome from './screens/Welcome';
 import FasilitatorWelcome from './screens/Welcome/FasilitatorWelcome';
+import Report from './pages/Report';
+import MitraReportDetail from './pages/MitraReportDetail';
+import KunjunganFasilitator from './pages/KunjunganFasilitator';
 
 // ----------------------------------------------------------------------
 
@@ -150,35 +153,29 @@ export default function Router() {
             },
           ],
         },
-        {
-          path: 'masalah',
-          element: (
-            <RequireAuth allowedRoles={['admin']}>
-              <ComingSoon />
-            </RequireAuth>
-          ),
-        },
+
         {
           path: 'kunjungan-fasilitator',
           element: (
             <RequireAuth allowedRoles={['admin']}>
-              <ComingSoon />
+              <KunjunganFasilitator />
             </RequireAuth>
           ),
         },
-        {
-          path: 'log',
-          element: (
-            <RequireAuth allowedRoles={['admin']}>
-              <ComingSoon />
-            </RequireAuth>
-          ),
-        },
+
         {
           path: 'report',
           element: (
             <RequireAuth allowedRoles={['admin']}>
-              <ComingSoon />
+              <Report />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'report/detail/:mitraCode',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <MitraReportDetail />
             </RequireAuth>
           ),
         },

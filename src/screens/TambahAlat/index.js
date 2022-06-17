@@ -136,7 +136,7 @@ export default function TambahAlat() {
     setAlertOpen(false);
     setItem(null);
   };
-  const list = data && data.data.data;
+  const list = data && data?.data?.data;
 
   return (
     <>

@@ -97,7 +97,7 @@ export default function ListMasalah() {
                   <Image
                     folder="mitra"
                     style={{ height: 110 }}
-                    src={mitraDetail?.ktp.length > 100 ? mitraDetail?.ktp : dummyKtp}
+                    src={mitraDetail?.ktp}
                     dummy={dummyKtp}
                     alt={`img-ktp`}
                   />

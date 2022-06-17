@@ -98,7 +98,7 @@ export default function VerifikasiAnggotaDetail() {
                 <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                   <Image
                     style={{ height: 110 }}
-                    src={mitraDetail?.ktp.length > 100 ? mitraDetail?.ktp : dummyKtp}
+                    src={mitraDetail?.ktp}
                     dummy={dummyKtp}
                     folder="mitra"
                     alt={`img-ktp`}

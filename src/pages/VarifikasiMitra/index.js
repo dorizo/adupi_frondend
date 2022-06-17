@@ -61,11 +61,11 @@ export default function Index() {
   const { data, isLoading, refetch } = useQuery('GET_MITRA_ALL_BY_SU_NO', GET_MITRA_ALL_BY_SU_NO);
   const { enqueueSnackbar } = useSnackbar();
 
-  const rows = data && data.data.data;
+  const rows = data && data?.data?.data;
 
   const { TableComponent, list } = useTable({
     header: headCells,
-    rows,
+    rows: rows || [],
     loading: isLoading,
   });
   // HANDLE ACTION

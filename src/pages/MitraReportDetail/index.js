@@ -1,32 +1,46 @@
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
   Container,
   Grid,
+  Stack,
   Table,
   TableCell,
   TableContainer,
-  Button,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material';
+import { DesktopDatePicker } from '@mui/x-date-pickers';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
-import LoadingComponent from '../../components/LoadingComponent';
-import { GET_MITRA_DETAIL_BY_SU } from '../../api/mitra';
+import { GET_REPORT_MITRA_DETAIL_BY_DATE } from '../../api/report';
 import dummybarang from '../../assets/dummy-barang.jpg';
 import dummyKtp from '../../assets/dummy-ktp.jpg';
-import Page from '../../components/Page';
 import Image from '../../components/Image';
+import LoadingComponent from '../../components/LoadingComponent';
+import Page from '../../components/Page';
 import useImageViewer from '../../hooks/useImageViewer';
+import { fDateSuffix } from '../../utils/formatTime';
+import DetailTransaksi from './DetailTransaksi';
 
-export default function MitraDetail() {
+const date = new Date();
+const y = date.getFullYear();
+const m = date.getMonth();
+const startInit = new Date(y, m, 1);
+const endInit = new Date(y, m + 1, 0);
+
+export default function MitraReportDetail() {
   const params = useParams();
+  const [start, setStart] = useState(startInit);
+  const [end, setEnd] = useState(endInit);
   const { handleOpen: handleOpenImage } = useImageViewer();
-  const { data, isLoading } = useQuery(['GET_MITRA_DETAIL_BY_SU', params.mitraCode], () =>
-    GET_MITRA_DETAIL_BY_SU(params.mitraCode)
+  const { data, isLoading, refetch } = useQuery(['GET_REPORT_MITRA_DETAIL_BY_DATE', params.mitraCode], () =>
+    GET_REPORT_MITRA_DETAIL_BY_DATE(fDateSuffix(start), fDateSuffix(end), params.mitraCode)
   );
   const mitraDetail = data && data?.data?.data;
   if (isLoading) {
@@ -34,10 +48,10 @@ export default function MitraDetail() {
   }
 
   return (
-    <Page title="Mitra Detail">
+    <Page title="Report Mitra Detail">
       <Container>
         <Typography variant="h4" gutterBottom>
-          Mitra Detail
+          Report Mitra Detail
         </Typography>
         <Card style={{ marginBottom: 10 }}>
           <CardHeader title={mitraDetail?.nama} subheader={mitraDetail?.jenisMitra} />
@@ -190,6 +204,41 @@ export default function MitraDetail() {
                 </div>
               ))}
             </>
+            <Typography style={{ marginTop: 10, marginBottom: 10, fontWeight: 'bold' }} variant="body1">
+              Transaksi :
+            </Typography>
+            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+              <Box>
+                <DesktopDatePicker
+                  label="Dari"
+                  inputFormat="dd/MM/yyyy"
+                  value={start}
+                  onChange={(newVal) => setStart(newVal)}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+                <DesktopDatePicker
+                  label="Sampai"
+                  inputFormat="dd/MM/yyyy"
+                  value={end}
+                  onChange={(newVal) => setEnd(newVal)}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </Box>
+              <Button
+                onClick={() => refetch(fDateSuffix(start), fDateSuffix(end))}
+                size="large"
+                variant="contained"
+                color="primary"
+              >
+                Filter
+              </Button>
+            </Stack>
+            <DetailTransaksi
+              isLoading={isLoading}
+              pembelian={mitraDetail?.transaksi?.beliSampah}
+              penjualan={mitraDetail?.transaksi?.jualSampah}
+              masalah={mitraDetail?.masalah}
+            />
           </CardContent>
         </Card>
       </Container>

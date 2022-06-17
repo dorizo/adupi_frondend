@@ -124,7 +124,7 @@ export default function Anggota() {
     setAlertOpen(false);
     setItem(null);
   };
-  const list = data && data.data.data;
+  const list = data && data?.data?.data;
   return (
     <>
       <BarMobile title={'Anggota'} />

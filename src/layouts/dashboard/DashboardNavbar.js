@@ -1,7 +1,8 @@
-import { AppBar, Box, IconButton, Stack, Toolbar } from '@mui/material';
+import { Alert, AppBar, Box, IconButton, Stack, Toolbar } from '@mui/material';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
+import { Offline } from 'react-detect-offline';
 // components
 import Iconify from '../../components/Iconify';
 //
@@ -50,7 +51,9 @@ export default function DashboardNavbar({ onOpenSidebar }) {
 
         {/* <Searchbar /> */}
         <Box sx={{ flexGrow: 1 }} />
-
+        <Offline>
+          <Alert severity="error">Anda sedang offline!</Alert>
+        </Offline>
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
           {/* <LanguagePopover /> */}
           {/* <NotificationsPopover /> */}

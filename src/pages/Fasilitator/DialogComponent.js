@@ -93,7 +93,7 @@ export default function DialogComponent(props) {
     API.then((res) => {
       const list =
         res &&
-        res.data.data.map((p) => {
+        res.data?.data?.map((p) => {
           if (editMode && item.userCode === p.userCode) {
             setUserC({ value: p.userCode, title: p.email });
             formik.setFieldValue('userCode', { value: p.userCode, title: p.email });
@@ -114,7 +114,7 @@ export default function DialogComponent(props) {
       .then((res) => {
         const list =
           res &&
-          res.data.data.map((p) => {
+          res.data?.data?.map((p) => {
             if (editMode && idWil === p.wilayahCode) {
               setProvinsiS({ value: p.wilayahCode, title: p.wilayah });
             }
@@ -141,7 +141,7 @@ export default function DialogComponent(props) {
       .then((res) => {
         const list =
           res &&
-          res.data.data.map((p) => {
+          res.data?.data?.map((p) => {
             if (editMode && idWil === p.wilayahCode) {
               setKabupatenS({ value: p.wilayahCode, title: p.wilayah });
             }
@@ -169,7 +169,7 @@ export default function DialogComponent(props) {
       .then((res) => {
         const list =
           res &&
-          res.data.data.map((p) => {
+          res.data?.data?.map((p) => {
             if (editMode && idWil === p.wilayahCode) {
               setKecamatanS({ value: p.wilayahCode, title: p.wilayah });
             }
@@ -194,7 +194,7 @@ export default function DialogComponent(props) {
       .then((res) => {
         const list =
           res &&
-          res.data.data.map((p) => {
+          res.data?.data?.map((p) => {
             if (editMode && idWil === p.wilayahCode) {
               formik.setFieldValue('wilayahCode', {
                 value: p.wilayahCode,

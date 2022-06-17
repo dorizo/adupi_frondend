@@ -53,11 +53,11 @@ export default function Index() {
   const [itemSelected, setItemSelected] = React.useState(null);
   const { data, isLoading } = useQuery('GET_MITRA_ALL_BY_SU_YES', GET_MITRA_ALL_BY_SU_YES);
   const navigate = useNavigate();
-  const rows = data && data.data.data;
+  const rows = data && data?.data?.data;
 
   const { TableComponent, list } = useTable({
     header: headCells,
-    rows,
+    rows: rows || [],
     loading: isLoading,
   });
   const handleActionOpen = (event, item) => {

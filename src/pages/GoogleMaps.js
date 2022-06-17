@@ -56,7 +56,7 @@ export default function GoogleMaps() {
     setLoading(true);
     const data = await queryClient.fetchQuery('GET_ALL_PROVINSI', GET_ALL_PROVINSI);
     if (data.status === 200) {
-      setProvinsi(setOption(data.data.data));
+      setProvinsi(setOption(data?.data?.data));
     }
     setLoading(false);
   }
@@ -64,7 +64,7 @@ export default function GoogleMaps() {
     setLoading(true);
     const data = await queryClient.fetchQuery(['GET_KABUPATEN', id], () => GET_KABUPATEN(id));
     if (data.status === 200) {
-      setKabupaten(setOption(data.data.data));
+      setKabupaten(setOption(data?.data?.data));
     }
     setLoading(false);
   }
@@ -72,7 +72,7 @@ export default function GoogleMaps() {
     setLoading(true);
     const data = await queryClient.fetchQuery(['GET_KECAMATAN', id], () => GET_KECAMATAN(id));
     if (data.status === 200) {
-      setKecamatan(setOption(data.data.data));
+      setKecamatan(setOption(data?.data?.data));
     }
     setLoading(false);
   }

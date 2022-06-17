@@ -79,7 +79,7 @@ export default function Step4({ handleNext, values, isLoading }) {
       .then((res) => {
         const list =
           res &&
-          res.data.data.map((p) => {
+          res.data?.data?.map((p) => {
             const wil = { value: p.wilayahCode, label: p.wilayah };
             return wil;
           });
@@ -103,7 +103,7 @@ export default function Step4({ handleNext, values, isLoading }) {
       .then((res) => {
         const list =
           res &&
-          res.data.data.map((p) => {
+          res.data?.data?.map((p) => {
             const wil = { value: p.wilayahCode, label: p.wilayah };
             return wil;
           });
@@ -126,7 +126,7 @@ export default function Step4({ handleNext, values, isLoading }) {
       .then((res) => {
         const list =
           res &&
-          res.data.data.map((p) => {
+          res.data?.data?.map((p) => {
             const wil = { value: p.wilayahCode, label: p.wilayah };
             return wil;
           });
@@ -148,7 +148,7 @@ export default function Step4({ handleNext, values, isLoading }) {
       .then((res) => {
         const list =
           res &&
-          res.data.data.map((p) => {
+          res.data?.data?.map((p) => {
             const wil = { value: p.wilayahCode, label: p.wilayah };
             return wil;
           });

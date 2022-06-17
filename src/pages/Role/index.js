@@ -33,11 +33,11 @@ export default function Index() {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  const rows = data && data.data.data;
+  const rows = data && data?.data?.data;
 
   const { TableComponent, list } = useTable({
     header: headCells,
-    rows,
+    rows: rows || [],
     loading: isLoading,
   });
   // HANDLE ACTION

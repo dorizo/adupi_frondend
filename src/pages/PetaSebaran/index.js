@@ -43,7 +43,7 @@ export default function PetaSebaran() {
     setLoadingG(true);
     const data = await queryClient.fetchQuery('GET_ALL_ANGGOTA_DAHSBOARD', GET_ALL_ANGGOTA);
     if (data.status === 200) {
-      setList(data.data.data);
+      setList(data?.data?.data);
     }
     setLoadingG(false);
   }
@@ -51,7 +51,7 @@ export default function PetaSebaran() {
     setLoadingG(true);
     const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_BY_WILAYAH', v], () => GET_ALL_ANGGOTA_BY_WILAYAH(v));
     if (data.status === 200) {
-      setList(data.data.data);
+      setList(data?.data?.data);
     }
     setLoadingG(false);
   }
@@ -59,7 +59,7 @@ export default function PetaSebaran() {
     setLoading(true);
     const data = await queryClient.fetchQuery('GET_ALL_PROVINSI', GET_ALL_PROVINSI);
     if (data.status === 200) {
-      setProvinsi(setOption(data.data.data));
+      setProvinsi(setOption(data?.data?.data));
     }
     setLoading(false);
   }
@@ -67,7 +67,7 @@ export default function PetaSebaran() {
     setLoading(true);
     const data = await queryClient.fetchQuery(['GET_KABUPATEN', id], () => GET_KABUPATEN(id));
     if (data.status === 200) {
-      setKabupaten(setOption(data.data.data));
+      setKabupaten(setOption(data?.data?.data));
     }
     setLoading(false);
   }
@@ -75,7 +75,7 @@ export default function PetaSebaran() {
     setLoading(true);
     const data = await queryClient.fetchQuery(['GET_KECAMATAN', id], () => GET_KECAMATAN(id));
     if (data.status === 200) {
-      setKecamatan(setOption(data.data.data));
+      setKecamatan(setOption(data?.data?.data));
     }
     setLoading(false);
   }
@@ -90,7 +90,7 @@ export default function PetaSebaran() {
   };
   const handleChangeKecamatan = (_, v) => {
     setKecamatanS(v);
-    getAllAnggotaWilayah(v);
+    getAllAnggotaWilayah(v.value);
   };
   const handleReset = () => {
     setKabupaten();
