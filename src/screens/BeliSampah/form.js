@@ -2,6 +2,7 @@ import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import TidakAdaData from '../../components/TidakAdaData';
 import { GET_ALL_ANGGOTA } from '../../api/anggota';
 import { GET_ALL_JENIS_SAMPAH } from '../../api/jenis_sampah';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
@@ -25,6 +26,7 @@ export default function Form({
 }) {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowFrom] = useState(false);
+  const [search, setSearch] = useState('');
   const [form, setForm] = useState({ sumber: '', jsCode: '', harga: '', berat: '', jenis: '' });
 
   const [sampah, setSampah] = useState([]);
@@ -39,7 +41,8 @@ export default function Form({
     dataJenis?.data?.data.map((js) => {
       return { value: js.jsCode, label: js.jenis };
     });
-  const anggota = data && data?.data?.data;
+
+  const anggotaNF = data && data?.data?.data;
 
   const handleOpen = (a, s, val) => {
     setLoading(true);
@@ -79,10 +82,22 @@ export default function Form({
     await setDataStruck({ ...dataStruck, detail: sampah, createAt: new Date() });
     await handleOpen('Struck', 2, { detail: sampah });
   };
+  const filterAnggota = (array, query) => {
+    if (query) {
+      const column = array[0] && Object.keys(array[0]);
+      return array.filter((a) =>
+        column.some((col) => a[col] && a[col].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
+      );
+    }
+    return array;
+  };
+  const anggota = filterAnggota(anggotaNF, search);
   return (
     <form>
       {step === 0 && (
         <>
+          <TextInput value={search} onChange={(e) => setSearch(e.target.value)} label="Cari Anggota" />
+          {anggota && anggota.length === 0 && <TidakAdaData />}
           <Grid sx={{ padding: 3 }} container spacing={2}>
             {anggota &&
               anggota.map((m, i) => (

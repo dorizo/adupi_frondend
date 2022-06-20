@@ -168,6 +168,30 @@ export default function Anggota() {
                     </Box>
                     <Box sx={{ display: 'flex' }}>
                       <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
+                        Provinsi :{' '}
+                      </Typography>
+                      <Typography variant="caption">{li.provinsi}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
+                        Kabupaten :{' '}
+                      </Typography>
+                      <Typography variant="caption">{li.kabupaten}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
+                        Kecamatan :{' '}
+                      </Typography>
+                      <Typography variant="caption">{li.kecamatan}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
+                        Desa :{' '}
+                      </Typography>
+                      <Typography variant="caption">{li.desa}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
                         Alamat :{' '}
                       </Typography>
                       <Typography variant="caption">{li.alamat}</Typography>
