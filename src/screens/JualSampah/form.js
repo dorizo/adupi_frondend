@@ -2,10 +2,12 @@ import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { ADD_PEMBELI, GET_ALL_PEMBELI } from '../../api/pembeli';
 import { GET_ALL_JENIS_SAMPAH } from '../../api/jenis_sampah';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import SelectInput from '../../components/SelectInput';
 import TextInput from '../../components/TextInput';
+import AutoCompleteLoading from '../../components/AutoCompleteLoading';
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 
@@ -13,9 +15,19 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
   const [loading, setLoading] = useState(false);
   const [showForm, setShowFrom] = useState(false);
   const [pembeli, setPembeli] = useState('');
+  const [pembeliCode, setPembeliCode] = useState(null);
   const [form, setForm] = useState({ jenisCode: '', harga: '', berat: '', jenis: '' });
 
   const [sampah, setSampah] = useState([]);
+  const { data: pembeliData } = useQuery('GET_ALL_PEMBELI', () => GET_ALL_PEMBELI(null));
+  const listPembeli = pembeliData && pembeliData?.data?.data;
+
+  const pembeliOption =
+    listPembeli &&
+    listPembeli?.map((m) => {
+      const option = { value: m.pembeliCode, title: m.pembeli };
+      return option;
+    });
 
   const { data: dataJenis } = useQuery('GET_ALL_JENIS_SAMPAH', GET_ALL_JENIS_SAMPAH, {
     refetchOnMount: true,
@@ -60,20 +72,45 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
     const jenis = optionJs.find((j) => j.value === e.target.value);
     setForm({ ...form, jenisCode: e.target.value, jenis: jenis.label });
   };
+  const handleSetPemebeli = (newVal) => {
+    setPembeliCode(newVal);
+    if (newVal.title !== 'Lain-lain') {
+      setPembeli(newVal.title);
+    } else {
+      setPembeli('');
+    }
+  };
+  const handleAddPembeli = async () => {
+    const response = await ADD_PEMBELI({ pembeli });
+    if (response.status === 200) {
+      await console.log(response.data.message);
+      await handleOpen('Sampah', 1, { pembeliCode: pembeliCode?.value });
+    }
+  };
   return (
     <form>
       {step === 0 && (
         <>
-          <TextInput
-            id="pembeli"
-            name="pembeli"
-            type="text"
-            onChange={(e) => setPembeli(e.target.value)}
-            value={pembeli}
-            label={'Pembeli'}
+          <AutoCompleteLoading
+            label="Pembeli"
+            options={pembeliOption}
+            loading={isLoading}
+            value={pembeliCode}
+            getOptionLabel={(option) => option.title}
+            onChange={(_, newVal) => handleSetPemebeli(newVal)}
           />
+          {pembeliCode?.title === 'Lain-lain' && (
+            <TextInput
+              id="pembeli"
+              name="pembeli"
+              type="text"
+              onChange={(e) => setPembeli(e.target.value)}
+              value={pembeli}
+              label={'Tambah Pembeli'}
+            />
+          )}
           <ButtonPrimary
-            onClick={() => handleOpen('Sampah', 1, { pembeli })}
+            onClick={handleAddPembeli}
             style={{ marginTop: 30, marginBottom: 5 }}
             disabled={pembeli === '' || isLoading}
             label={'Selanjutnya'}

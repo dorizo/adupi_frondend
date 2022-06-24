@@ -49,9 +49,9 @@ const BELI_SAMPAH = async ({ anggotaCode, nota, detail }) => {
     return catchCallBack(error);
   }
 };
-const JUAL_SAMPAH = async ({ pembeli, nota, detail }) => {
+const JUAL_SAMPAH = async ({ pembeliCode, nota, detail }) => {
   const data = qs.stringify({
-    pembeli,
+    pembeliCode,
     nota,
     detail,
   });

@@ -4,13 +4,13 @@ import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 import Blog from './pages/Blog';
-import ComingSoon from './pages/ComingSoon';
 import Fasilitator from './pages/Fasilitator';
 import JenisSampah from './pages/JenisSampah';
 import ListMasalah from './pages/ListMasalah';
 import Login from './pages/Login';
 import Mitra from './pages/Mitra';
 import NotFound from './pages/Page404';
+import Pembeli from './pages/Pembeli';
 import Register from './pages/Register';
 import Role from './pages/Role';
 import RoleDetail from './pages/RoleDetail';
@@ -23,8 +23,11 @@ import VerifikasiAnggotaDetail from './pages/VerifikasiAnggotaDetail';
 import MobileGuard from './Guard/MobileGuard';
 import RequireAuth from './Guard/RequiredAuth';
 import MobileLayout from './layouts/MobileLayout';
+import KunjunganFasilitator from './pages/KunjunganFasilitator';
 import MitraDetail from './pages/MitraDetail';
+import MitraReportDetail from './pages/MitraReportDetail';
 import PetaSebaran from './pages/PetaSebaran';
+import Report from './pages/Report';
 import Akun from './screens/Akun';
 import Anggota from './screens/Anggota';
 import BeliSampah from './screens/BeliSampah';
@@ -39,9 +42,6 @@ import TambahAlat from './screens/TambahAlat';
 import TambahMitra from './screens/TambahMitra';
 import Welcome from './screens/Welcome';
 import FasilitatorWelcome from './screens/Welcome/FasilitatorWelcome';
-import Report from './pages/Report';
-import MitraReportDetail from './pages/MitraReportDetail';
-import KunjunganFasilitator from './pages/KunjunganFasilitator';
 
 // ----------------------------------------------------------------------
 
@@ -105,6 +105,14 @@ export default function Router() {
           element: (
             <RequireAuth allowedRoles={['admin']}>
               <JenisSampah />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'pembeli',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <Pembeli />
             </RequireAuth>
           ),
         },

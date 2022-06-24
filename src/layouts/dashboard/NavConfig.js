@@ -32,6 +32,11 @@ const navConfig = [
     icon: getIcon('eva:person-done-outline'),
   },
   {
+    title: 'Pembeli',
+    path: '/dashboard/pembeli',
+    icon: getIcon('eva:shopping-cart-outline'),
+  },
+  {
     title: 'list mitra',
     path: '/dashboard/mitra',
     icon: getIcon('eva:list-outline'),

@@ -51,7 +51,7 @@ export default function JualSampah() {
   };
 
   const handleOnAdd = () => {
-    setDrawerTitle('Pilih Anggota');
+    setDrawerTitle('Pilih Pembeli');
     onOpen();
     setStep(0);
   };
