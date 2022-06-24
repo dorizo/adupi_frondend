@@ -213,14 +213,16 @@ export default function MitraReportDetail() {
                   label="Dari"
                   inputFormat="dd/MM/yyyy"
                   value={start}
-                  onChange={(newVal) => setStart(newVal)}
+                  getOptionLabel={(option) => option.title}
+                  onChange={(_, newVal) => setStart(newVal)}
                   renderInput={(params) => <TextField {...params} />}
                 />
                 <DesktopDatePicker
                   label="Sampai"
                   inputFormat="dd/MM/yyyy"
                   value={end}
-                  onChange={(newVal) => setEnd(newVal)}
+                  getOptionLabel={(option) => option.title}
+                  onChange={(_, newVal) => setEnd(newVal)}
                   renderInput={(params) => <TextField {...params} />}
                 />
               </Box>
