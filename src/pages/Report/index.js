@@ -94,68 +94,68 @@ const endInit = new Date(y, m + 1, 0);
 const chartOpton = [
   {
     component: <LuasGudangPerbulan />,
-    title: 'LuasGudangPerbulan',
+    title: 'Luas Gudang Perbulan',
   },
   {
     component: <PekerjaPerbulan />,
-    title: 'PekerjaPerbulan',
+    title: 'Pekerja Perbulan',
   },
   {
     component: <PembelianMitraPerbulan />,
-    title: 'PembelianMitraPerbulan',
+    title: 'Pembelian Mitra Perbulan',
   },
   {
     component: <PenjualanMitraPerbulan />,
-    title: 'PenjualanMitraPerbulan',
+    title: 'Penjualan Mitra Perbulan',
   },
   {
     component: <PenjualanPerMitraPerbulan />,
-    title: 'PenjualanPerMitraPerbulan',
+    title: 'Penjualan Per Mitra Perbulan',
   },
   {
     component: <PembelianPerMitraPerbulan />,
-    title: 'PembelianPerMitraPerbulan',
+    title: 'Pembelian Per Mitra Perbulan',
   },
   {
     component: <PenjualanMitraPerbulanPabrik />,
-    title: 'PenjualanMitraPerbulanPabrik',
+    title: 'Penjualan Mitra Perbulan Pabrik',
   },
   {
     component: <PenjualanPerMitraPerbulanPabrik />,
-    title: 'PenjualanPerMitraPerbulanPabrik',
+    title: 'Penjualan Per Mitra Perbulan Pabrik',
   },
   {
     component: <MasalahMitraPerbulan />,
-    title: 'MasalahMitraPerbulan',
+    title: 'Masalah Mitra Perbulan',
   },
   {
     component: <MasalahPerMitraPerbulan />,
-    title: 'MasalahPerMitraPerbulan',
+    title: 'Masalah PerMitra Perbulan',
   },
   {
     component: <PembelianMitraPerKategori />,
-    title: 'PembelianMitraPerKategori',
+    title: 'Pembelian Mitra Per Kategori',
   },
   {
     component: <PenjualanMitraPerKategori />,
-    title: 'PenjualanMitraPerKategori',
+    title: 'Penjualan Mitra Per Kategori',
   },
   {
     component: <PembelianPerMitra />,
-    title: 'AnalisisPembelianPerMitra',
+    title: 'Analisis Pembelian Per Mitra',
   },
   {
     component: <PembelianPerPekerja />,
-    title: 'AnalisisPembelianPerPekerja',
+    title: 'Analisis Pembelian Per Pekerja',
   },
   {
     component: <PembelianPerLuas />,
-    title: 'AnalisisPembelianPerLuas',
+    title: 'Analisis Pembelian Per Luas',
   },
 ];
 
 export default function Report() {
-  const fixedOptions = [chartOpton[1]];
+  const fixedOptions = [chartOpton[2]];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [start, setStart] = React.useState(startInit);
   const [end, setEnd] = React.useState(endInit);
@@ -203,19 +203,12 @@ export default function Report() {
               id="fixed-tags-demo"
               value={showChart}
               onChange={(event, newValue) => {
-                setShowChart([...fixedOptions, ...newValue.filter((option) => fixedOptions.indexOf(option) === -1)]);
+                setShowChart([...newValue]);
               }}
               options={chartOpton}
               getOptionLabel={(option) => option.title}
               renderTags={(tagValue, getTagProps) =>
-                tagValue.map((option, index) => (
-                  <Chip
-                    key={index}
-                    label={option.title}
-                    {...getTagProps({ index })}
-                    disabled={fixedOptions.indexOf(option) !== -1}
-                  />
-                ))
+                tagValue.map((option, index) => <Chip key={index} label={option.title} {...getTagProps({ index })} />)
               }
               renderInput={(params) => <TextField {...params} label="Pilih chart" placeholder="Chart Lainnya" />}
             />
