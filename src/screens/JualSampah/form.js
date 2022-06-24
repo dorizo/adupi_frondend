@@ -81,9 +81,13 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
     }
   };
   const handleAddPembeli = async () => {
-    const response = await ADD_PEMBELI({ pembeli });
-    if (response.status === 200) {
-      await console.log(response.data.message);
+    if (pembeliCode.title === 'Lain-lain') {
+      const response = await ADD_PEMBELI({ pembeli });
+      if (response.status === 200) {
+        await console.log(response.data.message);
+        await handleOpen('Sampah', 1, { pembeliCode: pembeliCode?.value });
+      }
+    } else {
       await handleOpen('Sampah', 1, { pembeliCode: pembeliCode?.value });
     }
   };
