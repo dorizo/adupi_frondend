@@ -1,4 +1,5 @@
-import { Card } from '@mui/material';
+import { Box, Card, IconButton } from '@mui/material';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
@@ -36,10 +37,10 @@ export default function Step4({ handleNext, values, isLoading }) {
     setSelectedImg(null);
   };
 
-  const center = {
+  const [center, setCenter] = useState({
     lat: values?.lat || -6.258752,
     lng: values?.lang || 106.6201363,
-  };
+  });
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -60,8 +61,23 @@ export default function Step4({ handleNext, values, isLoading }) {
   console.log(map);
 
   const onMapClick = (val) => {
-    setMarker(val.latLng);
+    const mm = val.latLng;
+    setMarker({ lat: mm?.lat(), lng: mm?.lng() });
     console.log(val.latLng);
+  };
+
+  const handleMyLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        console.log(position);
+        setMarker(pos);
+        setCenter(pos);
+      });
+    }
   };
 
   const idPro = values?.wilayahCodeUsaha && values.wilayahCodeUsaha.split('.')[0];
@@ -183,11 +199,23 @@ export default function Step4({ handleNext, values, isLoading }) {
     }),
     onSubmit: (values) => {
       // handleNext(5, 'Data Mesin', { ...values, lat: marker?.lat(), lang: marker?.lng(), foto: '-' });
-      handleNext(5, 'Data Mesin', { ...values, lat: marker?.lat(), lang: marker?.lng(), foto: selectedImg });
+      handleNext(5, 'Data Mesin', { ...values, lat: marker?.lat, lang: marker?.lng, foto: selectedImg });
     },
   });
   useEffect(() => {
-    getPro();
+    function xxxx() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setCenter(pos);
+        });
+      }
+      getPro();
+    }
+    xxxx();
   }, []);
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -243,6 +271,11 @@ export default function Step4({ handleNext, values, isLoading }) {
             {marker && <Marker position={marker} />}
           </GoogleMap>
         )}
+        <Box style={{ display: 'flex', justifyContent: 'end', marginRight: 5 }}>
+          <IconButton onClick={handleMyLocation} aria-label="my location">
+            <MyLocationIcon />
+          </IconButton>
+        </Box>
       </Card>
       <div style={{ paddingLeft: 40, paddingRight: 40, marginBottom: 20 }}>
         {selectedImg && (
