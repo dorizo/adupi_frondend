@@ -1,4 +1,4 @@
-import { Card } from '@mui/material';
+import { Card, CardHeader } from '@mui/material';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
@@ -8,11 +8,18 @@ import { GET_ALL_PROVINSI, GET_DESA, GET_KABUPATEN, GET_KECAMATAN } from '../../
 import ButtonPrimary from '../../../components/Button/ButtonPrimary';
 import SelectInput from '../../../components/SelectInput';
 import TextInput from '../../../components/TextInput';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
 
 const containerStyle = {
   width: '100%',
   height: '400px',
 };
+let centerstyle={
+  position: 'absolute',
+  zIndex:20,
+  right:15,
+  bottom:180
+}
 
 export default function Step4({ handleNext, values, isLoading }) {
   const mlg = values?.lang ? { lat: values?.lat, lng: values?.lang } : null;
@@ -24,6 +31,8 @@ export default function Step4({ handleNext, values, isLoading }) {
   const [loading, setLoading] = useState(false);
   const [map, setMap] = React.useState(null);
   const [selectedImg, setSelectedImg] = useState(values?.foto || null);
+  const [center ,setCenter ] = useState({lat:values?.lat || -6.258752,lng:values?.lang || 106.6201363});
+  console.log(center);
   const handleUploadClick = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -35,11 +44,14 @@ export default function Step4({ handleNext, values, isLoading }) {
   const removeImg = () => {
     setSelectedImg(null);
   };
+  const mylocation =  () =>{
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position.coords.latitude);
+      setCenter({lat:position.coords.latitude , lng:position.coords.longitude});
+      
+    });
+  }
 
-  const center = {
-    lat: values?.lat || -6.258752,
-    lng: values?.lang || 106.6201363,
-  };
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -231,6 +243,8 @@ export default function Step4({ handleNext, values, isLoading }) {
         multiline
       />
       <Card style={{ marginTop: 10, marginBottom: 10 }}>
+      
+      <div style={centerstyle} ><MyLocationIcon onClick={mylocation} /></div>
         {isLoaded && (
           <GoogleMap
             mapContainerStyle={containerStyle}
