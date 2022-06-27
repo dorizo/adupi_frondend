@@ -55,10 +55,19 @@ export default function PetaSebaran() {
     setLoadingG(true);
     const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_DAHSBOARD', { start, end }], () => GET_MAP_ANGGOTA(start, end));
 
+
+
     if (data.status === 200) {
       setList(data?.data?.data);
     }
     setLoadingG(false);
+  }
+  
+  const hanlechangemaps = async () =>{
+    const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_DAHSBOARD', { start, end }], () => GET_MAP_ANGGOTA(start, end));
+    if (data.status === 200) {
+      setList(data?.data?.data);
+    }
   }
   const handleSelectAnggota = (a) => {
     setAnggota(a);
@@ -111,7 +120,7 @@ export default function PetaSebaran() {
                 />
               </Box>
               <Button
-                onClick={() => refetch(fDateSuffix(start), fDateSuffix(end))}
+                onClick={hanlechangemaps}
                 size="large"
                 variant="contained"
                 color="primary"
