@@ -40,8 +40,7 @@ export default function DialogComponent(props) {
                   <Typography sx={{ fontSize: 12 }}>{item?.nama}</Typography>
                   <Typography sx={{ fontSize: 10 }}>NIK : {item?.nik}</Typography>
                   <Typography sx={{ fontSize: 10 }}>No Hp : {item?.noHp}</Typography>
-                  <Typography sx={{ fontSize: 10 }}>No Hp : {item?.noHp}</Typography>
-                  <Typography sx={{ fontSize: 10 }}>Alamat : {item?.alamat}</Typography>
+                  <Typography sx={{ fontSize: 10 }}>Alamat : {item?.alamat} {item?.desa}, kecamatan {item?.kecamatan}, {item?.kabupaten}, {item?.provinsi}</Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Box sx={{ display: 'flex', justifyContent: 'end' }}>
