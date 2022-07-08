@@ -2,7 +2,8 @@ import { Avatar, Box, Drawer, Link, Typography } from '@mui/material';
 // material
 import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 // components
 import Logo from '../../components/Logo';
 import NavSection from '../../components/NavSection';
@@ -41,9 +42,17 @@ DashboardSidebar.propTypes = {
 };
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
+  const { pathname } = useLocation();
   const { auth } = useAuth();
 
   const isDesktop = useResponsive('up', 'lg');
+
+  useEffect(() => {
+    if (!isDesktop && isOpenSidebar) {
+      onCloseSidebar();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   const renderContent = (
     <Scrollbar
