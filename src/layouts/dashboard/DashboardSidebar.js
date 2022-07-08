@@ -2,8 +2,7 @@ import { Avatar, Box, Drawer, Link, Typography } from '@mui/material';
 // material
 import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 // components
 import Logo from '../../components/Logo';
 import NavSection from '../../components/NavSection';
@@ -42,17 +41,9 @@ DashboardSidebar.propTypes = {
 };
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
-  const { pathname } = useLocation();
   const { auth } = useAuth();
 
   const isDesktop = useResponsive('up', 'lg');
-
-  useEffect(() => {
-    if (isOpenSidebar) {
-      onCloseSidebar();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
 
   const renderContent = (
     <Scrollbar
@@ -87,6 +78,24 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     </Scrollbar>
   );
 
+  console.log(isOpenSidebar);
+  if (!isOpenSidebar) {
+    return (
+      <Drawer
+        open={isOpenSidebar}
+        variant="persistent"
+        PaperProps={{
+          sx: {
+            width: DRAWER_WIDTH,
+            bgcolor: 'background.default',
+            borderRightStyle: 'dashed',
+          },
+        }}
+      >
+        {renderContent}
+      </Drawer>
+    );
+  }
   return (
     <RootStyle>
       {!isDesktop && (
@@ -103,7 +112,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
       {isDesktop && (
         <Drawer
-          open
+          open={isOpenSidebar}
           variant="persistent"
           PaperProps={{
             sx: {

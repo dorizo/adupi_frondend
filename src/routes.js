@@ -28,6 +28,7 @@ import MitraDetail from './pages/MitraDetail';
 import MitraReportDetail from './pages/MitraReportDetail';
 import PetaSebaran from './pages/PetaSebaran';
 import Report from './pages/Report';
+import ReportMayora from './pages/ReportMayora';
 import Akun from './screens/Akun';
 import Anggota from './screens/Anggota';
 import BeliSampah from './screens/BeliSampah';
@@ -176,6 +177,14 @@ export default function Router() {
           element: (
             <RequireAuth allowedRoles={['admin']}>
               <Report />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'report_mayora',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <ReportMayora />
             </RequireAuth>
           ),
         },

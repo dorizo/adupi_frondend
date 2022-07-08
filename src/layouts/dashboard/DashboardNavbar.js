@@ -26,6 +26,12 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
     width: `calc(100% - ${DRAWER_WIDTH + 1}px)`,
   },
 }));
+const RootStyle2 = styled(AppBar)(({ theme }) => ({
+  boxShadow: 'none',
+  backdropFilter: 'blur(6px)',
+  WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
+  backgroundColor: alpha(theme.palette.background.default, 0.72),
+}));
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   minHeight: APPBAR_MOBILE,
@@ -39,13 +45,36 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
 
 DashboardNavbar.propTypes = {
   onOpenSidebar: PropTypes.func,
+  isOpenSidebar: PropTypes.any,
 };
 
-export default function DashboardNavbar({ onOpenSidebar }) {
+export default function DashboardNavbar({ isOpenSidebar, onOpenSidebar }) {
+  if (!isOpenSidebar) {
+    return (
+      <RootStyle2>
+        <ToolbarStyle>
+          <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
+            <Iconify icon="eva:menu-2-fill" />
+          </IconButton>
+
+          {/* <Searchbar /> */}
+          <Box sx={{ flexGrow: 1 }} />
+          <Offline>
+            <Alert severity="error">Anda sedang offline!</Alert>
+          </Offline>
+          <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
+            {/* <LanguagePopover /> */}
+            {/* <NotificationsPopover /> */}
+            <AccountPopover />
+          </Stack>
+        </ToolbarStyle>
+      </RootStyle2>
+    );
+  }
   return (
     <RootStyle>
       <ToolbarStyle>
-        <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}>
+        <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
 

@@ -63,6 +63,11 @@ const navConfig = [
     path: '/dashboard/report',
     icon: getIcon('eva:archive-outline'),
   },
+  {
+    title: 'report mayora',
+    path: '/dashboard/report_mayora',
+    icon: getIcon('eva:archive-outline'),
+  },
 ];
 
 export default navConfig;
