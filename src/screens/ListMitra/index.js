@@ -11,7 +11,9 @@ import {
   Table,
   TableCell,
   TableContainer,
+  TablePagination,
   TableRow,
+  TextField,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
@@ -30,7 +32,7 @@ import {
 } from '../../api/mitra';
 import dummybarang from '../../assets/dummy-barang.jpg';
 import dummyKtp from '../../assets/dummy-ktp.jpg';
-import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
+import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import BarMobile from '../../components/BarMobile';
 import DialogConfirm from '../../components/DialogConfirm';
 import Image from '../../components/Image';
@@ -46,6 +48,9 @@ export default function ListMitra() {
   const [alignment, setAlignment] = useState('aktif');
   const [alertOpen, setAlertOpen] = useState(false);
   const [item, setItem] = useState(null);
+  const [page, setPage] = useState(0);
+  const [search, setSearch] = useState('');
+  const [size, setSize] = useState(5);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { handleOpen: handleOpenImage } = useImageViewer();
@@ -129,13 +134,33 @@ export default function ListMitra() {
     setAlertOpen(false);
   };
 
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  function stableSort(array, query) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    if (query) {
+      const column = array[0] && Object.keys(array[0]);
+      return array.filter((a) =>
+        column.some((col) => a[col] && a[col].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
+      );
+    }
+    return stabilizedThis.map((el) => el[0]);
+  }
+
   const listNo = data && data?.data?.data;
   const listAll = dataAll && dataAll.data.data;
-  const list = alignment === 'aktif' ? listAll : listNo;
+  const ll = alignment === 'aktif' ? listAll : listNo;
+  const list = ll ? stableSort(ll, search).slice(page * size, page * size + size) : [];
   return (
     <>
       <BarMobile title={'List Mitra'} />
-      <AdupiXMayoraHead />
+      <AdupiXLeMineraleHead />
       <div style={{ marginTop: 5, paddingLeft: 20, paddingRight: 20 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
           <Typography variant="h3">Daftar Mitra</Typography>
@@ -144,6 +169,14 @@ export default function ListMitra() {
             <ToggleButton value="verifikasi">Verifikasi</ToggleButton>
           </ToggleButtonGroup>
         </Box>
+        <TextField
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          variant="outlined"
+          fullWidth
+          placeholder="Cari ..."
+          sx={{ marginBottom: 2 }}
+        />
         {isLoading && <LoadingCard />}
         {list && list?.length === 0 && <TidakAdaData />}
         {list &&
@@ -334,6 +367,15 @@ export default function ListMitra() {
               </CardContent>
             </Card>
           ))}
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 50]}
+          component="div"
+          count={ll && ll.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={size}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </div>
       {alertOpen && (
         <DialogConfirm

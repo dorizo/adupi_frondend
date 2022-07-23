@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import React, { useState } from 'react';
 import adupi from '../../assets/logo/adupi.png';
-import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
+import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import useDrawer from '../../hooks/useDrawer';
 import Masuk from './Masuk';
@@ -15,7 +15,7 @@ export default function FasilitatorWelcome() {
   };
   return (
     <>
-      <AdupiXMayoraHead text />
+      <AdupiXLeMineraleHead text />
       <img alt="recyle logo" width="100%" style={{ paddingLeft: 20, paddingRight: 20 }} src={adupi} />
       <div style={{ textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
         <Typography variant="h4">Selamat Datang </Typography>

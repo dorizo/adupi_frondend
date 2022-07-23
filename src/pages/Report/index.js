@@ -29,6 +29,7 @@ import MasalahMitraPerbulan from './Chart/MasalahMitraPerbulan';
 import MasalahPerMitraPerbulan from './Chart/MasalahPerMitraPerbulan';
 import PekerjaPerbulan from './Chart/PekerjaPerbulan';
 import PembelianMitraPerbulan from './Chart/PembelianMitraPerbulan';
+import PembelianMitraPerJenis from './Chart/PembelianMitraPerJenis';
 import PembelianMitraPerKategori from './Chart/PembelianMitraPerKategori';
 import PembelianPerLuas from './Chart/PembelianPerLuas';
 import PembelianPerMitra from './Chart/PembelianPerMitra';
@@ -36,6 +37,7 @@ import PembelianPerMitraPerbulan from './Chart/PembelianPerMitraPerbulan';
 import PembelianPerPekerja from './Chart/PembelianPerPekerja';
 import PenjualanMitraPerbulan from './Chart/PenjualanMitraPerbulan';
 import PenjualanMitraPerbulanPabrik from './Chart/PenjualanMitraPerbulanPabrik';
+import PenjualanMitraPerJenis from './Chart/PenjualanMitraPerJenis';
 import PenjualanMitraPerKategori from './Chart/PenjualanMitraPerKategori';
 import PenjualanPerMitraPerbulan from './Chart/PenjualanPerMitraPerbulan';
 import PenjualanPerMitraPerbulanPabrik from './Chart/PenjualanPerMitraPerbulanPabrik';
@@ -139,6 +141,14 @@ const chartOpton = [
   {
     component: <PenjualanMitraPerKategori />,
     title: 'Penjualan Mitra Per Kategori',
+  },
+  {
+    component: <PembelianMitraPerJenis />,
+    title: 'Pembelian Mitra Per Jenis',
+  },
+  {
+    component: <PenjualanMitraPerJenis />,
+    title: 'Penjualan Mitra Per Jenis',
   },
   {
     component: <PembelianPerMitra />,

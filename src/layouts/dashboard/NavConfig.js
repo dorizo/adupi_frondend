@@ -22,6 +22,11 @@ const navConfig = [
     icon: getIcon('eva:settings-outline'),
   },
   {
+    title: 'kategori-sampah',
+    path: '/dashboard/kategori-sampah',
+    icon: getIcon('eva:trash-2-outline'),
+  },
+  {
     title: 'jenis-sampah',
     path: '/dashboard/jenis-sampah',
     icon: getIcon('eva:trash-2-outline'),
@@ -66,6 +71,11 @@ const navConfig = [
   {
     title: 'report mayora',
     path: '/dashboard/report_mayora',
+    icon: getIcon('eva:archive-outline'),
+  },
+  {
+    title: 'export data',
+    path: '/dashboard/export-data',
     icon: getIcon('eva:archive-outline'),
   },
 ];

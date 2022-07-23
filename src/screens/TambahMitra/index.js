@@ -3,7 +3,7 @@ import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { POST_REGISTRASI_MITRA } from '../../api/mitra';
 import anggota from '../../assets/illustation/anggota.png';
-import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
+import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import BarMobile from '../../components/BarMobile';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import useDrawer from '../../hooks/useDrawer';
@@ -61,7 +61,7 @@ export default function TambahMitra() {
   return (
     <>
       <BarMobile title={'Tambah Mitra'} />
-      <AdupiXMayoraHead />
+      <AdupiXLeMineraleHead />
       <img alt="recyle logo" style={{ paddingLeft: 20, paddingRight: 20 }} width="100%" src={anggota} />
       <div style={{ marginTop: 5, textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
         <Typography align="center" variant="h2">

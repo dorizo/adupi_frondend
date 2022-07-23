@@ -1,9 +1,9 @@
-import { Box, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Grid, TablePagination, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { ADD_ANGGOTA, DELETE_ANGGOTA, GET_ALL_ANGGOTA, UPDATE_ANGGOTA } from '../../api/anggota';
-import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
+import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import BarMobile from '../../components/BarMobile';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import DialogConfirm from '../../components/DialogConfirm';
@@ -25,6 +25,9 @@ export default function Anggota() {
   const [step, setStep] = useState(0);
   const [values, setValues] = useState({});
   const { enqueueSnackbar } = useSnackbar();
+  const [page, setPage] = useState(0);
+  const [search, setSearch] = useState('');
+  const [size, setSize] = useState(5);
   const { data, refetch, isLoading } = useQuery('GET_ALL_ANGGOTA', GET_ALL_ANGGOTA, {
     refetchOnWindowFocus: false,
   });
@@ -124,22 +127,48 @@ export default function Anggota() {
     setAlertOpen(false);
     setItem(null);
   };
-  const list = data && data?.data?.data;
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  function stableSort(array, query) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    if (query) {
+      const column = array[0] && Object.keys(array[0]);
+      return array.filter((a) =>
+        column.some((col) => a[col] && a[col].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
+      );
+    }
+    return stabilizedThis.map((el) => el[0]);
+  }
+  const ll = data && data?.data?.data;
+  const list = ll ? stableSort(ll, search).slice(page * size, page * size + size) : [];
   return (
     <>
-      <BarMobile title={'Anggota'} />
-      <AdupiXMayoraHead />
+      <BarMobile title={'Supplier'} />
+      <AdupiXLeMineraleHead />
       {/* <img alt="recyle logo" width="100%" style={{ padding: 20 }} src={anggota} /> */}
       <div style={{ textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
         <Typography align="center" variant="h2">
-          Anggota / Sumber
+          Supplier
         </Typography>
         <ButtonPrimary onClick={handleOnAdd} style={{ marginTop: 50, marginBottom: 5 }} label={'Tambah'} />
       </div>
 
       <div style={{ marginTop: 5, paddingLeft: 20, paddingRight: 20 }}>
+        <TextField
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          variant="outlined"
+          fullWidth
+          placeholder="Cari ..."
+          sx={{ marginBottom: 2 }}
+        />
         {isLoading && <LoadingCard />}
-
         {list && list?.length === 0 && <TidakAdaData />}
         {list &&
           list.map((li, i) => (
@@ -206,6 +235,15 @@ export default function Anggota() {
               </CardContent>
             </Card>
           ))}
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 50]}
+          component="div"
+          count={ll && ll.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={size}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </div>
       <Drawer title={drawerTitle}>
         <Form

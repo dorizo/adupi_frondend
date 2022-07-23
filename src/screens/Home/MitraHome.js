@@ -31,10 +31,20 @@ export default function MitraHome() {
   });
   const self = data && data?.data?.data;
   const menuList = [
-    { title: 'Beli Sampah', desc: 'Masukkan Data Sampah yang Dibeli', icon: menuBeli, link: '/mobile/beli-sampah' },
-    { title: 'Jual Sampah', desc: 'Masukkan Data Sampah yang Dijual', icon: menuJual, link: '/mobile/jual-sampah' },
+    {
+      title: 'Pembelian bahan DUP',
+      desc: 'Pembelian bahan baku daur ulang ',
+      icon: menuBeli,
+      link: '/mobile/beli-sampah',
+    },
+    {
+      title: 'Penjualan bahan DUP',
+      desc: 'Penjualan bahan baku daur ulang',
+      icon: menuJual,
+      link: '/mobile/jual-sampah',
+    },
     { title: 'Masalah', desc: 'Laporkan Masalah Mesin/Kendaraan', icon: menuMasalah, link: '/mobile/masalah' },
-    { title: 'Anggota / Sumber', desc: 'Tambah Anggota/Sumber Sampah', icon: menuAnggota, link: '/mobile/anggota' },
+    { title: 'Tambah Supplier', desc: 'Tambah Supplier DUP', icon: menuAnggota, link: '/mobile/anggota' },
     { title: 'Alat', desc: 'Tambah Alat', icon: menuAlat, link: `/mobile/alat` },
   ];
 
@@ -44,17 +54,18 @@ export default function MitraHome() {
         <Box sx={{ flexGrow: 1 }}>
           <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }} position="static">
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10, marginTop: 10 }}>
-              <img alt="adupi logo" width={50} src={adupi} />
+              <img alt="adupi logo" width={50} src={adupi} style={{ marginRight: 2 }} />
               <Typography
                 variant="caption"
                 style={{
+                  fontWeight: 'bold',
                   wordWrap: 'break-word',
                   width: 120,
                   borderLeft: '2px solid #fff',
                   paddingLeft: 5,
                 }}
               >
-                ASOSIASI {'\n'} DAUR ULANG {'\n'} PLASTIK INDONESIA
+                Gerakan {'\n'} Ekonomi {'\n'} Sirkular
               </Typography>
             </div>
             <Toolbar>

@@ -5,11 +5,11 @@ import { useSnackbar } from 'notistack';
 import * as React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import {
-  ADD_JENIS_SAMPAH,
-  DELETE_JENIS_SAMPAH,
-  GET_ALL_JENIS_SAMPAH,
-  UPDATE_JENIS_SAMPAH,
-} from '../../api/jenis_sampah';
+  ADD_KATEGORI_SAMPAH,
+  DELETE_KATEGORI_SAMPAH,
+  GET_ALL_KATEGORI_SAMPAH,
+  UPDATE_KATEGORI_SAMPAH,
+} from '../../api/kategori_sampah';
 import DialogConfirm from '../../components/DialogConfirm';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
@@ -18,17 +18,11 @@ import DialogComponent from './DialogComponent';
 
 const headCells = [
   {
-    id: 'jenis',
+    id: 'kategori',
     numeric: false,
     disablePadding: true,
-    label: 'Jenis Sampah',
+    label: 'Kategori Sampah',
   },
-  // {
-  //   id: 'kategori',
-  //   numeric: false,
-  //   disablePadding: true,
-  //   label: 'Kategori Sampah',
-  // },
 ];
 
 export default function Index() {
@@ -39,7 +33,7 @@ export default function Index() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [itemSelected, setItemSelected] = React.useState(null);
   //   const { checkPermision } = useMee();
-  const { data, isLoading, refetch } = useQuery('GET_ALL_JENIS_SAMPAH', GET_ALL_JENIS_SAMPAH);
+  const { data, isLoading, refetch } = useQuery('GET_ALL_KATEGORI_SAMPAH', GET_ALL_KATEGORI_SAMPAH);
   const { enqueueSnackbar } = useSnackbar();
 
   const rows = data && data?.data?.data;
@@ -73,7 +67,7 @@ export default function Index() {
     setAlertOpen(false);
   };
 
-  const deleteMutation = useMutation((params) => DELETE_JENIS_SAMPAH(params.id), {
+  const deleteMutation = useMutation((params) => DELETE_KATEGORI_SAMPAH(params.id), {
     onSuccess: async (res) => {
       const variant = res.status === 200 ? 'success' : 'warning';
       await enqueueSnackbar(res.data.message, { variant });
@@ -89,7 +83,7 @@ export default function Index() {
   // HANDLE ACTION
   const onAdd = async (data, callbackSetError) => {
     setLoading(true);
-    const response = await ADD_JENIS_SAMPAH(data);
+    const response = await ADD_KATEGORI_SAMPAH(data);
     if (response.status === 400) {
       callbackSetError(response.data.error.form);
     }
@@ -110,7 +104,7 @@ export default function Index() {
   };
   const onUpdate = async (data, id, callbackSetError) => {
     setLoading(true);
-    const response = await UPDATE_JENIS_SAMPAH(data, id);
+    const response = await UPDATE_KATEGORI_SAMPAH(data, id);
     if (response.data.status === 400) {
       callbackSetError(response.data.error.form);
     }
@@ -124,7 +118,7 @@ export default function Index() {
     await setLoading(false);
   };
   const onDelete = async () => {
-    deleteMutation.mutate({ id: itemSelected.jsCode });
+    deleteMutation.mutate({ id: itemSelected.ksCode });
   };
   const handleConfirm = async () => {
     await onDelete();
@@ -133,11 +127,11 @@ export default function Index() {
   const actionOpen = Boolean(anchorEl);
   const processing = loading || isLoading || deleteMutation.isLoading;
   return (
-    <Page title="Jenis Sampah">
+    <Page title="Kategori Sampah">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Jenis Sampah
+            Kategori Sampah
           </Typography>
           <Button onClick={() => setDialogOpen(true)} variant="contained">
             Tambah
@@ -154,11 +148,8 @@ export default function Index() {
                   <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
                     <TableCell>{row.no}</TableCell>
                     <TableCell id={labelId} scope="row">
-                      {row.jenis}
-                    </TableCell>
-                    {/* <TableCell id={labelId} scope="row">
                       {row.kategori}
-                    </TableCell> */}
+                    </TableCell>
                   </TableRow>
                 );
               })

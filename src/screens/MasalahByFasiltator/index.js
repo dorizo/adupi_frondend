@@ -12,7 +12,7 @@ import {
   UPDATE_MASALAH,
 } from '../../api/masalah';
 import dummyMasalah from '../../assets/dummy-masalah.png';
-import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
+import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import BarMobile from '../../components/BarMobile';
 import DialogConfirm from '../../components/DialogConfirm';
 import Image from '../../components/Image';
@@ -156,7 +156,7 @@ export default function MasalahByFasilitator() {
   return (
     <>
       <BarMobile title={'Masalah Mitra'} />
-      <AdupiXMayoraHead />
+      <AdupiXLeMineraleHead />
       <div style={{ marginTop: 5, paddingLeft: 20, paddingRight: 20 }}>
         {isLoading && <LoadingCard />}
 

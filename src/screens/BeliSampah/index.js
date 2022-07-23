@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { BELI_SAMPAH } from '../../api/sampah';
 import belisampah from '../../assets/illustation/beli-sampah.png';
-import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
+import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import BarMobile from '../../components/BarMobile';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import useDrawer from '../../hooks/useDrawer';
@@ -64,7 +64,7 @@ export default function BeliSampah() {
   return (
     <>
       <BarMobile title={'Beli Sampah'} />
-      <AdupiXMayoraHead />
+      <AdupiXLeMineraleHead />
       <img alt="recyle logo" width="100%" src={belisampah} />
       <div style={{ textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
         <Typography align="center" variant="h2">

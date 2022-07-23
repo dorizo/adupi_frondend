@@ -244,7 +244,39 @@ const GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUS = async (tahun, jenisMasalah, stat
     return catchCallBack(error);
   }
 };
-const GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORI = async (jsCode) => {
+const GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORI = async (ksCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/newSemuaMitraPerkategori`, {
+      headers,
+      params: {
+        ksCode,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+const GET_PENJUALAN_SEMUA_MITRA_PERKATEGORI = async (ksCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/penjualan/newSemuaMitraPerkategori`, {
+      headers,
+      params: {
+        ksCode,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+const GET_PEMBELIAN_SEMUA_MITRA_PERJENIS = async (jsCode) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
@@ -260,7 +292,7 @@ const GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORI = async (jsCode) => {
     return catchCallBack(error);
   }
 };
-const GET_PENJUALAN_SEMUA_MITRA_PERKATEGORI = async (jsCode) => {
+const GET_PENJUALAN_SEMUA_MITRA_PERJENIS = async (jsCode) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
@@ -325,8 +357,27 @@ const GET_ANALISI_PEMBELIAN_LUAS_GUDANG_PERBULAN = async (tahun) => {
   }
 };
 
+const EXPORT_BELI_SAMAPH = async (start, end) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`export/beliSampah/2`, {
+      headers,
+      params: {
+        start,
+        end,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
 export {
   GET_REPORT_MITRA_BY_DATE,
+  EXPORT_BELI_SAMAPH,
   GET_REPORT_MITRA_DETAIL_BY_DATE,
   GET_ANALISI_PEMBELIAN_LUAS_GUDANG_PERBULAN,
   GET_ANALISI_PEMBELIAN_MITRA_PERBULAN,
@@ -346,4 +397,6 @@ export {
   GET_PENJUALAN_SEMUA_MITRA_PERBULAN_PABRIK,
   GET_PENJUALAN_SEMUA_MITRA_PERKATEGORI,
   GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUS,
+  GET_PEMBELIAN_SEMUA_MITRA_PERJENIS,
+  GET_PENJUALAN_SEMUA_MITRA_PERJENIS,
 };

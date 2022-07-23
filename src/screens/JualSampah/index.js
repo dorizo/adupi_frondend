@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { JUAL_SAMPAH } from '../../api/sampah';
 import jualsampah from '../../assets/illustation/jual-sampah.png';
 
-import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
+import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import BarMobile from '../../components/BarMobile';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import useDrawer from '../../hooks/useDrawer';
@@ -59,7 +59,7 @@ export default function JualSampah() {
   return (
     <>
       <BarMobile title={'Jual Sampah'} />
-      <AdupiXMayoraHead />
+      <AdupiXLeMineraleHead />
       <img alt="recyle logo" width="100%" src={jualsampah} />
       <div style={{ marginTop: 35, textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
         <Typography align="center" variant="h2">

@@ -1,69 +1,73 @@
 import qs from 'qs';
 import axios, { catchCallBack } from '../index';
 
-const GET_ALL_JENIS_SAMPAH = async () => {
+const GET_ALL_KATEGORI_SAMPAH = async () => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.get('master/jenisSampah/all', { headers });
+    const response = await axios.get('master/kategoriSampah/all', { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
   }
 };
-const GET_ONE_JENIS_SAMPAH = async (id) => {
+const GET_ONE_KATEGORI_SAMPAH = async (id) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.get(`master/jenisSampah/one/${id}`, { headers });
-    return response;
-  } catch (error) {
-    return catchCallBack(error);
-  }
-};
-
-const ADD_JENIS_SAMPAH = async ({ jenis, ksCode }) => {
-  const data = qs.stringify({
-    jenis,
-    ksCode,
-  });
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-  };
-  try {
-    const response = await axios.post(`master/jenisSampah/add`, data, { headers });
+    const response = await axios.get(`master/kategoriSampah/one/${id}`, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
   }
 };
 
-const UPDATE_JENIS_SAMPAH = async ({ jenis, ksCode }, id) => {
+const ADD_KATEGORI_SAMPAH = async ({ kategori }) => {
   const data = qs.stringify({
-    jenis,
-    ksCode,
+    kategori,
   });
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.put(`master/jenisSampah/edit/${id}`, data, { headers });
+    const response = await axios.post(`master/kategoriSampah/add`, data, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
   }
 };
-const DELETE_JENIS_SAMPAH = async (id) => {
+
+const UPDATE_KATEGORI_SAMPAH = async ({ kategori }, id) => {
+  const data = qs.stringify({
+    kategori,
+  });
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.delete(`master/jenisSampah/delete/${id}`, { headers });
+    const response = await axios.put(`master/kategoriSampah/edit/${id}`, data, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
   }
 };
-export { ADD_JENIS_SAMPAH, GET_ALL_JENIS_SAMPAH, DELETE_JENIS_SAMPAH, UPDATE_JENIS_SAMPAH, GET_ONE_JENIS_SAMPAH };
+const DELETE_KATEGORI_SAMPAH = async (id) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.delete(`master/kategoriSampah/delete/${id}`, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+export {
+  ADD_KATEGORI_SAMPAH,
+  GET_ALL_KATEGORI_SAMPAH,
+  DELETE_KATEGORI_SAMPAH,
+  UPDATE_KATEGORI_SAMPAH,
+  GET_ONE_KATEGORI_SAMPAH,
+};

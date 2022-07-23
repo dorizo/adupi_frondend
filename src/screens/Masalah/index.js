@@ -1,4 +1,15 @@
-import { Box, Button, Card, CardContent, CardHeader, Chip, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Chip,
+  Grid,
+  TablePagination,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
@@ -6,7 +17,7 @@ import { fDateTime } from '../../utils/formatTime';
 import { ADD_MASALAH, CHANGE_STATUS_MASALAH, DELETE_MASALAH, GET_ALL_MASALAH, UPDATE_MASALAH } from '../../api/masalah';
 import dummyMasalah from '../../assets/dummy-masalah.png';
 import masalah from '../../assets/illustation/masalah.png';
-import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
+import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import BarMobile from '../../components/BarMobile';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import DialogConfirm from '../../components/DialogConfirm';
@@ -26,6 +37,9 @@ export default function Masalah() {
   const [item, setItem] = useState(null);
   const [step, setStep] = useState(0);
   const [values, setValues] = useState({});
+  const [page, setPage] = useState(0);
+  const [search, setSearch] = useState('');
+  const [size, setSize] = useState(5);
   const { enqueueSnackbar } = useSnackbar();
   const { data, refetch, isLoading } = useQuery('GET_ALL_MASALAH', GET_ALL_MASALAH, {
     refetchOnWindowFocus: false,
@@ -141,12 +155,32 @@ export default function Masalah() {
     setAlertOpen(false);
     setItem(null);
   };
-  const list = data && data?.data?.data;
+
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  function stableSort(array, query) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    if (query) {
+      const column = array[0] && Object.keys(array[0]);
+      return array.filter((a) =>
+        column.some((col) => a[col] && a[col].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
+      );
+    }
+    return stabilizedThis.map((el) => el[0]);
+  }
+  const ll = data && data?.data?.data;
+  const list = ll ? stableSort(ll, search).slice(page * size, page * size + size) : [];
 
   return (
     <>
       <BarMobile title={'Masalah'} />
-      <AdupiXMayoraHead />
+      <AdupiXLeMineraleHead />
       <img alt="recyle logo" width="100%" src={masalah} />
       <div style={{ marginTop: 5, textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
         <Typography align="center" variant="h2">
@@ -159,6 +193,14 @@ export default function Masalah() {
       </div>
 
       <div style={{ marginTop: 5, paddingLeft: 20, paddingRight: 20 }}>
+        <TextField
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          variant="outlined"
+          fullWidth
+          placeholder="Cari ..."
+          sx={{ marginBottom: 2 }}
+        />
         {isLoading && <LoadingCard />}
 
         {list && list?.length === 0 && <TidakAdaData />}
@@ -213,6 +255,15 @@ export default function Masalah() {
               </CardContent>
             </Card>
           ))}
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 50]}
+          component="div"
+          count={ll && ll.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={size}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </div>
       <Drawer title={drawerTitle}>
         <Form

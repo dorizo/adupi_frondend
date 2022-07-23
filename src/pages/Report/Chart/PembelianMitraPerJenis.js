@@ -2,18 +2,18 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography }
 import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
-import { GET_ALL_KATEGORI_SAMPAH } from '../../../api/kategori_sampah';
-import { GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORI } from '../../../api/report';
+import { GET_ALL_JENIS_SAMPAH } from '../../../api/jenis_sampah';
+import { GET_PEMBELIAN_SEMUA_MITRA_PERJENIS } from '../../../api/report';
 import AutoCompleteLoading from '../../../components/AutoCompleteLoading';
 import { yearOption } from '../../../utils/yearOption';
 
 const tahunSekarang = new Date().getFullYear();
 
-export default function PembelianMitraPerKategori() {
+export default function PembelianMitraPerJenis() {
   const [tahun, setTahun] = useState({ value: tahunSekarang, title: tahunSekarang });
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [ksCode, setKsCode] = useState(null);
+  const [jsCode, setJsCode] = useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,28 +23,28 @@ export default function PembelianMitraPerKategori() {
     setOpen(false);
   };
   const handleReset = () => {
-    setKsCode(null);
+    setJsCode(null);
   };
   const handleFilter = () => {
-    refetch(ksCode?.value);
+    refetch(jsCode?.value);
     setOpen(false);
   };
 
-  const { data, refetch } = useQuery(['GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORI', ksCode?.value], () =>
-    GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORI(ksCode?.value)
+  const { data, refetch } = useQuery(['GET_PEMBELIAN_SEMUA_MITRA_PERJENIS', jsCode?.value], () =>
+    GET_PEMBELIAN_SEMUA_MITRA_PERJENIS(jsCode?.value)
   );
-  const { data: jsData } = useQuery('GET_ALL_KATEGORI_SAMPAH', GET_ALL_KATEGORI_SAMPAH);
+  const { data: jsData } = useQuery('GET_ALL_JENIS_SAMPAH', GET_ALL_JENIS_SAMPAH);
   const listJS = jsData && jsData?.data?.data;
   const jsOption =
     listJS &&
     listJS?.map((m) => {
-      const option = { value: m.ksCode, title: m.kategori };
+      const option = { value: m.jsCode, title: m.jenis };
       return option;
     });
 
   const list = data && data?.data?.data;
   const series = (list && list?.map((d) => d.jumlah)) || [];
-  const labels = (list && list?.map((d) => d.kategori)) || [];
+  const labels = (list && list?.map((d) => d.jenis)) || [];
   const state = {
     series,
     options: {
@@ -79,7 +79,7 @@ export default function PembelianMitraPerKategori() {
       </Button>
 
       <ReactApexChart options={state.options} series={state.series} type="pie" height={360} />
-      <Typography variant="caption">*Jenis : {ksCode ? ksCode.title : 'all'}</Typography>
+      <Typography variant="caption">*Jenis : {jsCode ? jsCode.title : 'all'}</Typography>
       <Dialog
         fullWidth
         maxWidth="xs"
@@ -99,12 +99,12 @@ export default function PembelianMitraPerKategori() {
             onChange={(_, newVal) => setTahun(newVal)}
           />
           <AutoCompleteLoading
-            label="Kategori"
+            label="Jenis"
             options={jsOption}
             loading={loading}
-            value={ksCode}
+            value={jsCode}
             getOptionLabel={(option) => option.title}
-            onChange={(_, newVal) => setKsCode(newVal)}
+            onChange={(_, newVal) => setJsCode(newVal)}
           />
         </DialogContent>
         <DialogActions>

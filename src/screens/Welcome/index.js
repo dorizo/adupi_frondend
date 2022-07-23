@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import Page from '../../components/Page';
 import recyle from '../../assets/illustation/recyle.png';
-import AdupiXMayoraHead from '../../components/AdupiXMayoraHead';
+import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import ButtonSecondary from '../../components/Button/ButtonSecondary';
 import useDrawer from '../../hooks/useDrawer';
@@ -69,7 +69,7 @@ export default function Welcome() {
   };
   return (
     <Page title="Welcome">
-      <AdupiXMayoraHead />
+      <AdupiXLeMineraleHead />
       <img alt="recyle logo" width="100%" src={recyle} />
       <div style={{ textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
         <Typography variant="h4">Selamat Datang Mitra Adupi</Typography>

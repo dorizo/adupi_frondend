@@ -63,7 +63,7 @@ export default function TransaksiPenjualan() {
                 <Typography style={{ fontWeight: 'bold' }}>Penjualan</Typography>
                 <Typography variant="caption">{fDateTime(li?.createAt)}</Typography>
               </Box>
-              <Typography>Pembeli : {li?.pembeli}</Typography>
+              <Typography>Pembeli : {li?.pembeli?.pembeli}</Typography>
               <Typography>Berat : {li?.totalBerat}</Typography>
               <Box sx={{ justifyContent: 'space-between', flexGrow: 1, display: 'flex' }}>
                 <Typography>Harga : {li?.totalHarga}</Typography>

@@ -6,6 +6,7 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 import Blog from './pages/Blog';
 import Fasilitator from './pages/Fasilitator';
 import JenisSampah from './pages/JenisSampah';
+import KategoriSampah from './pages/KategoriSampah';
 import ListMasalah from './pages/ListMasalah';
 import Login from './pages/Login';
 import Mitra from './pages/Mitra';
@@ -43,6 +44,7 @@ import TambahAlat from './screens/TambahAlat';
 import TambahMitra from './screens/TambahMitra';
 import Welcome from './screens/Welcome';
 import FasilitatorWelcome from './screens/Welcome/FasilitatorWelcome';
+import Export from './pages/Export';
 
 // ----------------------------------------------------------------------
 
@@ -106,6 +108,14 @@ export default function Router() {
           element: (
             <RequireAuth allowedRoles={['admin']}>
               <JenisSampah />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'kategori-sampah',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <KategoriSampah />
             </RequireAuth>
           ),
         },
@@ -177,6 +187,14 @@ export default function Router() {
           element: (
             <RequireAuth allowedRoles={['admin']}>
               <Report />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'export-data',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <Export />
             </RequireAuth>
           ),
         },
