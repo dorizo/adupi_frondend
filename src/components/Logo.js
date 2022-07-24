@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Box } from '@mui/material';
-import adupi from '../assets/logo/adupi.png';
+import logo from '../assets/logo/logo-black.png';
 
 // ----------------------------------------------------------------------
 
@@ -24,15 +24,15 @@ export default function Logo({ disabledLink = false, sx }) {
   // OR
   // const logo = <Box component="img" src="/static/logo.svg" sx={{ width: 40, height: 40, ...sx }} />
 
-  const logo = (
-    <Box sx={{ width: 65, height: 65, ...sx }}>
-      <img alt="adupi logo" width={65} src={adupi} />
+  const logoo = (
+    <Box sx={{ width: 80, height: 80, ...sx }}>
+      <img alt="adupi logo" width={80} src={logo} />
     </Box>
   );
 
   if (disabledLink) {
-    return <>{logo}</>;
+    return <>{logoo}</>;
   }
 
-  return <RouterLink to="/">{logo}</RouterLink>;
+  return <RouterLink to="/">{logoo}</RouterLink>;
 }

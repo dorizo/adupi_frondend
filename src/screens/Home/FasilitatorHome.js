@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import kehadiran from '../../assets/illustation/kehadiran.png';
 import listMitra from '../../assets/illustation/list-mitra.png';
 import menuAnggota from '../../assets/illustation/menu-anggota.png';
-import adupi from '../../assets/logo/adupi-w.png';
+import adupi from '../../assets/logo/logo.png';
 import useAuth from '../../hooks/useAuth';
 import Akun from '../Akun';
 
@@ -32,17 +32,18 @@ export default function FasilitatorHome() {
         <Box sx={{ flexGrow: 1 }}>
           <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }} position="static">
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10, marginTop: 10 }}>
-              <img alt="adupi logo" width={50} src={adupi} />
+              <img alt="adupi logo" width={50} src={adupi} style={{ marginRight: 2 }} />
               <Typography
                 variant="caption"
                 style={{
+                  fontWeight: 'bold',
                   wordWrap: 'break-word',
                   width: 120,
                   borderLeft: '2px solid #fff',
                   paddingLeft: 5,
                 }}
               >
-                ASOSIASI {'\n'} DAUR ULANG {'\n'} PLASTIK INDONESIA
+                Gerakan {'\n'} Ekonomi {'\n'} Sirkular
               </Typography>
             </div>
             <Toolbar>

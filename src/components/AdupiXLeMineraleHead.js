@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import adupi from '../assets/logo/adupi.png';
+import adupi from '../assets/logo/logo-black.png';
 import leMineral from '../assets/logo/le-minerale.png';
 
 export default function AdupiXLeMineraleHead({ text = false }) {

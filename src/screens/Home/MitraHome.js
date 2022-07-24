@@ -18,7 +18,7 @@ import menuBeli from '../../assets/illustation/menu-beli-sampah.png';
 import menuJual from '../../assets/illustation/menu-jual-sampah.png';
 import menuMasalah from '../../assets/illustation/menu-masalah.png';
 import menuAlat from '../../assets/illustation/recyle.png';
-import adupi from '../../assets/logo/adupi-w.png';
+import adupi from '../../assets/logo/logo.png';
 import Akun from '../Akun';
 import Transaksi from '../Transaksi';
 
