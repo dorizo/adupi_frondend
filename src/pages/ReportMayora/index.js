@@ -6,6 +6,8 @@ import MasalahMitraPerbulan from './Chart/MasalahMitraPerbulan';
 import MasalahPerMitraPerbulan from './Chart/MasalahPerMitraPerbulan';
 import PembelianMitraPerbulan from './Chart/PembelianMitraPerbulan';
 import PembelianMitraPerKategori from './Chart/PembelianMitraPerKategori';
+import PembelianMitraPerJenis from './Chart/PembelianMitraPerJenis';
+import PenjualanMitraPerJenis from './Chart/PenjualanMitraPerJenis';
 import PembelianPerMitraPerbulan from './Chart/PembelianPerMitraPerbulan';
 import PenjualanPerMitraPerbulan from './Chart/PenjualanPerMitraPerbulan';
 
@@ -23,6 +25,18 @@ export default function ReportMayora() {
           <CardContent>
             <Grid container spacing={1} style={{ marginBottom: 10 }}>
               <Grid item xs={12} sm={6}>
+                <PembelianMitraPerJenis />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <PenjualanMitraPerJenis />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+        <Card style={{ marginBottom: 10 }}>
+          <CardContent>
+            <Grid container spacing={1} style={{ marginBottom: 10 }}>
+              <Grid item xs={12} sm={6}>
                 <PembelianMitraPerKategori />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -31,6 +45,7 @@ export default function ReportMayora() {
             </Grid>
           </CardContent>
         </Card>
+
         <Card style={{ marginBottom: 10 }}>
           <CardContent>
             <Grid container spacing={1} style={{ marginBottom: 10 }}>
