@@ -82,7 +82,7 @@ export default function PetaSebaran({ type = null }) {
     getAllAnggota();
   }, []);
 
-  const warna = ['#F00', '#ffff00', '#005187', '#155612', '#ff00d0', '#0cd151', '#000'];
+  const warna = ['#F00', '#ffff00', '#005187', '#155612', '#ff00d0', '#0cd151', '#000','#A58CFF','#FFE15D','#0e7013' ,'#9b9b9b','#c68383','#a80000'];
   function MyComponent() {
     const mapEvents = useMapEvents({
       zoomend: () => {
