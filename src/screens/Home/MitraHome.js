@@ -52,7 +52,7 @@ export default function MitraHome() {
     <div style={{ paddingBottom: 40 }}>
       {value === 0 && (
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }} position="static">
+          <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15,background: '#94C0E9' }} position="static">
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10, marginTop: 10 }}>
               <img alt="adupi logo" width={50} src={adupi} style={{ marginRight: 2 }} />
               <Typography

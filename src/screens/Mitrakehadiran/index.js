@@ -1,9 +1,9 @@
-import { Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Icon, TablePagination, TextField, Typography } from '@mui/material';
+import { Card, CardContent, CardHeader, Grid, TablePagination, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
-import { useState ,useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import TidakAdaData from '../../components/TidakAdaData';
-import { ADD_KUNJUNGAN, DELETE_KUNJUNGAN, GET_ALL_KUNJUNGAN, UPDATE_KUNJUNGAN ,ADD_KUNJUNGANIMAGE } from '../../api/kunjungan';
+import { ADD_KUNJUNGAN, DELETE_KUNJUNGAN, GET_ALL_KUNJUNGAN, UPDATE_KUNJUNGAN } from '../../api/kunjungan';
 import { GET_MITRA_ALL_BY_FASILITATOR } from '../../api/mitra';
 import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import BarMobile from '../../components/BarMobile';
@@ -11,26 +11,18 @@ import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import DialogConfirm from '../../components/DialogConfirm';
 import useDrawer from '../../hooks/useDrawer';
 import { fDateTime } from '../../utils/formatTime';
-import Form from './form';
-import MoreMenu from './MoreMenu';
+
 import LoadingCard from '../../components/LoadingCard';
-import BurstModeIcon from '@mui/icons-material/BurstMode';
-import ButtonUpload from 'src/components/Button/ButtonUpload';
-export default function Kunjungan() {
+export default function Mitrakehadiran() {
   const { onOpen, Drawer, onClose } = useDrawer();
   const [drawerTitle, setDrawerTitle] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [item, setItem] = useState(null);
-  const [lat, setlat] = useState('');
-  const [long, setlong] = useState('');
   const [step, setStep] = useState(0);
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(5);
-  const [openmodal, setOpenmodal] = useState(false);
-  const [Modalitems, setModalitems] = useState(null);
-  const [selectedImg, setSelectedImg] = useState('');
   const { enqueueSnackbar } = useSnackbar();
   const { data, refetch, isLoading } = useQuery('GET_ALL_KUNJUNGAN', GET_ALL_KUNJUNGAN, {
     refetchOnWindowFocus: false,
@@ -45,16 +37,9 @@ export default function Kunjungan() {
       return { value: g?.mitraCode, label: g?.nama };
     });
 
-    const imageupload = async (value) => {
-        console.log(value);
-        setModalitems(value);
-        setOpenmodal(true);
-        setSelectedImg("");
-    }
   const handleAdd = async (value) => {
     setLoading(true);
     // const response = await ADD_KUNJUNGAN({ ...values, foto: '-' });
-    console.log(value);
     const response = await ADD_KUNJUNGAN(value);
     if (response.status === 422) {
       const asdf = response.data.errors;
@@ -162,81 +147,18 @@ export default function Kunjungan() {
   }
   const ll = data && data?.data?.data;
   const list = ll ? stableSort(ll, search).slice(page * size, page * size + size) : [];
+  navigator.geolocation.getCurrentPosition(function(position) {
+    console.log("Latitude is :", position.coords.latitude);
+    console.log("Longitude is :", position.coords.longitude);
+  });       
 
-   
-
-  useEffect(()=>{
-
-    navigator.geolocation.getCurrentPosition(function(position) {
-      console.log("Latitude disni :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
-      setlat(position.coords.latitude);
-      setlong(position.coords.longitude);
-      
-      console.log(lat);
-    });    
-  });
-  const handleClose = () => {
-    setOpenmodal(false);
-  };
-
-
-  
-  const handleUploadClick = (event) => {
-    setLoading(true);
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setSelectedImg(reader.result);
-    };
-    setLoading(false);
-  };
-  const Uploadimagebase = async () => {
-    const response = await ADD_KUNJUNGANIMAGE({idku:Modalitems.kunjunganCode , image:selectedImg});
-    if (response.status === 422) {
-      const asdf = response.data.errors;
-      const keys = asdf && Object.keys(asdf);
-      keys.forEach((key) => {
-        enqueueSnackbar(asdf[key].msg, { variant: 'warning' });
-      });
-    }
-    if (response.status === 200) {
-      await enqueueSnackbar(response.data.message, { variant: 'success' });
-      refetch();
-      setOpenmodal(false);
-    }
-    if (response.status === 400) {
-      await enqueueSnackbar(response.data.message, { variant: 'error' });
-    }
-    if (response.status === 500) {
-      await enqueueSnackbar('Internal server error', 'error');
-    }
-  };
   return (
     <>
-     <Dialog open={openmodal} onClose={handleClose}>
-        <DialogTitle>{Modalitems?.judul}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-          </DialogContentText>
-          {selectedImg && (
-              <a style={{ width: '100%' }} role="button" tabIndex={0} >
-                <img style={{ margin: 10 }} src={selectedImg} alt={`img-nota`} />
-              </a>
-            )}
-          <ButtonUpload disabled={selectedImg} upload={handleUploadClick} component="label" label="Unggah File" />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
-          <Button onClick={Uploadimagebase}>Upload</Button>
-        </DialogActions>
-      </Dialog>
       <BarMobile title={'Kunjungan'} />
       <AdupiXLeMineraleHead />
       <div style={{ marginTop: 5, textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
         <Typography align="center" variant="h2">
-          Kunjungan
+          Kunjungan Mitra
         </Typography>
         <ButtonPrimary onClick={handleOnAdd} style={{ marginTop: 50, marginBottom: 5 }} label={'Tambah kunjungan'} />
       </div>
@@ -256,23 +178,15 @@ export default function Kunjungan() {
         {list &&
           list.map((m, i) => (
             <Card key={i} style={{ marginBottom: 10 }}>
-              <CardHeader
-                action={<MoreMenu handleOnUpdate={() => handleOnUpdate(m)} handleOnDelete={() => handleOnDelete(m)} />}
-                title={m?.judul}
-                subheader={`Tanggal :  ${fDateTime(m?.createAt)}`}
-              />
+              
               <CardContent>
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
                     <Typography sx={{ fontSize: 10 }}>Deskripsi : {m?.deskripsi} </Typography>
+                    <Typography sx={{ fontSize: 10 }}>Mitra : </Typography>
                   </Grid>
                 </Grid>
-              </CardContent> 
-              <CardActions>
-                <div style={{padding:10}} >
-                  <BurstModeIcon  spacing={1} onClick={() => imageupload(m)} />
-                </div>
-              </CardActions>
+              </CardContent>
             </Card>
           ))}
         <TablePagination
@@ -284,10 +198,9 @@ export default function Kunjungan() {
           rowsPerPage={size}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-       
       </div>
       <Drawer title={drawerTitle}>
-        <Form isLoading={loading} mitra={mitra} item={item} step={step} handleAdd={handleAdd} onUpdate={handleUpdate} latitudes={lat} longitudes={long} />
+    
       </Drawer>
       {alertOpen && (
         <DialogConfirm

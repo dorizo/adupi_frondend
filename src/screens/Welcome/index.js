@@ -72,7 +72,7 @@ export default function Welcome() {
       <AdupiXLeMineraleHead />
       <img alt="recyle logo" width="100%" src={recyle} />
       <div style={{ textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
-        <Typography variant="h4">Selamat Datang Mitra Adupi</Typography>
+        <Typography variant="h4">Selamat Datang Mitra GESN</Typography>
         <Typography align="center" style={{ wordWrap: 'break-word', width: 240, margin: 'auto' }}>
           Sebelum masuk ke aplikasi {'\n'} silahkan daftar dulu ya
         </Typography>

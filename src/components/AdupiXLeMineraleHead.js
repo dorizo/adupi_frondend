@@ -11,8 +11,8 @@ export default function AdupiXLeMineraleHead({ text = false }) {
           Sponsored by :
         </Typography>
       )}
-      {text === false && <img alt="adupi logo" width={65} src={adupi} />}
-      <img alt="leMineral logo" height={55} src={leMineral} />
+      {text === false && <img alt="adupi logo" width={95} src={adupi} />}
+      <img alt="leMineral logo" height={65} src={leMineral} />
     </div>
   );
 }

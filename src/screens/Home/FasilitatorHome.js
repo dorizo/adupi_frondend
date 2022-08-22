@@ -18,9 +18,10 @@ import useAuth from '../../hooks/useAuth';
 import Akun from '../Akun';
 
 const menuList = [
-  { title: 'Tambah Mitra', desc: 'Tambah Mitra ADUPI', icon: menuAnggota, link: '/mobile/tambah-mitra' },
-  { title: 'List Mitra', desc: 'Daftar Mitra ADUPI', icon: listMitra, link: '/mobile/list-mitra' },
-  { title: 'Kehadiran Mitra', desc: 'Cek Kehadiran Mitra Disini', icon: kehadiran, link: '/mobile/list-kehadiran' },
+  { title: 'Tambah Mitra', desc: 'Tambah Mitra GESN', icon: menuAnggota, link: '/mobile/tambah-mitra' },
+  { title: 'List Mitra', desc: 'Daftar Mitra GESN', icon: listMitra, link: '/mobile/list-mitra' },
+  { title: 'Kehadiran Mitra', desc: 'Kunjungan Mitra GESN', icon: kehadiran, link: '/mobile/list-kehadiranmitra' },
+  { title: 'Kehadiran Non Mitra', desc: 'Kunjungan Non Mitra GESN', icon: kehadiran, link: '/mobile/list-kehadiran' },
 ];
 export default function FasilitatorHome() {
   const { auth } = useAuth();
@@ -30,9 +31,9 @@ export default function FasilitatorHome() {
     <div style={{ paddingBottom: 20 }}>
       {value === 0 && (
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }} position="static">
+          <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15 ,background: '#94C0E9'  }} position="static">
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10, marginTop: 10 }}>
-              <img alt="adupi logo" width={50} src={adupi} style={{ marginRight: 2 }} />
+              <img alt="adupi logo" width={80} src={adupi} style={{ marginRight: 2 }} />
               <Typography
                 variant="caption"
                 style={{
@@ -43,7 +44,7 @@ export default function FasilitatorHome() {
                   paddingLeft: 5,
                 }}
               >
-                Gerakan {'\n'} Ekonomi {'\n'} Sirkular
+                Gerakan {'\n'} Ekonomi {'\n'} Sirkular Nasional
               </Typography>
             </div>
             <Toolbar>

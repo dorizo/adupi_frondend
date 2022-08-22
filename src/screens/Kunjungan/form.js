@@ -8,7 +8,7 @@ import TextInput from '../../components/TextInput';
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 
-export default function Form({ mitra, step, isLoading, handleAdd, item, onUpdate }) {
+export default function Form({ mitra, step, isLoading, handleAdd, item, onUpdate , latitudes , longitudes }) {
   const editAble = (item?.kunjunganCode && true) || false;
 
   const handleSubmit = (values) => {
@@ -22,7 +22,9 @@ export default function Form({ mitra, step, isLoading, handleAdd, item, onUpdate
     initialValues: {
       deskripsi: item ? item.deskripsi : '',
       judul: item ? item.judul : '',
-      mitraCode: item ? item.mitraCode : '',
+      mitraCode: item ? item.mitraCode : 1,
+      latitude: item?item.latitude:latitudes,
+      longitude: item ? item.longitude : longitudes,
     },
     validationSchema: Yup.object({
       deskripsi: Yup.string().required('Harus Disisi'),
@@ -31,6 +33,8 @@ export default function Form({ mitra, step, isLoading, handleAdd, item, onUpdate
     }),
     onSubmit: handleSubmit,
   });
+    
+  console.log('SSSS'+formik.values.latitude);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -39,12 +43,36 @@ export default function Form({ mitra, step, isLoading, handleAdd, item, onUpdate
           <SelectInput
             label={'Mitra'}
             name="mitraCode"
+            style={{ display:  "none"}}
             id="mitraCode"
             value={formik.values.mitraCode}
             onChange={formik.handleChange}
             error={formik.touched.mitraCode && Boolean(formik.errors.mitraCode)}
             option={mitra}
             pilih={false}
+          />
+       
+            <TextInput
+            id="latitude"
+            name="latitude"
+            type="hidden"
+            style={{width: 0,height: 0,}}
+            value={formik.values.latitude}
+            onChange={formik.handleChange}
+            error={formik.touched.latitude && Boolean(formik.errors.latitude)}
+            helperText={formik.touched.latitude && formik.errors.latitude}
+            label={'latitudes'}
+          />
+            <TextInput
+            id="longitude"
+            name="longitude"
+            type="hidden"
+            style={{width: 0,height: 0,}}
+            value={formik.values.longitude}
+            onChange={formik.handleChange}
+            error={formik.touched.longitude && Boolean(formik.errors.longitude)}
+            helperText={formik.touched.longitude && formik.errors.longitude}
+            label={'longitude'}
           />
           <TextInput
             id="judul"

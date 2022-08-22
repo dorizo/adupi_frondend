@@ -42,9 +42,11 @@ import Masalah from './screens/Masalah';
 import MasalahByFasilitator from './screens/MasalahByFasiltator';
 import TambahAlat from './screens/TambahAlat';
 import TambahMitra from './screens/TambahMitra';
+import Kehadiranmitra from './screens/Mitrakehadiran';
 import Welcome from './screens/Welcome';
 import FasilitatorWelcome from './screens/Welcome/FasilitatorWelcome';
 import Export from './pages/Export';
+import Mitrakehadiran from './screens/Mitrakehadiran';
 
 // ----------------------------------------------------------------------
 
@@ -309,6 +311,14 @@ export default function Router() {
           element: (
             <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
               <TambahMitra />
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'list-kehadiranmitra',
+          element: (
+            <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
+              <Mitrakehadiran />
             </MobileGuard>
           ),
         },

@@ -24,12 +24,13 @@ const GET_ONE_KUNJUNGAN = async (id) => {
   }
 };
 
-const ADD_KUNJUNGAN = async ({ judul, deskripsi, mitraCode }) => {
+const ADD_KUNJUNGAN = async ({ judul, deskripsi, mitraCode,latitude,longitude }) => {
   const data = qs.stringify({
     judul,
     deskripsi,
     mitraCode,
-  });
+    latitude,
+    longitude  });
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
@@ -41,6 +42,23 @@ const ADD_KUNJUNGAN = async ({ judul, deskripsi, mitraCode }) => {
   }
 };
 
+
+const ADD_KUNJUNGANIMAGE = async ({ idku, image }) => {
+  const data = qs.stringify({
+    idku,
+    image,
+   });
+   console.log("kok kosong" , data);
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.post(`kunjungan/addfoto`, data, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const UPDATE_KUNJUNGAN = async ({ judul, deskripsi, mitraCode }, id) => {
   const data = qs.stringify({
     judul,
@@ -68,4 +86,4 @@ const DELETE_KUNJUNGAN = async (id) => {
     return catchCallBack(error);
   }
 };
-export { ADD_KUNJUNGAN, GET_ALL_KUNJUNGAN, DELETE_KUNJUNGAN, UPDATE_KUNJUNGAN, GET_ONE_KUNJUNGAN };
+export { ADD_KUNJUNGAN, GET_ALL_KUNJUNGAN, DELETE_KUNJUNGAN, UPDATE_KUNJUNGAN, GET_ONE_KUNJUNGAN,ADD_KUNJUNGANIMAGE };
