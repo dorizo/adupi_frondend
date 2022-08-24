@@ -168,8 +168,8 @@ export default function Mitrakehadiran() {
           if(rad){
             navigate("/mobile/kehadiranmitradetail/"+me.mitraCode)
           }else{
-            navigate("/mobile/kehadiranmitradetail/"+me.mitraCode)
-            // enqueueSnackbar('Jarak terlalu jauh ' ,{ variant:"error", autoHideDuration: 500 });
+            // navigate("/mobile/kehadiranmitradetail/"+me.mitraCode)
+            enqueueSnackbar('Jarak terlalu jauh ' ,{ variant:"error", autoHideDuration: 500 });
           }
         },function error(msg){
           alert('Please enable your GPS position future.'); 
