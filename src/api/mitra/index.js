@@ -250,6 +250,17 @@ const GET_MITRA_DETAIL_BY_FASILITATOR = async (id) => {
     return catchCallBack(error);
   }
 };
+const GET_CEK_LOKASI = async (id) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`fasilitator/ceklokasi/${id}`, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_MITRA_DETAIL_BY_SU = async (id) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -304,4 +315,5 @@ export {
   CHECK_EMAIL,
   CHECK_NIK,
   CHECK_NO_HP,
+  GET_CEK_LOKASI,
 };

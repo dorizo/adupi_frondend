@@ -1,19 +1,23 @@
-import { Card, CardContent, CardHeader, Grid, TablePagination, TextField, Typography } from '@mui/material';
+import { Button, Card, CardContent, CardHeader, Grid, TablePagination, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import TidakAdaData from '../../components/TidakAdaData';
 import { ADD_KUNJUNGAN, DELETE_KUNJUNGAN, GET_ALL_KUNJUNGAN, UPDATE_KUNJUNGAN } from '../../api/kunjungan';
-import { GET_MITRA_ALL_BY_FASILITATOR } from '../../api/mitra';
+import { GET_MITRA_ALL_BY_FASILITATOR, GET_MITRA_DETAIL_BY_FASILITATOR, GET_MITRA_NV_BY_FASILITATOR } from '../../api/mitra';
 import AdupiXLeMineraleHead from '../../components/AdupiXLeMineraleHead';
 import BarMobile from '../../components/BarMobile';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import DialogConfirm from '../../components/DialogConfirm';
 import useDrawer from '../../hooks/useDrawer';
 import { fDateTime } from '../../utils/formatTime';
-
+import AddLocationAltTwoToneIcon from '@mui/icons-material/AddLocationAltTwoTone';
+import * as geolib from 'geolib';
 import LoadingCard from '../../components/LoadingCard';
+import {  useNavigate } from 'react-router-dom';
 export default function Mitrakehadiran() {
+  
+  const navigate = useNavigate();
   const { onOpen, Drawer, onClose } = useDrawer();
   const [drawerTitle, setDrawerTitle] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
@@ -23,14 +27,12 @@ export default function Mitrakehadiran() {
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(5);
+  const [lats ,setLats] = useState("");
+  const [longs ,setLongs] = useState("");
   const { enqueueSnackbar } = useSnackbar();
-  const { data, refetch, isLoading } = useQuery('GET_ALL_KUNJUNGAN', GET_ALL_KUNJUNGAN, {
-    refetchOnWindowFocus: false,
-  });
-  const { data: dataMitra } = useQuery('GET_MITRA_ALL_BY_FASILITATOR', GET_MITRA_ALL_BY_FASILITATOR, {
-    refetchOnWindowFocus: false,
-  });
-
+  const { data, refetch, isLoading } = useQuery('GET_MITRA_NV_BY_FASILITATOR', GET_MITRA_NV_BY_FASILITATOR);
+  const { data: dataMitra } = useQuery('GET_MITRA_ALL_BY_FASILITATOR', GET_MITRA_ALL_BY_FASILITATOR);
+  console.log(dataMitra);
   const mitra =
     dataMitra &&
     dataMitra?.data?.data?.map((g) => {
@@ -145,13 +147,34 @@ export default function Mitrakehadiran() {
     }
     return stabilizedThis.map((el) => el[0]);
   }
-  const ll = data && data?.data?.data;
+  const ll = data && dataMitra?.data?.data;
   const list = ll ? stableSort(ll, search).slice(page * size, page * size + size) : [];
   navigator.geolocation.getCurrentPosition(function(position) {
     console.log("Latitude is :", position.coords.latitude);
     console.log("Longitude is :", position.coords.longitude);
+    setLats(position.coords.latitude);
+    setLongs(position.coords.longitude);
   });       
 
+  const radiuslocation = async (me) => {
+        const x = await GET_MITRA_DETAIL_BY_FASILITATOR(me.mitraCode);
+        await navigator.geolocation.getCurrentPosition(function(position) {
+          console.log( position.coords.latitude , position.coords.longitude);
+              const rad  =  geolib.isPointWithinRadius(
+                { latitude: position.coords.latitude, longitude:position.coords.longitude },
+                { latitude: x?.data?.data?.gudang?.[0]?.lat, longitude: x?.data?.data?.gudang?.[0]?.lang },
+                500
+            );
+          if(rad){
+            navigate("/mobile/kehadiranmitradetail/"+me.mitraCode)
+          }else{
+            navigate("/mobile/kehadiranmitradetail/"+me.mitraCode)
+            // enqueueSnackbar('Jarak terlalu jauh ' ,{ variant:"error", autoHideDuration: 500 });
+          }
+        },function error(msg){
+          alert('Please enable your GPS position future.'); 
+        },{maximumAge:600000, timeout:5000, enableHighAccuracy: true});   
+  };
   return (
     <>
       <BarMobile title={'Kunjungan'} />
@@ -160,8 +183,7 @@ export default function Mitrakehadiran() {
         <Typography align="center" variant="h2">
           Kunjungan Mitra
         </Typography>
-        <ButtonPrimary onClick={handleOnAdd} style={{ marginTop: 50, marginBottom: 5 }} label={'Tambah kunjungan'} />
-      </div>
+        </div>
       <div style={{ marginTop: 5, paddingLeft: 20, paddingRight: 20 }}>
         <TextField
           value={search}
@@ -181,9 +203,14 @@ export default function Mitrakehadiran() {
               
               <CardContent>
                 <Grid container spacing={1}>
-                  <Grid item xs={12}>
-                    <Typography sx={{ fontSize: 10 }}>Deskripsi : {m?.deskripsi} </Typography>
-                    <Typography sx={{ fontSize: 10 }}>Mitra : </Typography>
+                  <Grid item xs={10}>
+                    <Typography sx={{ fontSize: 10 }}>Mitra : {m?.nama} </Typography>
+                    <Typography sx={{ fontSize: 10 }}>{m?.alamat} </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Button onClick={() =>{radiuslocation(m);}}>
+                      <AddLocationAltTwoToneIcon />  
+                    </Button>
                   </Grid>
                 </Grid>
               </CardContent>

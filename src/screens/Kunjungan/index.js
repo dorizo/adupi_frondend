@@ -16,6 +16,7 @@ import MoreMenu from './MoreMenu';
 import LoadingCard from '../../components/LoadingCard';
 import BurstModeIcon from '@mui/icons-material/BurstMode';
 import ButtonUpload from 'src/components/Button/ButtonUpload';
+import { LoadingButton } from '@mui/lab';
 export default function Kunjungan() {
   const { onOpen, Drawer, onClose } = useDrawer();
   const [drawerTitle, setDrawerTitle] = useState('');
@@ -31,6 +32,7 @@ export default function Kunjungan() {
   const [openmodal, setOpenmodal] = useState(false);
   const [Modalitems, setModalitems] = useState(null);
   const [selectedImg, setSelectedImg] = useState('');
+  const [loadingbutton ,setloadingbutton] = useState(true);
   const { enqueueSnackbar } = useSnackbar();
   const { data, refetch, isLoading } = useQuery('GET_ALL_KUNJUNGAN', GET_ALL_KUNJUNGAN, {
     refetchOnWindowFocus: false,
@@ -50,6 +52,7 @@ export default function Kunjungan() {
         setModalitems(value);
         setOpenmodal(true);
         setSelectedImg("");
+        setloadingbutton(false);
     }
   const handleAdd = async (value) => {
     setLoading(true);
@@ -191,8 +194,10 @@ export default function Kunjungan() {
       setSelectedImg(reader.result);
     };
     setLoading(false);
+    setloadingbutton(false);
   };
   const Uploadimagebase = async () => {
+    setloadingbutton(true);
     const response = await ADD_KUNJUNGANIMAGE({idku:Modalitems.kunjunganCode , image:selectedImg});
     if (response.status === 422) {
       const asdf = response.data.errors;
@@ -229,7 +234,7 @@ export default function Kunjungan() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          <Button onClick={Uploadimagebase}>Upload</Button>
+          <LoadingButton loading={loadingbutton} onClick={Uploadimagebase}>Upload</LoadingButton>
         </DialogActions>
       </Dialog>
       <BarMobile title={'Kunjungan'} />
