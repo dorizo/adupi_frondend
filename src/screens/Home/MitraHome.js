@@ -55,8 +55,8 @@ export default function MitraHome() {
         <Box sx={{ flexGrow: 1 }}>
           <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15,background: '#94C0E9' }} position="static">
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10, marginTop: 10 }}>
-              <img alt="adupi logo" width={50} src={adupi} style={{ marginRight: 2 }} />
-              <Typography
+            <img alt="adupi logo" width={80} src={adupi} style={{ marginRight: 2 }} />
+               <Typography
                 variant="caption"
                 style={{
                   fontWeight: 'bold',
@@ -106,7 +106,7 @@ export default function MitraHome() {
               </Grid>
             ))}
             <Grid onClick={() => {
-                  var url = "whatsapp://send?phone=62895640035735";
+                  var url = "whatsapp://send?phone=6281285622115";
                   window.location.href = url;
                   }} key={8} item xs={6}>
                 <Card style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>

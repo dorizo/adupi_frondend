@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import kehadiran from '../../assets/illustation/kehadiran.png';
+import kehadirannonmitra from '../../assets/illustation/menu-beli-sampah.png';
 import listMitra from '../../assets/illustation/list-mitra.png';
 import menuAnggota from '../../assets/illustation/menu-anggota.png';
 import adupi from '../../assets/logo/logo.png';
@@ -21,7 +22,7 @@ const menuList = [
   { title: 'Tambah Mitra', desc: 'Tambah Mitra GESN', icon: menuAnggota, link: '/mobile/tambah-mitra' },
   { title: 'List Mitra', desc: 'Daftar Mitra GESN', icon: listMitra, link: '/mobile/list-mitra' },
   { title: 'Kehadiran Mitra', desc: 'Kunjungan Mitra GESN', icon: kehadiran, link: '/mobile/list-kehadiranmitra' },
-  { title: 'Kehadiran Non Mitra', desc: 'Kunjungan Non Mitra GESN', icon: kehadiran, link: '/mobile/list-kehadiran' },
+  { title: 'Kehadiran Non Mitra', desc: 'Kunjungan Non Mitra GESN', icon: kehadirannonmitra, link: '/mobile/list-kehadiran' },
 ];
 export default function FasilitatorHome() {
   const { auth } = useAuth();
