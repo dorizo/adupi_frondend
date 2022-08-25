@@ -19,6 +19,7 @@ import menuJual from '../../assets/illustation/menu-jual-sampah.png';
 import menuMasalah from '../../assets/illustation/menu-masalah.png';
 import menuAlat from '../../assets/illustation/recyle.png';
 import adupi from '../../assets/logo/logo.png';
+import support from '../../assets/illustation/support.png';
 import Akun from '../Akun';
 import Transaksi from '../Transaksi';
 
@@ -104,6 +105,20 @@ export default function MitraHome() {
                 </Card>
               </Grid>
             ))}
+            <Grid onClick={() => {
+                  var url = "whatsapp://send?phone=62895640035735";
+                  window.location.href = url;
+                  }} key={8} item xs={6}>
+                <Card style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                  <CardContent
+                    style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 15 }}
+                  >
+                    <img alt={`menu-wa`} style={{ width: '100%' }} src={support} />
+                    <Typography variant="h4">Support</Typography>
+                    <Typography variant="caption">Whatsapp Link</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
           </Grid>
           <Transaksi />
         </Box>
