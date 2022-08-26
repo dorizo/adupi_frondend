@@ -1,12 +1,14 @@
-import { Typography } from '@mui/material';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { IconButton, Typography } from '@mui/material';
+import SwipeableDrawer from '@mui/material/Drawer';
 import * as React from 'react';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';;
 export default function useDrawer() {
   const [state, setState] = React.useState(false);
 
   const toggleDrawer = (open) => (event) => {
-    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    console.log(event && event.type);
+    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'click')) {
+      console.log("swift");
       return;
     }
     setState(open);
@@ -18,7 +20,7 @@ export default function useDrawer() {
         PaperProps={{ elevation: 0, style: { backgroundColor: 'transparent' } }}
         anchor={'bottom'}
         open={state}
-        onClose={closeable ? toggleDrawer(false) : undefined}
+        // onClose={closeable ? toggleDrawer(false) : undefined}
         onOpen={toggleDrawer(true)}
       >
         <div
@@ -31,7 +33,10 @@ export default function useDrawer() {
           }}
         >
           <Typography sx={{ borderBottom: 3, marginBottom: 2 }} variant="h4" color="primary">
-            {title}
+          <IconButton onClick={toggleDrawer(false)}>
+           <ArrowBackIcon   /> 
+           </IconButton>{title}
+          
           </Typography>
           {children}
         </div>
