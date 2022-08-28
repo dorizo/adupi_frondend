@@ -1,0 +1,491 @@
+import { Box, Button, Card, CardActions, CardContent, CardHeader, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, ImageList, ImageListItem, TextField, Typography } from "@mui/material";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import { CHANGE_STATUS_MASALAH, GET_ALL_MASALAH_BY_MITRA } from "src/api/masalah";
+import { fDateTime } from "src/utils/formatTime";
+import dummyMasalah from '../../assets/dummy-masalah.png';
+import Image from "src/components/Image";
+import { GET_PEMBELIAN_MITRA_PERBULAN, GET_PENJUALAN_MITRA_PERBULAN } from "src/api/report";
+import { format } from "date-fns";
+import ReactApexChart from "react-apexcharts";
+import { LoadingButton } from "@mui/lab";
+import SaveIcon from '@mui/icons-material/Save';
+import CameraAltRounded from "@mui/icons-material/CameraAltRounded";
+import ButtonUpload from "src/components/Button/ButtonUpload";
+import { useState } from "react";
+import { useSnackbar } from "notistack";
+import { ADD_KUNJUNGANIMAGE } from "src/api/kunjungan";
+import { useFormik } from "formik";
+import * as Yup from 'yup';
+import { GET_KUNJUNGAN_DETAIL, GET_viewimagekunjungan } from "src/api/kunjunganmitra";
+
+export default function Detailmitracomp({title}) {
+
+    const params = useParams();
+    const [openmodal, setOpenmodal] = useState(false);
+    const [Modalitems, setModalitems] = useState(null);
+    const [selectedImg, setSelectedImg] = useState('');
+    const [loadingbutton ,setloadingbutton] = useState(true);
+    const { enqueueSnackbar } = useSnackbar();
+    const handleClose = () => {
+        setOpenmodal(false);
+      };
+      const handleUploadClick = (event) => {
+        // setLoading(true);
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          setSelectedImg(reader.result);
+        };
+        // setLoading(false);
+        setloadingbutton(false);
+      };
+      
+      const Uploadimagebase = async () => {
+        setloadingbutton(true);
+        const response = await ADD_KUNJUNGANIMAGE({idku:title , image:selectedImg , statusfoto:'mitra'});
+        if (response.status === 422) {
+          const asdf = response.data.errors;
+          const keys = asdf && Object.keys(asdf);
+          keys.forEach((key) => {
+            enqueueSnackbar(asdf[key].msg, { variant: 'warning' });
+          });
+        }
+        if (response.status === 200) {
+          await enqueueSnackbar(response.data.message, { variant: 'success' });
+          refetch();
+          setOpenmodal(false);
+        }
+        if (response.status === 400) {
+          await enqueueSnackbar(response.data.message, { variant: 'error' });
+        }
+        if (response.status === 500) {
+          await enqueueSnackbar('Internal server error', 'error');
+        }
+        imagerefach();
+      };
+  
+      
+  
+    const imageupload = async (value) => {
+        setModalitems(value);
+        setOpenmodal(true);
+        setSelectedImg("");
+        setloadingbutton(false);
+    }
+      
+      //image upload end
+  
+   
+    const { data: masalahmitra ,refetch} =   useQuery(['GET_ALL_MASALAH_BY_MITRA', params.mitraCode], () =>
+    GET_ALL_MASALAH_BY_MITRA(params.mitraCode)
+    );
+  
+    const { data: pembelianmitra } =   useQuery(['GET_PEMBELIAN_MITRA_PERBULAN', params.mitraCode], () =>
+    GET_PEMBELIAN_MITRA_PERBULAN(format(new Date(), "Y"),params.mitraCode)
+    );
+    
+    const { data: penjualanmitra } =   useQuery(['GET_PENJUALAN_MITRA_PERBULAN', params.mitraCode], () =>
+    GET_PENJUALAN_MITRA_PERBULAN(format(new Date(), "Y"),params.mitraCode)
+    );
+    const { data: imagekunjungan , refetch:imagerefach } =   useQuery(['GET_PENJUALAN_MITRA_PERBULAN', title], () =>
+    GET_viewimagekunjungan(title,'mitra')
+    );
+    const datamasalahmitra = masalahmitra?.data?.data;
+    console.log(imagekunjungan);
+  
+  const handleChangeStatus = async (id) => {
+      const response = await CHANGE_STATUS_MASALAH(id);
+      if (response.status === 200) {
+        await enqueueSnackbar(response.data.message, { variant: 'success' });
+        refetch();
+      }
+      if (response.status === 400) {
+        await enqueueSnackbar(response.data.message, { variant: 'error' });
+      }
+      if (response.status === 500) {
+        await enqueueSnackbar('Internal server error', 'error');
+      }
+    };
+  
+    
+    const list = penjualanmitra && penjualanmitra?.data?.data;
+    
+    const chartDataBerat = [...Array(12)].map(() => 0);
+      list?.forEach((v) => {
+        chartDataBerat[v.bulan - 1] = v.berat / 1000;
+      });
+  
+  
+    const state = {
+      series: [
+        {
+          name: 'Berat(ton)',
+          data: chartDataBerat,
+        },
+      ],
+      options: {
+        chart: {
+          height: 350,
+          type: 'bar',
+          zoom: {
+            enabled: false,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'straight',
+        },
+        title: {
+          text: 'Chart Penjualan',
+          align: 'left',
+        },
+        grid: {
+          row: {
+            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+            opacity: 0.5,
+          },
+        },
+        yaxis: [
+          {
+            labels: {
+              formatter: (val) => val.toFixed(2),
+            },
+          },
+        ],
+        xaxis: {
+          categories: [
+            'Januari',
+            'Febuari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember',
+          ],
+        },
+      },
+    };
+  
+    
+    const list2 = pembelianmitra && pembelianmitra?.data?.data;
+    
+    const chartDataBerat2 = [...Array(12)].map(() => 0);
+      list2?.forEach((v) => {
+        chartDataBerat2[v.bulan - 1] = v.berat / 1000;
+      });
+    const state2 = {
+      series: [
+        {
+          name: 'Berat(ton)',
+          data: chartDataBerat2,
+        },
+      ],
+      options: {
+        chart: {
+          height: 350,
+          type: 'line',
+          zoom: {
+            enabled: false,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'straight',
+        },
+        title: {
+          text: 'Chart Pembelian',
+          align: 'left',
+        },
+        grid: {
+          row: {
+            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+            opacity: 0.5,
+          },
+        },
+        yaxis: [
+          {
+            labels: {
+              formatter: (val) => val.toFixed(2),
+            },
+          },
+        ],
+        xaxis: {
+          categories: [
+            'Januari',
+            'Febuari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember',
+          ],
+        },
+      },
+    };
+
+
+    const handleSubmit =async (val ,{ resetForm}) =>{
+        // console.log(val);
+      const response =  await GET_KUNJUNGAN_DETAIL(val);
+      console.log(response);
+      if(response.status == 200){
+        await enqueueSnackbar(response.data.message, { variant: 'success' });
+        resetForm();
+      }else{
+        
+        await enqueueSnackbar(response.data.message, { variant: 'error' });
+
+      }
+      }
+    
+  const formik = useFormik({
+    initialValues: 
+    {
+        Kunjungan_formCapaian : "",
+        Kunjungan_formKeterlambatan : "",
+        Kunjungan_formHargaPembelian : "",
+        Kunjungan_formPekerja : "",
+        Kunjungan_formJumlahMesin : "",
+        Kunjungan_formPendampingan : "",
+        mitraCode :title
+     
+     },
+    validationSchema: Yup.object({
+        Kunjungan_formCapaian: Yup.string().required('Harus Disisi'),
+        Kunjungan_formKeterlambatan: Yup.string().required('Harus Disisi'),
+        Kunjungan_formHargaPembelian: Yup.string().required('Harus Disisi'),
+        Kunjungan_formPekerja: Yup.string().required('Harus Disisi'),
+        Kunjungan_formJumlahMesin: Yup.string().required('Harus Disisi'),
+        Kunjungan_formPendampingan: Yup.string().required('Harus Disisi'),
+        mitraCode: Yup.string().required('Harus Disisi'),
+    }),
+    onSubmit: handleSubmit,
+  });
+
+return(
+    <>
+     <Dialog open={openmodal} onClose={handleClose}>
+            <DialogTitle>{Modalitems?.judul}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+              </DialogContentText>
+              {selectedImg && (
+                  <a style={{ width: '100%' }} role="button" tabIndex={0} >
+                    <img style={{ margin: 10 }} src={selectedImg} alt={`img-nota`} />
+                  </a>
+                )}
+              <ButtonUpload disabled={selectedImg} upload={handleUploadClick} component="label" label="Unggah File" />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Close</Button>
+              <LoadingButton loading={loadingbutton} onClick={Uploadimagebase}>Upload</LoadingButton>
+            </DialogActions>
+          </Dialog>
+    <Card style={{ marginTop: 5}}>
+                <CardContent>
+                  <ReactApexChart options={state.options} series={state.series} type="line" height={360} />
+                </CardContent>
+                <CardActions>
+                
+                </CardActions>
+            </Card>
+           
+            <Card style={{ marginTop: 5}}>
+                <CardContent>
+                  <ReactApexChart options={state2.options} series={state2.series} type="line" height={360} />
+                </CardContent>
+                <CardActions>
+                
+                </CardActions>
+            </Card>
+            <Card style={{marginTop:4}}>
+                <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                   Peninjauan Masalah 
+                 </Typography>
+                 {datamasalahmitra &&
+                        datamasalahmitra.map((li, i) => (
+                            li?.status === 'Selesai' ?<></> :
+                            <Card key={i} style={{ marginBottom: 10 }}>
+                            <CardHeader
+                                title={li?.jenisMasalah}
+                                subheader={
+                                <Chip label={li?.status} color={li?.status === 'Dalam peninjauan' ? 'warning' : 'success'} />
+                                }
+                            />
+                            <CardContent>
+                                
+                                <Grid container spacing={1}>
+                                <Grid item xs={6}>
+                                    <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                                    Deskripsi :{' '}
+                                    </Typography>
+                                    <Typography variant="caption">{li?.deskripsi}</Typography>
+                                    <br />
+                                    {li?.status === 'Dalam peninjauan' && (
+                                    <Button
+                                        style={{ marginTop: 5 }}
+                                        onClick={() => handleChangeStatus(li.masalahCode)}
+                                        variant="outlined"
+                                        size="small"
+                                        color="success"
+                                    >
+                                        Selesai
+                                    </Button>
+                                    )}
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                                    <Image
+                                        style={{ width: 100 }}
+                                        src={li?.foto}
+                                        dummy={dummyMasalah}
+                                        folder="masalah"
+                                        alt={`img-masalah`}
+                                    />
+                                    </Box>
+                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Typography variant="caption">{fDateTime(li?.createAt)}</Typography>
+                                    </Box>
+                                </Grid>
+                                </Grid>
+                            </CardContent>
+                            </Card>
+                        ))}
+                </CardContent>
+            </Card>
+            <Card style={{marginTop:4}}>
+              <CardContent>
+                <Typography variant="caption">FORM INPUT KUNJUNGAN</Typography>
+                <form  onSubmit={formik.handleSubmit}>
+                <FormControl fullWidth sx={{ m: 1 }}>
+                  <TextField
+                    name="Kunjungan_formCapaian"
+                    value={formik.values.Kunjungan_formCapaian}
+                    onChange={formik.handleChange}
+                    error={formik.touched.Kunjungan_formCapaian && Boolean(formik.errors.Kunjungan_formCapaian)}
+                    helperText={formik.touched.Kunjungan_formCapaian && formik.errors.Kunjungan_formCapaian}
+                    id="outlined-multiline-flexible"
+                    label="capaian serapan mitra bulan ini ?"
+                    multiline
+                    rows={2}
+                  />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1 }}>
+                  <TextField
+                    name="Kunjungan_formKeterlambatan"
+                    value={formik.values.Kunjungan_formKeterlambatan}
+                    error={formik.touched.Kunjungan_formKeterlambatan && Boolean(formik.errors.Kunjungan_formKeterlambatan)}
+                    helperText={formik.touched.Kunjungan_formKeterlambatan && formik.errors.Kunjungan_formKeterlambatan}
+                    onChange={formik.handleChange}
+                    id="outlined-multiline-flexible"
+                    label="kendala Pembayaran yang dialami ?"
+                    multiline
+                    rows={2}
+                  />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1 }}>
+                  <TextField
+                    name="Kunjungan_formHargaPembelian"
+                    value={formik.values.Kunjungan_formHargaPembelian}
+                    error={formik.touched.Kunjungan_formHargaPembelian && Boolean(formik.errors.Kunjungan_formHargaPembelian)}
+                    helperText={formik.touched.Kunjungan_formHargaPembelian && formik.errors.Kunjungan_formHargaPembelian}
+                    onChange={formik.handleChange}
+                    id="outlined-multiline-flexible"
+                    label="harga pembelian/penjualan di lapangan ?"
+                
+                  />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1 }}>
+                  <TextField
+                    name="Kunjungan_formPekerja"
+                    value={formik.values.Kunjungan_formPekerja}
+                    error={formik.touched.Kunjungan_formPekerja && Boolean(formik.errors.Kunjungan_formPekerja)}
+                    helperText={formik.touched.Kunjungan_formPekerja && formik.errors.Kunjungan_formPekerja}
+                    onChange={formik.handleChange}
+                    id="outlined-multiline-flexible"
+                    label="jumlah pekerja saat ini ?"
+                  />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1 }}>
+                  <TextField
+                    name="Kunjungan_formJumlahMesin"
+                    value={formik.values.Kunjungan_formJumlahMesin}
+                    error={formik.touched.Kunjungan_formJumlahMesin && Boolean(formik.errors.Kunjungan_formJumlahMesin)}
+                    helperText={formik.touched.Kunjungan_formJumlahMesin && formik.errors.Kunjungan_formJumlahMesin}
+                    onChange={formik.handleChange}
+                    id="outlined-multiline-flexible"
+                    label="Jumlah Mesin Saat ini ?"
+                  />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1 }}>
+                <TextField
+                    name="Kunjungan_formPendampingan"
+                    value={formik.values.Kunjungan_formPendampingan}
+                    error={formik.touched.Kunjungan_formPendampingan && Boolean(formik.errors.Kunjungan_formPendampingan)}
+                    helperText={formik.touched.Kunjungan_formPendampingan && formik.errors.Kunjungan_formPendampingan}
+                    onChange={formik.handleChange}
+                    id="outlined-multiline-flexible"
+                    label="pelatihan/pendampingan yang dibutuhkan ?"
+                    multiline
+                    rows={2}
+                  />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1 }}>
+                <LoadingButton
+                    type="submit"
+                    loadingPosition="start"
+                    startIcon={<SaveIcon />}
+                    variant="outlined"
+                  >
+                    Simpan
+                  </LoadingButton>
+                </FormControl>
+              </form>
+              </CardContent>
+            </Card>
+            <Card style={{marginTop:4}}>
+              <CardActions style={ {display: "flex",justifyContent: "flex-end"}}>
+              <LoadingButton
+                  loadingPosition="start"
+                  startIcon={<CameraAltRounded />}
+                  variant="outlined"
+                  onClick={() =>{imageupload()}}
+                >
+                  Camera
+                </LoadingButton>
+              </CardActions>
+              <CardContent>
+                <ImageList sx={{height: 200 }} cols={3} rowHeight={164}>
+                    {imagekunjungan?.data?.data?.map((li, i) => (
+                  <ImageListItem>
+                 <Image
+                        src={li?.foto}
+                        alt={`img-barang`}
+                        folder="kunjungan"
+                        dummy={dummyMasalah}
+                      />
+                  </ImageListItem>
+                   ))}
+                 </ImageList>
+              </CardContent>
+            </Card>
+    </>
+)
+}

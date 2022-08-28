@@ -43,10 +43,11 @@ const ADD_KUNJUNGAN = async ({ judul, deskripsi, mitraCode,latitude,longitude })
 };
 
 
-const ADD_KUNJUNGANIMAGE = async ({ idku, image }) => {
+const ADD_KUNJUNGANIMAGE = async ({ idku, image , statusfoto }) => {
   const data = qs.stringify({
     idku,
     image,
+    statusfoto,
    });
    console.log("kok kosong" , data);
   const headers = {

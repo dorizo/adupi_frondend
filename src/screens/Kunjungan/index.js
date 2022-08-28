@@ -198,7 +198,7 @@ export default function Kunjungan() {
   };
   const Uploadimagebase = async () => {
     setloadingbutton(true);
-    const response = await ADD_KUNJUNGANIMAGE({idku:Modalitems.kunjunganCode , image:selectedImg});
+    const response = await ADD_KUNJUNGANIMAGE({idku:Modalitems.kunjunganCode , image:selectedImg , statusfoto:'non mitra'});
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);

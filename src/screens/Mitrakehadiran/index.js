@@ -160,10 +160,11 @@ export default function Mitrakehadiran() {
         const x = await GET_MITRA_DETAIL_BY_FASILITATOR(me.mitraCode);
         await navigator.geolocation.getCurrentPosition(function(position) {
           console.log( position.coords.latitude , position.coords.longitude);
+          console.log( x?.data?.data?.gudang?.[0]?.lat, x?.data?.data?.gudang?.[0]?.lang );
               const rad  =  geolib.isPointWithinRadius(
                 { latitude: position.coords.latitude, longitude:position.coords.longitude },
                 { latitude: x?.data?.data?.gudang?.[0]?.lat, longitude: x?.data?.data?.gudang?.[0]?.lang },
-                500
+                1000
             );
           if(rad){
             navigate("/mobile/kehadiranmitradetail/"+me.mitraCode)
