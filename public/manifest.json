@@ -4,8 +4,8 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "ADUPI Bank Sampah",
-  "short_name": "Bank Sampah",
+  "name": "Gerakan Ekonomi Sirkular",
+  "short_name": "Gerakan Ekonomi Sirkular",
   "description": "Asosiasi Daur Ulang Plastik Indonesia",
   "icons": [
       {

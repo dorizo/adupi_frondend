@@ -12,6 +12,30 @@ const GET_ALL_MASALAH = async () => {
     return catchCallBack(error);
   }
 };
+
+const GET_ALL_MASALAH_DASHBOARD = async () => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get('masalah/allstatuscount', { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+const GET_ALL_MASALAH_DASHBOARDLIST = async (kode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`masalah/allstatus/${kode}`, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_ALL_MASALAH_BY_MITRA = async (id) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -98,4 +122,6 @@ export {
   UPDATE_MASALAH,
   GET_ONE_MASALAH,
   CHANGE_STATUS_MASALAH,
+  GET_ALL_MASALAH_DASHBOARD,
+  GET_ALL_MASALAH_DASHBOARDLIST,
 };

@@ -47,6 +47,8 @@ import FasilitatorWelcome from './screens/Welcome/FasilitatorWelcome';
 import Export from './pages/Export';
 import Mitrakehadiran from './screens/Mitrakehadiran';
 import Mitrakehadirandetail from './screens/Mitrakehadirandetail';
+import Kunjungandashboard from './pages/kunjungandashboard';
+import Detailmasalahstatus from './pages/Detailmasalahstatus';
 
 // ----------------------------------------------------------------------
 
@@ -61,7 +63,20 @@ export default function Router() {
       ),
       children: [
         { path: '', element: <Navigate to={'/dashboard/app'} /> },
-        { path: 'app', element: <PetaSebaran /> },
+        {
+          path: 'detailmasalahstatus/:status',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <Detailmasalahstatus />
+            </RequireAuth>
+          ),
+        },
+        { path: 'app', element:(
+          <>
+          <Kunjungandashboard />
+          <PetaSebaran />
+          </>
+        )},
         {
           path: 'role',
           children: [
@@ -156,6 +171,7 @@ export default function Router() {
                 </RequireAuth>
               ),
             },
+          
             {
               path: 'masalah/:mitraCode',
               element: (
