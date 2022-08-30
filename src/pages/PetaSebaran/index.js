@@ -1,9 +1,11 @@
-import { Box, Button, CardContent, Container, Drawer, List, Stack, TextField } from '@mui/material';
+import { Box, Button, CardContent, Container, Drawer, FormControl, InputLabel, List, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { width } from '@mui/system';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 import 'leaflet/dist/leaflet.css';
 import React, { useEffect, useState } from 'react';
 import { MapContainer, Marker, TileLayer, Tooltip, useMapEvents } from 'react-leaflet';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
+import { GET_MITRA_ALL_BY_SU_YES } from 'src/api/mitra';
 import { GET_MAP_ANGGOTA } from '../../api/dashboard';
 import Page from '../../components/Page';
 import DetailAnggota from './DetailAnggota';
@@ -37,9 +39,10 @@ export default function PetaSebaran({ type = null }) {
   const [anggota, setAnggota] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(5);
   const queryClient = useQueryClient();
-  const [ukuranmarker, setUkuranmarker] = useState(10);
+  const [ukuranmarker, setUkuranmarker] = useState(5);
   const [start, setStart] = React.useState(startInit);
   const [end, setEnd] = React.useState(endInit);
+  const [mitraValue , setmitraValue] = useState("");
   async function getAllAnggota() {
     // const date = new Date();
 
@@ -49,8 +52,8 @@ export default function PetaSebaran({ type = null }) {
     // const awal = firstDay.getFullYear() + "-" + lastDay.getMonth() + "-" + firstDay.getDate();
     // const akhir = lastDay.getFullYear() + "-" + lastDay.getMonth() + "-" + lastDay.getDate();
     setLoadingG(true);
-    const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_DAHSBOARD', { start, end }], () =>
-      GET_MAP_ANGGOTA(start, end)
+    const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_DAHSBOARD', { start, end ,mitraValue}], () =>
+      GET_MAP_ANGGOTA(start, end , mitraValue)
     );
 
     if (data.status === 200) {
@@ -60,13 +63,16 @@ export default function PetaSebaran({ type = null }) {
   }
 
   const hanlechangemaps = async () => {
-    const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_DAHSBOARD', { start, end }], () =>
-      GET_MAP_ANGGOTA(start, end)
+    const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_DAHSBOARD', { start, end ,mitraValue }], () =>
+      GET_MAP_ANGGOTA(start, end,mitraValue)
     );
     if (data.status === 200) {
       setList(data?.data?.data);
     }
   };
+  
+  const { data:datamitra, isLoading:lodingmitra } = useQuery('GET_MITRA_ALL_BY_SU_YES', GET_MITRA_ALL_BY_SU_YES);
+  // console.log(datamitra?.data?.data);
   const handleSelectAnggota = (a) => {
     setAnggota(a);
     setDrawerOpen(true);
@@ -87,11 +93,16 @@ export default function PetaSebaran({ type = null }) {
     const mapEvents = useMapEvents({
       zoomend: () => {
         console.error(mapEvents.getZoom());
-        setUkuranmarker(mapEvents.getZoom());
+      
       },
     });
 
     return null;
+  }
+  const singledata = (e) => {
+      // console.log(e.target.value)
+      setmitraValue(e.target.value);
+
   }
 
   const MapComponent = () => {
@@ -101,6 +112,20 @@ export default function PetaSebaran({ type = null }) {
           <CardContent style={{ padding: 0, marginTop: 20 }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
               <Box>
+                  <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    id="demo-multiple-name"
+                    value={mitraValue}
+                    style={{width:200}}
+                    onChange={singledata}
+                  >
+                    {datamitra?.data?.data.map((row ,indexx)=>{
+                      
+                       return(<MenuItem value={row.mitraCode}>{row.nama}</MenuItem>) 
+                        
+                      })}
+                </Select>
                 <DesktopDatePicker
                   label="Dari"
                   inputFormat="dd/MM/yyyy"
@@ -157,7 +182,7 @@ export default function PetaSebaran({ type = null }) {
               list?.map((a, i) => {
                 const color = warna[i];
                 const mitra = `<svg version="1.1" id="marker-11" xmlns="http://www.w3.org/2000/svg" fill='${color}'
-                fill-opacity="1" width="20px" height="20px" viewBox="0 0 11 11"><path id="path4133" d="M5.5-0.0176c-1.7866,0-3.8711,1.0918-3.8711,3.8711&#xA;&#x9;C1.6289,5.7393,4.6067,9.9082,5.5,11c0.7941-1.0918,3.871-5.1614,3.871-7.1466C9.371,1.0742,7.2866-0.0176,5.5-0.0176z"/></svg>`;
+                fill-opacity="1" width="12px" height="12px" viewBox="0 0 11 11"><path id="path4133" d="M5.5-0.0176c-1.7866,0-3.8711,1.0918-3.8711,3.8711&#xA;&#x9;C1.6289,5.7393,4.6067,9.9082,5.5,11c0.7941-1.0918,3.871-5.1614,3.871-7.1466C9.371,1.0742,7.2866-0.0176,5.5-0.0176z"/></svg>`;
                 const iconermitra = L.divIcon({ html: mitra, iconSize: [0, 0], iconAnchor: [0, 0] });
                 return (
                   <Marker

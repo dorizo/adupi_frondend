@@ -3,10 +3,11 @@ import axios, { catchCallBack } from '../index';
 
 
 
-const GET_MAP_ANGGOTA = async (tanggalawal,tanggalakhir) => {
+const GET_MAP_ANGGOTA = async (tanggalawal,tanggalakhir , mitraCode) => {
   const data = qs.stringify({
     tanggalawal,
     tanggalakhir,
+    mitraCode,
   });
   
   console.log(data);
