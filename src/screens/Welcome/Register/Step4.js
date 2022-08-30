@@ -88,6 +88,19 @@ export default function Step4({ handleNext, values, isLoading }) {
       });
     }
   };
+  useEffect(()=>{
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        console.log(position);
+        setMarker(pos);
+        setCenter(pos);
+      });
+    }
+  })
 
   const idPro = values?.wilayahCodeUsaha && values.wilayahCodeUsaha.split('.')[0];
   const idKab =

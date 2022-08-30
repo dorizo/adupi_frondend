@@ -5,6 +5,10 @@ import { DesktopDatePicker } from '@mui/x-date-pickers';
 import * as React from 'react';
 import Page from '../../components/Page';
 import SelectInput from '../../components/SelectInput';
+import * as XLSX from "xlsx";
+import { REPORT_PEMBELI, REPORT_PENJUALAN } from 'src/api/exportdata';
+import { useQueryClient } from 'react-query';
+import * as FileSaver from "file-saver";
 
 const date = new Date();
 const y = date.getFullYear();
@@ -16,6 +20,36 @@ export default function Export() {
   const [start, setStart] = React.useState(startInit);
   const [end, setEnd] = React.useState(endInit);
   const [type, setType] = React.useState('penjualan');
+
+  const queryClient = useQueryClient();
+  const handlestart = async (val) =>{
+    setStart(val);
+  }
+
+  const hendleend = async (val) =>{
+    setEnd(val);
+  }
+  const hendledownload = async () => {
+    let data;
+    if (type === 'pembelian') {
+    data = await queryClient.fetchQuery(['getall', { start, end }], () =>
+    REPORT_PEMBELI(start, end)
+    );
+    }else{
+    data = await queryClient.fetchQuery(['getall', { start, end }], () =>
+      REPORT_PENJUALAN(start, end)
+    );
+        
+    }
+    // console.log(data?.data?.data);
+    
+    const ws = XLSX.utils.json_to_sheet(data?.data?.data);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const datam = new Blob([excelBuffer], { type:  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
+    FileSaver.saveAs(datam, type+" report("+start+" s/d "+end+").xlsx");
+  }
+
 
   const downloadFile = () => {
     /* eslint-disable prefer-const */
@@ -75,7 +109,7 @@ export default function Export() {
                   label="Dari"
                   inputFormat="dd/MM/yyyy"
                   value={start}
-                  onChange={(_, newVal) => setStart(newVal)}
+                  onChange={(val)=>{handlestart(val)}}
                   renderInput={(params) => <TextField {...params} />}
                 />
               </Grid>
@@ -84,11 +118,11 @@ export default function Export() {
                   label="Sampai"
                   inputFormat="dd/MM/yyyy"
                   value={end}
-                  onChange={(_, newVal) => setEnd(newVal)}
+                  onChange={(val)=>{hendleend(val)}}
                   renderInput={(params) => <TextField {...params} />}
                 />
               </Grid>
-              <Button size="large" variant="contained" onClick={downloadFile} color="primary">
+              <Button size="large" variant="contained" onClick={hendledownload} color="primary">
                 Export Excel
               </Button>
             </Grid>
