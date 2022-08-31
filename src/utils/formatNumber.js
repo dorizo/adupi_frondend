@@ -10,6 +10,10 @@ export function fRupiah(number) {
   return `Rp.  ${numeral(number).format('0,0[.]00')}`;
 }
 
+export function ribuan(number) {
+  return `${numeral(number).format('0,0[.]00')} KG`;
+}
+
 export function fPercent(number) {
   return numeral(number / 100).format('0.0%');
 }

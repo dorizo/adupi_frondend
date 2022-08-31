@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Button, Card, CardContent, Grid, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
@@ -9,6 +9,7 @@ import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import SelectInput from '../../components/SelectInput';
 import TextInput from '../../components/TextInput';
 import Struck from './Struck';
+import CurrencyFormat from 'react-currency-format';
 
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
@@ -26,6 +27,7 @@ export default function Form({
 }) {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowFrom] = useState(false);
+  const [sampahbutton, setsampahbutton] = useState(false);
   const [search, setSearch] = useState('');
   const [form, setForm] = useState({ sumber: '', jsCode: '', harga: '', berat: '', jenis: '' });
 
@@ -65,6 +67,7 @@ export default function Form({
     setSampah([...sampah, form]);
     setForm({ sumber: '', jsCode: '', harga: '', berat: '', jenis: '' });
     setShowFrom(false);
+    setsampahbutton(true);
   };
   const handleJenis = (e) => {
     const jenis = optionJs.find((j) => j.value === e.target.value);
@@ -147,7 +150,7 @@ export default function Form({
           <Button
             variant="outlined"
             style={{ marginBottom: 10 }}
-            onClick={() => setShowFrom(!showForm)}
+            onClick={() => {setShowFrom(!showForm); setsampahbutton(showForm)}}
             color="success"
           >
             {showForm ? 'Batal' : 'Tambah Sampah'}
@@ -175,14 +178,28 @@ export default function Form({
                   value={form.jsCode}
                   option={optionJs && optionJs}
                 />
-                <TextInput
-                  id="harga"
-                  name="harga"
-                  type="number"
-                  onChange={(e) => setForm({ ...form, harga: e.target.value })}
-                  value={form.harga}
-                  label={'Harga'}
-                />
+              
+                <CurrencyFormat 
+                fullWidth 
+                label={'Berat'} 
+                customInput={TextField} 
+                style={{paddingBottom:15 ,paddingTop:15}} 
+                onValueChange={(e) => setForm({ ...form, berat: e.value })}
+                thousandSeparator={true} 
+                type="tel"
+                value={form.berat} />
+                
+                <CurrencyFormat 
+                fullWidth 
+                customInput={TextField}
+                thousandSeparator={true} 
+                style={{paddingBottom:15 ,paddingTop:15}}
+                type="tel"
+                onValueChange={(e) => setForm({ ...form, harga: e.value })}
+                value={form.harga}
+                label={'Harga'}
+               />
+{/*                 
                 <TextInput
                   id="berat"
                   name="berat"
@@ -190,7 +207,7 @@ export default function Form({
                   onChange={(e) => setForm({ ...form, berat: e.target.value })}
                   value={form.berat}
                   label={'Berat'}
-                />
+                /> */}
                 <ButtonPrimary
                   onClick={handelSimpan}
                   disabled={form.berat === '' || form.harga === '' || form.jsCode === '' || form.sumber === ''}
@@ -201,7 +218,7 @@ export default function Form({
             )}
             <ButtonPrimary
               type="submit"
-              disabled={sampah.length === 0 || loading || isLoading}
+              disabled={sampah.length === 0 || sampahbutton===false || loading || isLoading}
               onClick={handleTambahSampah}
               label={isLoading ? 'Proses' : 'Simpan Pembelian'}
             />

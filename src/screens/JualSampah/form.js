@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Button, Card, CardContent, Grid, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
@@ -8,6 +8,7 @@ import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import SelectInput from '../../components/SelectInput';
 import TextInput from '../../components/TextInput';
 import AutoCompleteLoading from '../../components/AutoCompleteLoading';
+import CurrencyFormat from 'react-currency-format';
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 
@@ -16,6 +17,8 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
   const [showForm, setShowFrom] = useState(false);
   const [pembeli, setPembeli] = useState('');
   const [pembeliCode, setPembeliCode] = useState(null);
+  
+  const [sampahbutton, setsampahbutton] = useState(false);
   const [form, setForm] = useState({ jenisCode: '', harga: '', berat: '', jenis: '' });
 
   const [sampah, setSampah] = useState([]);
@@ -67,6 +70,7 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
     setSampah([...sampah, form]);
     setForm({ sumber: '', jenisCode: '', harga: '', berat: '', jenis: '' });
     setShowFrom(false);
+    setsampahbutton(true);
   };
   const handleJenis = (e) => {
     const jenis = optionJs.find((j) => j.value === e.target.value);
@@ -144,7 +148,7 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
           <Button
             variant="outlined"
             style={{ marginBottom: 10 }}
-            onClick={() => setShowFrom(!showForm)}
+            onClick={() => {setShowFrom(!showForm); setsampahbutton(showForm)}}
             color="success"
           >
             {showForm ? 'Batal' : 'Tambah Sampah'}
@@ -160,22 +164,26 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
                   value={form.jenisCode}
                   option={optionJs && optionJs}
                 />
-                <TextInput
-                  id="harga"
-                  name="harga"
-                  type="number"
-                  onChange={(e) => setForm({ ...form, harga: e.target.value })}
-                  value={form.harga}
-                  label={'Harga'}
-                />
-                <TextInput
-                  id="berat"
-                  name="berat"
-                  type="number"
-                  onChange={(e) => setForm({ ...form, berat: e.target.value })}
-                  value={form.berat}
-                  label={'Berat'}
-                />
+                <CurrencyFormat 
+                fullWidth 
+                label={'Berat'} 
+                customInput={TextField} 
+                style={{paddingBottom:15 ,paddingTop:15}} 
+                onValueChange={(e) => setForm({ ...form, berat: e.value })}
+                thousandSeparator={true} 
+                type="tel"
+                value={form.berat} />
+                
+                <CurrencyFormat 
+                fullWidth 
+                customInput={TextField}
+                thousandSeparator={true} 
+                style={{paddingBottom:15 ,paddingTop:15}}
+                type="tel"
+                onValueChange={(e) => setForm({ ...form, harga: e.value })}
+                value={form.harga}
+                label={'Harga'}
+               />
                 <ButtonPrimary
                   onClick={handelSimpan}
                   disabled={form.berat === '' || form.harga === '' || form.jenisCode === ''}
@@ -186,7 +194,7 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
             )}
             <ButtonPrimary
               type="submit"
-              disabled={sampah.length === 0}
+              disabled={sampah.length === 0 ||sampahbutton===false}
               onClick={() =>
                 handleOpen('Upload Nota', 2, {
                   detail: sampah.map((s) => {
