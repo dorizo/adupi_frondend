@@ -12,6 +12,22 @@ const GET_ALL_KUNJUNGAN = async () => {
     return catchCallBack(error);
   }
 };
+
+const GET_ALL_KUNJUNGANMITRA = async () => {
+  const data = qs.stringify({
+  
+   });
+   console.log("kok kosong" , data);
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.post(`report/kunjunganmitraall`, data, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_ONE_KUNJUNGAN = async (id) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -87,4 +103,4 @@ const DELETE_KUNJUNGAN = async (id) => {
     return catchCallBack(error);
   }
 };
-export { ADD_KUNJUNGAN, GET_ALL_KUNJUNGAN, DELETE_KUNJUNGAN, UPDATE_KUNJUNGAN, GET_ONE_KUNJUNGAN,ADD_KUNJUNGANIMAGE };
+export { ADD_KUNJUNGAN, GET_ALL_KUNJUNGAN, DELETE_KUNJUNGAN, UPDATE_KUNJUNGAN, GET_ONE_KUNJUNGAN,ADD_KUNJUNGANIMAGE ,GET_ALL_KUNJUNGANMITRA };

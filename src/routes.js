@@ -49,6 +49,7 @@ import Mitrakehadiran from './screens/Mitrakehadiran';
 import Mitrakehadirandetail from './screens/Mitrakehadirandetail';
 import Kunjungandashboard from './pages/kunjungandashboard';
 import Detailmasalahstatus from './pages/Detailmasalahstatus';
+import Kunjunganmitra from './pages/kunjunganmitra';
 
 // ----------------------------------------------------------------------
 
@@ -196,6 +197,14 @@ export default function Router() {
           element: (
             <RequireAuth allowedRoles={['admin']}>
               <KunjunganFasilitator />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'kunjungan-mitra',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <Kunjunganmitra />
             </RequireAuth>
           ),
         },

@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActions, CardContent, CardHeader, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, ImageList, ImageListItem, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardHeader, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, ImageList, ImageListItem, Typography } from "@mui/material";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { CHANGE_STATUS_MASALAH, GET_ALL_MASALAH_BY_MITRA } from "src/api/masalah";
@@ -9,16 +9,13 @@ import { GET_PEMBELIAN_MITRA_PERBULAN, GET_PENJUALAN_MITRA_PERBULAN } from "src/
 import { format } from "date-fns";
 import ReactApexChart from "react-apexcharts";
 import { LoadingButton } from "@mui/lab";
-import SaveIcon from '@mui/icons-material/Save';
 import CameraAltRounded from "@mui/icons-material/CameraAltRounded";
 import ButtonUpload from "src/components/Button/ButtonUpload";
 import { useState } from "react";
 import { useSnackbar } from "notistack";
 import { ADD_KUNJUNGANIMAGE } from "src/api/kunjungan";
-import { useFormik } from "formik";
-import * as Yup from 'yup';
 import { GET_KUNJUNGAN_DETAIL, GET_viewimagekunjungan } from "src/api/kunjunganmitra";
-
+import Form from './form';
 export default function Detailmitracomp({title}) {
 
     const params = useParams();
@@ -93,7 +90,6 @@ export default function Detailmitracomp({title}) {
     GET_viewimagekunjungan(title,'mitra')
     );
     const datamasalahmitra = masalahmitra?.data?.data;
-    console.log(imagekunjungan);
   
   const handleChangeStatus = async (id) => {
       const response = await CHANGE_STATUS_MASALAH(id);
@@ -238,46 +234,6 @@ export default function Detailmitracomp({title}) {
         },
       },
     };
-
-
-    const handleSubmit =async (val ,{ resetForm}) =>{
-        // console.log(val);
-      const response =  await GET_KUNJUNGAN_DETAIL(val);
-      console.log(response);
-      if(response.status == 200){
-        await enqueueSnackbar(response.data.message, { variant: 'success' });
-        resetForm();
-      }else{
-        
-        await enqueueSnackbar(response.data.message, { variant: 'error' });
-
-      }
-      }
-    
-  const formik = useFormik({
-    initialValues: 
-    {
-        Kunjungan_formCapaian : "",
-        Kunjungan_formKeterlambatan : "",
-        Kunjungan_formHargaPembelian : "",
-        Kunjungan_formPekerja : "",
-        Kunjungan_formJumlahMesin : "",
-        Kunjungan_formPendampingan : "",
-        mitraCode :title
-     
-     },
-    validationSchema: Yup.object({
-        Kunjungan_formCapaian: Yup.string().required('Harus Disisi'),
-        Kunjungan_formKeterlambatan: Yup.string().required('Harus Disisi'),
-        Kunjungan_formHargaPembelian: Yup.string().required('Harus Disisi'),
-        Kunjungan_formPekerja: Yup.string().required('Harus Disisi'),
-        Kunjungan_formJumlahMesin: Yup.string().required('Harus Disisi'),
-        Kunjungan_formPendampingan: Yup.string().required('Harus Disisi'),
-        mitraCode: Yup.string().required('Harus Disisi'),
-    }),
-    onSubmit: handleSubmit,
-  });
-
 return(
     <>
      <Dialog open={openmodal} onClose={handleClose}>
@@ -297,7 +253,7 @@ return(
               <LoadingButton loading={loadingbutton} onClick={Uploadimagebase}>Upload</LoadingButton>
             </DialogActions>
           </Dialog>
-    <Card style={{ marginTop: 5}}>
+          <Card style={{ marginTop: 5}}>
                 <CardContent>
                   <ReactApexChart options={state.options} series={state.series} type="line" height={360} />
                 </CardContent>
@@ -373,91 +329,7 @@ return(
             <Card style={{marginTop:4}}>
               <CardContent>
                 <Typography variant="caption">FORM INPUT KUNJUNGAN</Typography>
-                <form  onSubmit={formik.handleSubmit}>
-                <FormControl fullWidth sx={{ m: 1 }}>
-                  <TextField
-                    name="Kunjungan_formCapaian"
-                    value={formik.values.Kunjungan_formCapaian}
-                    onChange={formik.handleChange}
-                    error={formik.touched.Kunjungan_formCapaian && Boolean(formik.errors.Kunjungan_formCapaian)}
-                    helperText={formik.touched.Kunjungan_formCapaian && formik.errors.Kunjungan_formCapaian}
-                    id="outlined-multiline-flexible"
-                    label="capaian serapan mitra bulan ini ?"
-                    multiline
-                    rows={2}
-                  />
-                </FormControl>
-                <FormControl fullWidth sx={{ m: 1 }}>
-                  <TextField
-                    name="Kunjungan_formKeterlambatan"
-                    value={formik.values.Kunjungan_formKeterlambatan}
-                    error={formik.touched.Kunjungan_formKeterlambatan && Boolean(formik.errors.Kunjungan_formKeterlambatan)}
-                    helperText={formik.touched.Kunjungan_formKeterlambatan && formik.errors.Kunjungan_formKeterlambatan}
-                    onChange={formik.handleChange}
-                    id="outlined-multiline-flexible"
-                    label="kendala Pembayaran yang dialami ?"
-                    multiline
-                    rows={2}
-                  />
-                </FormControl>
-                <FormControl fullWidth sx={{ m: 1 }}>
-                  <TextField
-                    name="Kunjungan_formHargaPembelian"
-                    value={formik.values.Kunjungan_formHargaPembelian}
-                    error={formik.touched.Kunjungan_formHargaPembelian && Boolean(formik.errors.Kunjungan_formHargaPembelian)}
-                    helperText={formik.touched.Kunjungan_formHargaPembelian && formik.errors.Kunjungan_formHargaPembelian}
-                    onChange={formik.handleChange}
-                    id="outlined-multiline-flexible"
-                    label="harga pembelian/penjualan di lapangan ?"
-                
-                  />
-                </FormControl>
-                <FormControl fullWidth sx={{ m: 1 }}>
-                  <TextField
-                    name="Kunjungan_formPekerja"
-                    value={formik.values.Kunjungan_formPekerja}
-                    error={formik.touched.Kunjungan_formPekerja && Boolean(formik.errors.Kunjungan_formPekerja)}
-                    helperText={formik.touched.Kunjungan_formPekerja && formik.errors.Kunjungan_formPekerja}
-                    onChange={formik.handleChange}
-                    id="outlined-multiline-flexible"
-                    label="jumlah pekerja saat ini ?"
-                  />
-                </FormControl>
-                <FormControl fullWidth sx={{ m: 1 }}>
-                  <TextField
-                    name="Kunjungan_formJumlahMesin"
-                    value={formik.values.Kunjungan_formJumlahMesin}
-                    error={formik.touched.Kunjungan_formJumlahMesin && Boolean(formik.errors.Kunjungan_formJumlahMesin)}
-                    helperText={formik.touched.Kunjungan_formJumlahMesin && formik.errors.Kunjungan_formJumlahMesin}
-                    onChange={formik.handleChange}
-                    id="outlined-multiline-flexible"
-                    label="Jumlah Mesin Saat ini ?"
-                  />
-                </FormControl>
-                <FormControl fullWidth sx={{ m: 1 }}>
-                <TextField
-                    name="Kunjungan_formPendampingan"
-                    value={formik.values.Kunjungan_formPendampingan}
-                    error={formik.touched.Kunjungan_formPendampingan && Boolean(formik.errors.Kunjungan_formPendampingan)}
-                    helperText={formik.touched.Kunjungan_formPendampingan && formik.errors.Kunjungan_formPendampingan}
-                    onChange={formik.handleChange}
-                    id="outlined-multiline-flexible"
-                    label="pelatihan/pendampingan yang dibutuhkan ?"
-                    multiline
-                    rows={2}
-                  />
-                </FormControl>
-                <FormControl fullWidth sx={{ m: 1 }}>
-                <LoadingButton
-                    type="submit"
-                    loadingPosition="start"
-                    startIcon={<SaveIcon />}
-                    variant="outlined"
-                  >
-                    Simpan
-                  </LoadingButton>
-                </FormControl>
-              </form>
+                <Form title={title} />
               </CardContent>
             </Card>
             <Card style={{marginTop:4}}>

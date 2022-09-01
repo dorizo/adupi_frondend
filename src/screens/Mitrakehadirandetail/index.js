@@ -1,6 +1,6 @@
 import { Card, CardActions, CardContent, Typography } from "@mui/material";
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GET_MITRA_DETAIL_BY_FASILITATOR } from "src/api/mitra";
 import BarMobile from "src/components/BarMobile";
 import { LoadingButton } from "@mui/lab";
@@ -12,6 +12,7 @@ export default function Mitrakehadirandetail() {
     
     const params = useParams();
     const [statuscode , setstatuscode] = useState("checkin");
+    const navigate = useNavigate();
   
     let newDate = new Date();
     let tanggalsekarang = newDate.getFullYear()+"-"+(newDate.getMonth() + 1)+"-"+newDate.getDate();
@@ -31,7 +32,9 @@ export default function Mitrakehadirandetail() {
       });
     }
     const checkin = async (id) => {
-      // console.log(id);
+      if(statuscode == "checkout"){
+            navigate("/mobile/list-kehadiranmitra");
+      };
       const data  = await ADD_KUNJUNGANMITRA({"kunjungan_absen_name" : datasingle?.gudang?.[0]?.usahaCode , "kunjungan_absen_date": tanggalsekarang,"kunjungan_absen_status":statuscode,"mitraCode":params.mitraCode});
       if(data.status === 200){
         // console.log(data.status);
@@ -40,6 +43,7 @@ export default function Mitrakehadirandetail() {
         setstatuscode("checkin");
 
       }
+
       await detailrefech();
       
     }
