@@ -33,7 +33,6 @@ const list = [
     subList: [
       { title: 'Privasi', icon: <SecurityIcon />, link: '' },
       { title: 'Term and condition', icon: <PrivacyTipIcon />, link: '' },
-      { title: 'Bahasa', icon: <LanguageIcon />, link: '' },
     ],
   },
 ];
@@ -41,7 +40,7 @@ export default function Akun() {
   const { logoutMobile, auth } = useAuth();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }} position="static">
+      <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15 ,background: '#35a4ed'  }} position="static">
         <Toolbar>
           <Box sx={{ flexGrow: 1, flexDirection: 'column', marginTop: 2, marginBottom: 2 }}>
             <Typography variant="h6">Akun Setting</Typography>

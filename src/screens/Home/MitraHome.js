@@ -13,13 +13,15 @@ import * as React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { GET_SELF_MITRA } from '../../api/mitra';
-import menuAnggota from '../../assets/illustation/menu-anggota.png';
-import menuBeli from '../../assets/illustation/menu-beli-sampah.png';
-import menuJual from '../../assets/illustation/menu-jual-sampah.png';
-import menuMasalah from '../../assets/illustation/menu-masalah.png';
-import menuAlat from '../../assets/illustation/recyle.png';
-import adupi from '../../assets/logo/logo.png';
-import support from '../../assets/illustation/support.png';
+import menuAnggota from '../../assets/illustation/TambahSupplier.svg';
+import menuBeli from '../../assets/illustation/pembelian.svg';
+import menuJual from '../../assets/illustation/penjualan.svg';
+import menuMasalah from '../../assets/illustation/Masalah.svg';
+import menuAlat from '../../assets/illustation/Alat.svg';
+import gesn from '../../assets/logo/logo.png';
+import lemineral from '../../assets/logo/le-minerale.png';
+import adupi from '../../assets/logo/adupi.png';
+import support from '../../assets/illustation/support.svg';
 import Akun from '../Akun';
 import Transaksi from '../Transaksi';
 
@@ -53,44 +55,58 @@ export default function MitraHome() {
     <div style={{ paddingBottom: 40 }}>
       {value === 0 && (
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15,background: '#94C0E9' }} position="static">
-            <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10, marginTop: 10 }}>
-            <img alt="adupi logo" width={80} src={adupi} style={{ marginRight: 2 }} />
-               <Typography
-                variant="caption"
-                style={{
-                  fontWeight: 'bold',
-                  wordWrap: 'break-word',
-                  width: 120,
-                  borderLeft: '2px solid #fff',
-                  paddingLeft: 5,
-                }}
-              >
-                Gerakan {'\n'} Ekonomi {'\n'} Sirkular
+            <Box style={{background: '#35a4ed'  }} position="static">
+            <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10 }}>
+              <img alt="gesn logo" width={80} src={gesn} style={{ marginRight: 2 }} />
+              <img alt="adupi logo" width={40} src={adupi} style={{ marginRight: 2 }} />
+              <img alt="lemineral logo" width={40} src={lemineral} style={{ marginRight: 2 }} />
+            
+            </div>
+            <Toolbar sx={{color:"#FFFFFF"}}>
+              <IconButton size="large" edge="start" color="inherit" aria-label="menu">
+                <AccountCircleIcon sx={{fontSize:70}} />
+              </IconButton>
+              <Typography variant="body" component="div" sx={{ flexGrow: 1 }}>
+                Hai,<br /> {self?.nama} <br />  
+                {self?.alamat}
+              
               </Typography>
+              <Typography style={{ wordWrap: 'break-word', width: 100, textAlign: 'right' }}>
+                {' '}
+              </Typography>
+            </Toolbar>
+            <Box sx={{ padding: 3,background:"#F5F5F5" , borderStartEndRadius:30 , borderStartStartRadius:30,marginTop:5 }}>
+              <Typography variant="h6">Selamat Datang,</Typography>
+            <Typography variant="h6">{self?.nama}</Typography>
+            <Typography>Selamat bergabung sebagai mitra</Typography>
+          </Box>
+          </Box>
+          {/* <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15,background: '#35a4ed' }} position="static">
+            <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10, marginTop: 10 }}>
+            <img alt="gesn logo" width={80} src={gesn} style={{ marginRight: 2 }} />
+              <img alt="adupi logo" width={40} src={adupi} style={{ marginRight: 2 }} />
+              <img alt="lemineral logo" width={40} src={lemineral} style={{ marginRight: 2 }} />
+          
             </div>
             <Toolbar>
               <IconButton size="large" edge="start" color="inherit" aria-label="menu">
-                <AccountCircleIcon />
+                <AccountCircleIcon  sx={{fontSize:70}} />
               </IconButton>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Hai, {self?.nama}
+              <Typography variant="body2" component="div" sx={{ flexGrow: 1 }}>
+                Hai, <br /> {self?.nama} <br />   
+                {self?.alamat}
               </Typography>
-              <Typography style={{ wordWrap: 'break-word', width: 200, textAlign: 'right' }}>{self?.alamat}</Typography>
-              <LocationOnIcon />
             </Toolbar>
-          </AppBar>
-          <Box sx={{ padding: 3 }}>
+          </AppBar> */}
+          {/* <Box sx={{ padding: 3 }}>
             <Typography variant="h3">Selamat Datang,</Typography>
-            <Typography variant="h3">{self?.nama}</Typography>
-            <Typography>Selamat bergabung sebagai mitra</Typography>
             <br />
             {!self?.gudang && (
               <Button color="error" variant="contained">
                 Lengkapi Pendaftaran
               </Button>
             )}
-          </Box>
+          </Box> */}
           <Grid sx={{ padding: 3 }} container spacing={2}>
             {menuList.map((m, i) => (
               <Grid onClick={() => navigate(m.link)} key={i} item xs={6}>
@@ -99,8 +115,6 @@ export default function MitraHome() {
                     style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 15 }}
                   >
                     <img alt={`menu-${i}`} style={{ width: '100%' }} src={m.icon} />
-                    <Typography variant="h4">{m.title}</Typography>
-                    <Typography variant="caption">{m.desc}</Typography>
                   </CardContent>
                 </Card>
               </Grid>
@@ -114,8 +128,6 @@ export default function MitraHome() {
                     style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 15 }}
                   >
                     <img alt={`menu-wa`} style={{ width: '100%' }} src={support} />
-                    <Typography variant="h4">Support</Typography>
-                    <Typography variant="caption">Whatsapp Link</Typography>
                   </CardContent>
                 </Card>
               </Grid>
