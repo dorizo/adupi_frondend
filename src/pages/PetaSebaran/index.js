@@ -120,6 +120,7 @@ export default function PetaSebaran({ type = null }) {
                     style={{width:200}}
                     onChange={singledata}
                   >
+                    <MenuItem value="">SEMUA MITRA</MenuItem>
                     {datamitra?.data?.data.map((row ,indexx)=>{
                       
                        return(<MenuItem value={row.mitraCode}>{row.nama}</MenuItem>) 

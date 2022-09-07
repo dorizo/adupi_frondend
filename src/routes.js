@@ -50,6 +50,7 @@ import Mitrakehadirandetail from './screens/Mitrakehadirandetail';
 import Kunjungandashboard from './pages/kunjungandashboard';
 import Detailmasalahstatus from './pages/Detailmasalahstatus';
 import Kunjunganmitra from './pages/kunjunganmitra';
+import Activityfasilitator from './pages/activityfasilitator';
 
 // ----------------------------------------------------------------------
 
@@ -72,6 +73,15 @@ export default function Router() {
             </RequireAuth>
           ),
         },
+        {
+          path: 'detaillogfasilitator',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <Activityfasilitator />
+            </RequireAuth>
+          ),
+        },
+        
         { path: 'app', element:(
           <>
           <Kunjungandashboard />

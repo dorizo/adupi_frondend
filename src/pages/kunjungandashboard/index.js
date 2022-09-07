@@ -23,7 +23,7 @@ export default function Kunjungandashboard({ type = null }) {
             <Grid container spacing={2}>
                 <Grid item xs={4}>
                     <Card style={{padding:20}}>
-                        <h5>Kunjungan Terselesaikan</h5>
+                        <h5>Masalah Terselesaikan</h5>
                         <h1>{totalmasalah?.data?.data.selesai}</h1>
                         <Button  onClick={() => pindah("selesai")} variant="contained" endIcon={<NextPlanIcon />}>
                         Detail
@@ -32,7 +32,7 @@ export default function Kunjungandashboard({ type = null }) {
                 </Grid>
                 <Grid item xs={4}>
                     <Card style={{padding:20}}>
-                        <h5>Kunjungan Belum Terselesaikan</h5>
+                        <h5>Masalah Belum Terselesaikan</h5>
                         <h1>{totalmasalah?.data?.data.belum}</h1>
                         <Button  onClick={() => pindah("dalam peninjauan")}  variant="contained" endIcon={<NextPlanIcon />}>
                         Detail
@@ -40,7 +40,16 @@ export default function Kunjungandashboard({ type = null }) {
                         
                     </Card>
                 </Grid>
+                
                 <Grid item xs={4}>
+                <Card style={{padding:20}}>
+                        <h5>Fasilitator Aktif</h5>
+                        <h1>{totalmasalah?.data?.data.faslilitator}</h1>
+                        <Button  onClick={() =>navigate("/dashboard/detaillogfasilitator")}  variant="contained" endIcon={<NextPlanIcon />}>
+                        Detail
+                        </Button>
+                        
+                    </Card>
                 </Grid>
             </Grid>
         </Container>

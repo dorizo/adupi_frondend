@@ -50,6 +50,7 @@ export default function Form({title}) {
         }),
         onSubmit: handleSubmit,
       });
+      formik.values.mitraCode = title;
     return(
         <>
         <form  onSubmit={formik.handleSubmit}>

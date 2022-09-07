@@ -16,16 +16,26 @@ import { useSnackbar } from "notistack";
 import { ADD_KUNJUNGANIMAGE } from "src/api/kunjungan";
 import { GET_KUNJUNGAN_DETAIL, GET_viewimagekunjungan } from "src/api/kunjunganmitra";
 import Form from './form';
+import TextInput from "src/components/TextInput";
+import SelectInput from "src/components/SelectInput";
 export default function Detailmitracomp({title}) {
 
     const params = useParams();
     const [openmodal, setOpenmodal] = useState(false);
+    const [openmodalmasalah, setopenmodalmasalah] = useState(false);
+    
     const [Modalitems, setModalitems] = useState(null);
+    const [Modalmasalahitem, setModalmasalahitem] = useState(null);
+    const [inputnote, Setinputnote] = useState(null);
+    const [inputstatus , setinputstatus] = useState(null);
     const [selectedImg, setSelectedImg] = useState('');
     const [loadingbutton ,setloadingbutton] = useState(true);
     const { enqueueSnackbar } = useSnackbar();
     const handleClose = () => {
         setOpenmodal(false);
+      };
+      const handleClosemasalah = () => {
+        setopenmodalmasalah(false);
       };
       const handleUploadClick = (event) => {
         // setLoading(true);
@@ -38,6 +48,9 @@ export default function Detailmitracomp({title}) {
         // setLoading(false);
         setloadingbutton(false);
       };
+      const handleupdate = async () =>{
+        console.log(inputnote ,Modalmasalahitem?.masalahCode);
+      }
       
       const Uploadimagebase = async () => {
         setloadingbutton(true);
@@ -104,6 +117,13 @@ export default function Detailmitracomp({title}) {
         await enqueueSnackbar('Internal server error', 'error');
       }
     };
+
+    const handlemodalmasalah = async (m) => {
+      console.log(m);
+      setopenmodalmasalah(true);
+      setModalmasalahitem(m);
+
+    }
   
     
     const list = penjualanmitra && penjualanmitra?.data?.data;
@@ -236,7 +256,7 @@ export default function Detailmitracomp({title}) {
     };
 return(
     <>
-     <Dialog open={openmodal} onClose={handleClose}>
+          <Dialog open={openmodal} onClose={handleClose}>
             <DialogTitle>{Modalitems?.judul}</DialogTitle>
             <DialogContent>
               <DialogContentText>
@@ -251,6 +271,35 @@ return(
             <DialogActions>
               <Button onClick={handleClose}>Close</Button>
               <LoadingButton loading={loadingbutton} onClick={Uploadimagebase}>Upload</LoadingButton>
+            </DialogActions>
+          </Dialog>
+
+          <Dialog open={openmodalmasalah} fullWidth={true}>
+            <DialogTitle>{Modalitems?.judul}</DialogTitle>
+            <DialogContent>
+              {Modalmasalahitem?.deskripsi}
+            <TextInput
+              autoComplete='off'
+              multiline
+              rows={4}
+              onChange={(e) =>Setinputnote(e.target.value)}
+            />
+             <SelectInput
+            label="Jenis Masalah"
+            name="jenisMasalah"
+            id="jenisMasalah"
+            onChange={(e) =>setinputstatus(e.target.value)}
+            option={[
+              'dalam peninjauan',
+              'selesai',
+            ].map((a) => {
+              return { value: a, label: a };
+            })}
+          />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleupdate}>Simpan</Button>
+              <Button onClick={handleClosemasalah}>Cancel</Button>
             </DialogActions>
           </Dialog>
           <Card style={{ marginTop: 5}}>
@@ -297,7 +346,7 @@ return(
                                     {li?.status === 'Dalam peninjauan' && (
                                     <Button
                                         style={{ marginTop: 5 }}
-                                        onClick={() => handleChangeStatus(li.masalahCode)}
+                                        onClick={() => handlemodalmasalah(li)}
                                         variant="outlined"
                                         size="small"
                                         color="success"
