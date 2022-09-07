@@ -13,6 +13,19 @@ const GET_ALL_KUNJUNGAN = async () => {
   }
 };
 
+
+const CEK_KUNJUNGAN = async (id) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`cekkunjungan/${id}`, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
 const GET_ALL_KUNJUNGANMITRA = async () => {
   const data = qs.stringify({
   
@@ -103,4 +116,4 @@ const DELETE_KUNJUNGAN = async (id) => {
     return catchCallBack(error);
   }
 };
-export { ADD_KUNJUNGAN, GET_ALL_KUNJUNGAN, DELETE_KUNJUNGAN, UPDATE_KUNJUNGAN, GET_ONE_KUNJUNGAN,ADD_KUNJUNGANIMAGE ,GET_ALL_KUNJUNGANMITRA };
+export { ADD_KUNJUNGAN, GET_ALL_KUNJUNGAN, DELETE_KUNJUNGAN, UPDATE_KUNJUNGAN, GET_ONE_KUNJUNGAN,ADD_KUNJUNGANIMAGE ,GET_ALL_KUNJUNGANMITRA , CEK_KUNJUNGAN };

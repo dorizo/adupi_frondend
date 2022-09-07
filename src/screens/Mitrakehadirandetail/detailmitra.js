@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardActions, CardContent, CardHeader, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, ImageList, ImageListItem, Typography } from "@mui/material";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { CHANGE_STATUS_MASALAH, GET_ALL_MASALAH_BY_MITRA } from "src/api/masalah";
+import { CHANGE_STATUS_MASALAH, GET_ALL_MASALAH_BY_MITRA, NOTE_MASALAH_FASILITATOR } from "src/api/masalah";
 import { fDateTime } from "src/utils/formatTime";
 import dummyMasalah from '../../assets/dummy-masalah.png';
 import Image from "src/components/Image";
@@ -49,7 +49,31 @@ export default function Detailmitracomp({title}) {
         setloadingbutton(false);
       };
       const handleupdate = async () =>{
-        console.log(inputnote ,Modalmasalahitem?.masalahCode);
+        if(inputnote==null){
+          await enqueueSnackbar("Note Wajib Diisi", { variant: 'error' });
+          return;
+        }
+        if(inputstatus==null){
+          await enqueueSnackbar("Status wajib diisi Wajib Diisi", { variant: 'error' });
+          return;
+        }
+
+        const response = await NOTE_MASALAH_FASILITATOR({masalahCode:Modalmasalahitem?.masalahCode,note:inputnote,status:inputstatus});
+        console.log(response);
+        if (response.status === 200) {
+          await enqueueSnackbar(response.data.message, { variant: 'success' });
+          refetch();
+          setinputstatus(null);
+          Setinputnote(null);
+        }
+        if (response.status === 400) {
+          await enqueueSnackbar(response.data.message, { variant: 'error' });
+        }
+        if (response.status === 500) {
+          await enqueueSnackbar('Internal server error', 'error');
+        }
+        await setopenmodalmasalah(false);
+        
       }
       
       const Uploadimagebase = async () => {
@@ -285,7 +309,7 @@ return(
               onChange={(e) =>Setinputnote(e.target.value)}
             />
              <SelectInput
-            label="Jenis Masalah"
+            label="Status Masalah"
             name="jenisMasalah"
             id="jenisMasalah"
             onChange={(e) =>setinputstatus(e.target.value)}
@@ -351,7 +375,7 @@ return(
                                         size="small"
                                         color="success"
                                     >
-                                        Selesai
+                                        Input
                                     </Button>
                                     )}
                                 </Grid>

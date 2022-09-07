@@ -82,6 +82,22 @@ const CHANGE_STATUS_MASALAH = async (id) => {
   }
 };
 
+const NOTE_MASALAH_FASILITATOR = async ({ masalahCode, note, status }) => {
+  const data = qs.stringify({
+    masalahCode,
+    note,
+    status,
+  });
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.post(`fasilitator/masalahnote`, data, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const ADD_MASALAH = async ({ jenisMasalah, deskripsi, foto }) => {
   const data = qs.stringify({
     jenisMasalah,
@@ -137,4 +153,5 @@ export {
   GET_ALL_MASALAH_DASHBOARD,
   GET_ALL_MASALAH_DASHBOARDLIST,
   GET_ALL_ACTIVITI_DASHBOARDLIST,
+  NOTE_MASALAH_FASILITATOR,
 };

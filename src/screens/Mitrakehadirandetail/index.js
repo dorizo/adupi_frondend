@@ -8,12 +8,15 @@ import FollowTheSignsIcon from '@mui/icons-material/FollowTheSigns';
 import { useEffect, useState } from "react";
 import Detailmitracomp from "./detailmitra";
 import { ADD_KUNJUNGANMITRA, GET_KunjunganTanggal } from "src/api/kunjunganmitra";
+import { useSnackbar } from "notistack";
+import { CEK_KUNJUNGAN } from "src/api/kunjungan";
 export default function Mitrakehadirandetail() {
     
     const params = useParams();
     const [statuscode , setstatuscode] = useState("checkin");
     const navigate = useNavigate();
   
+    const { enqueueSnackbar } = useSnackbar();
     let newDate = new Date();
     let tanggalsekarang = newDate.getFullYear()+"-"+(newDate.getMonth() + 1)+"-"+newDate.getDate();
 
@@ -33,6 +36,18 @@ export default function Mitrakehadirandetail() {
     }
     const checkin = async (id) => {
       if(statuscode == "checkout"){
+
+             const CEKDATA = await CEK_KUNJUNGAN(mitradetail?.data?.data?.[0]?.kunjungan_absenCode);
+             console.log(CEKDATA);
+            if((CEKDATA?.data?.data?.masalahform) < 1){
+              await enqueueSnackbar('Anda Belum Mengisi Form masalah',  { variant: 'error' });
+              return true;
+            }else if(CEKDATA?.data?.data?.masalahfoto < 1){
+              await enqueueSnackbar('Anda Belum Melakukan Pengambilan foto',  { variant: 'error' });
+              return true;
+            }else{
+              await enqueueSnackbar('Berhasil Melakukan Kunjungan',  { variant: 'success' });
+            };
             navigate("/mobile/list-kehadiranmitra");
       };
       const data  = await ADD_KUNJUNGANMITRA({"kunjungan_absen_name" : datasingle?.gudang?.[0]?.usahaCode , "kunjungan_absen_date": tanggalsekarang,"kunjungan_absen_status":statuscode,"mitraCode":params.mitraCode});
@@ -77,7 +92,7 @@ export default function Mitrakehadirandetail() {
                 
                 </CardActions>
             </Card>
-           {statuscode === "checkout" ? <Detailmitracomp title={mitradetail?.data?.data?.[0]?.kunjungan_absenCode} />:<></> }
+           {statuscode === "checkout" ? <Detailmitracomp title={mitradetail?.data?.data?.[0]?.kunjungan_absenCode}  />:<></> }
             
           </>
     );
