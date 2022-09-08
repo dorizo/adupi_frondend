@@ -41,7 +41,7 @@ export default function FasilitatorHome() {
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10 }}>
               <img alt="gesn logo" width={80} src={gesn} style={{ marginRight: 2 }} />
               <img alt="adupi logo" width={40} src={adupi} style={{ marginRight: 2 }} />
-              <img alt="lemineral logo" width={40} src={lemineral} style={{ marginRight: 2 }} />
+              <img alt="lemineral logo" width={60} src={lemineral} style={{ marginRight: 2 }} />
             
             </div>
             <Toolbar sx={{color:"#FFFFFF"}}>
