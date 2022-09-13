@@ -4,7 +4,7 @@ import ListItemText from '@mui/material/ListItemText';
 import PropTypes from 'prop-types';
 
 export default function Action(props) {
-  const { actionOpen, actionClose, anchorEl, handleVerifikasi } = props;
+  const { actionOpen, actionClose, anchorEl, handleVerifikasi,handleDetail } = props;
   return (
     <Menu
       id="basic-menu"
@@ -23,6 +23,12 @@ export default function Action(props) {
         'aria-labelledby': 'basic-button',
       }}
     >
+      <MenuItem onClick={handleDetail}>
+        <ListItemIcon>
+          <CheckCircle fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>Detail</ListItemText>
+      </MenuItem>
       <MenuItem onClick={handleVerifikasi}>
         <ListItemIcon>
           <CheckCircle fontSize="small" />

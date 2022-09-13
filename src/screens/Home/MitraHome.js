@@ -81,32 +81,7 @@ export default function MitraHome() {
             <Typography>Selamat bergabung sebagai mitra</Typography>
           </Box>
           </Box>
-          {/* <AppBar style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15,background: '#35a4ed' }} position="static">
-            <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10, marginTop: 10 }}>
-            <img alt="gesn logo" width={80} src={gesn} style={{ marginRight: 2 }} />
-              <img alt="adupi logo" width={40} src={adupi} style={{ marginRight: 2 }} />
-              <img alt="lemineral logo" width={40} src={lemineral} style={{ marginRight: 2 }} />
-          
-            </div>
-            <Toolbar>
-              <IconButton size="large" edge="start" color="inherit" aria-label="menu">
-                <AccountCircleIcon  sx={{fontSize:70}} />
-              </IconButton>
-              <Typography variant="body2" component="div" sx={{ flexGrow: 1 }}>
-                Hai, <br /> {self?.nama} <br />   
-                {self?.alamat}
-              </Typography>
-            </Toolbar>
-          </AppBar> */}
-          {/* <Box sx={{ padding: 3 }}>
-            <Typography variant="h3">Selamat Datang,</Typography>
-            <br />
-            {!self?.gudang && (
-              <Button color="error" variant="contained">
-                Lengkapi Pendaftaran
-              </Button>
-            )}
-          </Box> */}
+       
           <Grid sx={{ padding: 3 }} container spacing={2}>
             {menuList.map((m, i) => (
               <Grid onClick={() => navigate(m.link)} key={i} item xs={6}>

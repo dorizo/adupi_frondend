@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import { fDateTime } from '../../utils/formatTime';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import { fRupiah } from '../../utils/formatNumber';
+import gesn from '../../assets/logo/logo.png';
+import lemineral from '../../assets/logo/le-minerale.png';
+import adupi from '../../assets/logo/adupi.png';
 
 function hitungTotal(detail) {
   let total = 0;
@@ -22,15 +25,23 @@ const ComponentToPrint = React.forwardRef(({ data }, ref) => (
     >
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
-          <TableRow>
-            <TableCell align="center" colSpan={2}>
+          <TableRow style={{background:'#35a4ed'}}>
+            <TableCell>
+            <div style={{ display: 'flex', alignItems: 'center', marginLeft: 10 }}>
+              <img alt="gesn logo" width={80} src={gesn} style={{ marginRight: 2 }} />
+              <img alt="adupi logo" width={40} src={adupi} style={{ marginRight: 2 }} />
+              <img alt="lemineral logo" width={60} src={lemineral} style={{ marginRight: 2 }} />
+            
+            </div>
+            </TableCell>
+            <TableCell align="center" colSpan={1}>
               <Typography sx={{ fontWeight: 'bold' }}>{data.mitra.namaUsaha}</Typography>
               <Typography>{data.mitra.alamat} </Typography>
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
-              {fDateTime(data.createAt)} <br /> No. 10809a
+              {fDateTime(data.createAt)} <br /> No. {Math.random()}
             </TableCell>
             <TableCell align="right">{data.anggota.nama}</TableCell>
           </TableRow>

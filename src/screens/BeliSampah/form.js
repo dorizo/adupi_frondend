@@ -10,6 +10,7 @@ import SelectInput from '../../components/SelectInput';
 import TextInput from '../../components/TextInput';
 import Struck from './Struck';
 import CurrencyFormat from 'react-currency-format';
+import { fRupiah, ribuan } from 'src/utils/formatNumber';
 
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
@@ -79,7 +80,7 @@ export default function Form({
       anggota,
       mitra: { alamat: mitra?.alamat, namaUsaha: mitra?.gudang[0]?.namaUsaha },
     });
-    handleOpen('Sampah', 1, { anggotaCode: anggota?.anggotaCode });
+    handleOpen('PEMBELIAN BAHAN DUP', 1, { anggotaCode: anggota?.anggotaCode });
   };
   const handleTambahSampah = async () => {
     await setDataStruck({ ...dataStruck, detail: sampah, createAt: new Date() });
@@ -137,8 +138,8 @@ export default function Form({
                     <Grid item xs={12}>
                       <Typography sx={{ fontWeight: 'bold' }}>{m?.jenis}</Typography>
                       <Typography sx={{ fontSize: 12 }}>Sumber : {m?.sumber}</Typography>
-                      <Typography sx={{ fontSize: 12 }}>Kapasitas : {m?.berat}</Typography>
-                      <Typography sx={{ fontSize: 12 }}>Kapasitas : {m?.harga}</Typography>
+                      <Typography sx={{ fontSize: 12 }}>Kapasitas : {ribuan(m?.berat)}</Typography>
+                      <Typography sx={{ fontSize: 12 }}>Kapasitas : {fRupiah(m?.harga)}</Typography>
                       <Button onClick={() => removeListSampah(i)} size="small" variant="outlined" color="error">
                         Hapus
                       </Button>

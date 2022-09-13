@@ -34,7 +34,7 @@ export default function Form({title}) {
             Kunjungan_formKeterlambatan : "",
             Kunjungan_formHargaPembelian : "",
             Kunjungan_formPekerja : "",
-            Kunjungan_formJumlahMesin : "",
+            Kunjungan_formJumlahMesin : title,
             Kunjungan_formPendampingan : "",
             mitraCode :title
          
@@ -44,7 +44,6 @@ export default function Form({title}) {
             Kunjungan_formKeterlambatan: Yup.string().required('Harus Disisi'),
             Kunjungan_formHargaPembelian: Yup.string().required('Harus Disisi'),
             Kunjungan_formPekerja: Yup.string().required('Harus Disisi'),
-            Kunjungan_formJumlahMesin: Yup.string().required('Harus Disisi'),
             Kunjungan_formPendampingan: Yup.string().required('Harus Disisi'),
             mitraCode: Yup.string().required('Harus Disisi'),
         }),
@@ -62,7 +61,7 @@ export default function Form({title}) {
                     error={formik.touched.Kunjungan_formCapaian && Boolean(formik.errors.Kunjungan_formCapaian)}
                     helperText={formik.touched.Kunjungan_formCapaian && formik.errors.Kunjungan_formCapaian}
                     id="outlined-multiline-flexible"
-                    label="capaian serapan mitra bulan ini ?"
+                    label="masalah apa yang dihadapi dalam mecapai target pembelian bulanan ?"
                     multiline
                     rows={2}
                   />
@@ -75,7 +74,7 @@ export default function Form({title}) {
                     helperText={formik.touched.Kunjungan_formKeterlambatan && formik.errors.Kunjungan_formKeterlambatan}
                     onChange={formik.handleChange}
                     id="outlined-multiline-flexible"
-                    label="kendala Pembayaran yang dialami ?"
+                    label="masalah apa yang dihadapi dalam melakukan Pembayaran pinjaman dari program?"
                     multiline
                     rows={2}
                   />
@@ -104,7 +103,7 @@ export default function Form({title}) {
                     label="jumlah pekerja saat ini ?"
                   />
                 </FormControl>
-                <FormControl fullWidth sx={{ m: 1 }}>
+                {/* <FormControl fullWidth sx={{ m: 1 }}>
                   <TextInput
                     name="Kunjungan_formJumlahMesin"
                     value={formik.values.Kunjungan_formJumlahMesin}
@@ -114,7 +113,7 @@ export default function Form({title}) {
                     id="outlined-multiline-flexible"
                     label="Jumlah Mesin Saat ini ?"
                   />
-                </FormControl>
+                </FormControl> */}
                 <FormControl fullWidth sx={{ m: 1 }}>
                 <TextInput
                     name="Kunjungan_formPendampingan"

@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import useImageViewer from '../../hooks/useImageViewer';
 import { GET_JUAL_SAMPAH } from '../../api/sampah';
 import { fDateTime } from '../../utils/formatTime';
+import { fRupiah, ribuan } from 'src/utils/formatNumber';
 
 export default function TransaksiPenjualan() {
   const { handleOpen, ImageViewerComponent } = useImageViewer();
@@ -64,9 +65,9 @@ export default function TransaksiPenjualan() {
                 <Typography variant="caption">{fDateTime(li?.createAt)}</Typography>
               </Box>
               <Typography>Pembeli : {li?.pembeli?.pembeli}</Typography>
-              <Typography>Berat : {li?.totalBerat}</Typography>
+              <Typography>Berat : {ribuan(li?.totalBerat)}</Typography>
               <Box sx={{ justifyContent: 'space-between', flexGrow: 1, display: 'flex' }}>
-                <Typography>Harga : {li?.totalHarga}</Typography>
+                <Typography>Harga : {fRupiah(li?.totalHarga)}</Typography>
                 {li?.nota && (
                   <Button
                     onClick={() => handleOpen(`${process.env.REACT_APP_API_URL_SSL}assets/penjualan/${li?.nota}`)}
@@ -90,9 +91,9 @@ export default function TransaksiPenjualan() {
                         <Typography style={{ fontWeight: 'bold' }}>{di?.jenis_sampah?.jenis}</Typography>
                         <Typography variant="caption">{di?.sumber}</Typography>
                       </Box>
-                      <Typography style={{ fontSize: 11 }}>Berat : {di?.berat}</Typography>
-                      <Typography style={{ fontSize: 11 }}>Harga : {di?.harga}</Typography>
-                      <Typography style={{ fontSize: 11 }}>Total : {di?.total}</Typography>
+                      <Typography style={{ fontSize: 11 }}>Berat : {ribuan(di?.berat)}</Typography>
+                      <Typography style={{ fontSize: 11 }}>Harga : {fRupiah(di?.harga)}</Typography>
+                      <Typography style={{ fontSize: 11 }}>Total : {fRupiah(di?.total)}</Typography>
                     </CardContent>
                   </Card>
                 ))}

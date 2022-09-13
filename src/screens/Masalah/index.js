@@ -225,17 +225,9 @@ export default function Masalah() {
                     </Typography>
                     <Typography variant="caption">{li?.deskripsi}</Typography>
                     <br />
-                    {li?.status === 'Dalam peninjauan' && (
-                      <Button
-                        style={{ marginTop: 5 }}
-                        onClick={() => handleChangeStatus(li.masalahCode)}
-                        variant="outlined"
-                        size="small"
-                        color="success"
-                      >
-                        Selesai
-                      </Button>
-                    )}
+                    <Typography variant="caption">Mulai : {fDateTime(li?.createAt)}</Typography><br />
+                    <Typography variant="caption">Terselesaikan : {li?.updateAt?fDateTime(li?.updateAt):"-"}</Typography>
+                 
                   </Grid>
                   <Grid item xs={6}>
                     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
@@ -248,7 +240,7 @@ export default function Masalah() {
                       />
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <Typography variant="caption">{fDateTime(li?.createAt)}</Typography>
+                     
                     </Box>
                   </Grid>
                 </Grid>

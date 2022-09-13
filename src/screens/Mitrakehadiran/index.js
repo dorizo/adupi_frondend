@@ -15,6 +15,7 @@ import AddLocationAltTwoToneIcon from '@mui/icons-material/AddLocationAltTwoTone
 import * as geolib from 'geolib';
 import LoadingCard from '../../components/LoadingCard';
 import {  useNavigate } from 'react-router-dom';
+import BarMobilekunjungan from 'src/components/BarMobilekunjungan';
 export default function Mitrakehadiran() {
   
   const navigate = useNavigate();
@@ -178,7 +179,7 @@ export default function Mitrakehadiran() {
   };
   return (
     <>
-      <BarMobile title={'Kunjungan'} />
+      <BarMobilekunjungan title={'List Kunjungan'} />
       <AdupiXLeMineraleHead />
       <div style={{ marginTop: 5, textAlign: 'center', paddingLeft: 30, paddingRight: 30 }}>
         <Typography align="center" variant="h2">

@@ -4,6 +4,7 @@ import { useSnackbar } from 'notistack';
 // import { useMee } from 'contexts/MeContext';
 import * as React from 'react';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { AKTIFASI_AKUN_MITRA, GET_MITRA_ALL_BY_SU_NO } from '../../api/mitra';
 import DialogConfirm from '../../components/DialogConfirm';
 import Page from '../../components/Page';
@@ -61,6 +62,7 @@ export default function Index() {
   const { data, isLoading, refetch } = useQuery('GET_MITRA_ALL_BY_SU_NO', GET_MITRA_ALL_BY_SU_NO);
   const { enqueueSnackbar } = useSnackbar();
 
+  const navigate = useNavigate();
   const rows = data && data?.data?.data;
 
   const { TableComponent, list } = useTable({
@@ -69,6 +71,10 @@ export default function Index() {
     loading: isLoading,
   });
   // HANDLE ACTION
+  const handleDetail = () => {
+    console.log(itemSelected);
+    navigate(`/dashboard/mitra/detail/${itemSelected.mitraCode}`);
+  };
   const handleActionOpen = (event, item) => {
     setItemSelected(item);
     setAnchorEl(event.currentTarget);
@@ -164,6 +170,7 @@ export default function Index() {
           handleVerifikasi={() => setAlertOpen(true)}
           anchorEl={anchorEl}
           actionClose={handleActionClose}
+          handleDetail={handleDetail}
         />
       )}
       {alertOpen && (
