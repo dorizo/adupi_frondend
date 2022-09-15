@@ -51,6 +51,11 @@ const navConfig = [
                   path: '/dashboard/mitra',
                   icon: getIcon('eva:list-outline'),
                 },
+                {
+                  title: 'Setting Target',
+                  path: '/dashboard/target',
+                  icon: getIcon('eva:list-outline'),
+                },
               ]
   },
 

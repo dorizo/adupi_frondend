@@ -51,6 +51,7 @@ import Kunjungandashboard from './pages/kunjungandashboard';
 import Detailmasalahstatus from './pages/Detailmasalahstatus';
 import Kunjunganmitra from './pages/kunjunganmitra';
 import Activityfasilitator from './pages/activityfasilitator';
+import Target from './pages/Target';
 
 // ----------------------------------------------------------------------
 
@@ -86,6 +87,11 @@ export default function Router() {
           <>
           <Kunjungandashboard />
           <PetaSebaran />
+          </>
+        )},
+        { path: 'target', element:(
+          <>
+          <Target />
           </>
         )},
         {

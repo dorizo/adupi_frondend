@@ -1,4 +1,4 @@
-import { Box, Button, CardContent, Container, Drawer, FormControl, InputLabel, List, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { Box, Button, CardContent, Container, Drawer, FormControl, Grid, InputLabel, List, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { width } from '@mui/system';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 import 'leaflet/dist/leaflet.css';
@@ -6,6 +6,8 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, Marker, TileLayer, Tooltip, useMapEvents } from 'react-leaflet';
 import { useQuery, useQueryClient } from 'react-query';
 import { GET_MITRA_ALL_BY_SU_YES } from 'src/api/mitra';
+import { GET_ALL_PROVINSI } from 'src/api/wilayah';
+import SelectInput from 'src/components/SelectInput';
 import { GET_MAP_ANGGOTA } from '../../api/dashboard';
 import Page from '../../components/Page';
 import DetailAnggota from './DetailAnggota';
@@ -33,6 +35,9 @@ const setOption = (data) => {
 };
 export default function PetaSebaran({ type = null }) {
   const [loading, setLoading] = useState(false);
+  const [Provinsi, setProvinsi] = useState(null);
+  const [Provinsivalue, setProvinsivalue] = useState(null);
+  
   const [loadingG, setLoadingG] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [list, setList] = useState([]);
@@ -52,8 +57,8 @@ export default function PetaSebaran({ type = null }) {
     // const awal = firstDay.getFullYear() + "-" + lastDay.getMonth() + "-" + firstDay.getDate();
     // const akhir = lastDay.getFullYear() + "-" + lastDay.getMonth() + "-" + lastDay.getDate();
     setLoadingG(true);
-    const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_DAHSBOARD', { start, end ,mitraValue}], () =>
-      GET_MAP_ANGGOTA(start, end , mitraValue)
+    const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_DAHSBOARD', { start, end ,mitraValue,Provinsivalue}], () =>
+      GET_MAP_ANGGOTA(start, end , mitraValue,Provinsivalue)
     );
 
     if (data.status === 200) {
@@ -63,8 +68,8 @@ export default function PetaSebaran({ type = null }) {
   }
 
   const hanlechangemaps = async () => {
-    const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_DAHSBOARD', { start, end ,mitraValue }], () =>
-      GET_MAP_ANGGOTA(start, end,mitraValue)
+    const data = await queryClient.fetchQuery(['GET_ALL_ANGGOTA_DAHSBOARD', { start, end ,mitraValue , Provinsivalue}], () =>
+      GET_MAP_ANGGOTA(start, end,mitraValue ,Provinsivalue)
     );
     if (data.status === 200) {
       setList(data?.data?.data);
@@ -104,6 +109,30 @@ export default function PetaSebaran({ type = null }) {
       setmitraValue(e.target.value);
 
   }
+async function getPro(){
+GET_ALL_PROVINSI()
+  .then((res) => {
+    const list =
+      res &&
+      res.data?.data?.map((p) => {
+        const wil = { value: p.wilayahCode, label: p.wilayah };
+        return wil;
+      });
+    setProvinsi(list);
+  })
+  .catch((e) => {
+    setProvinsi();
+    console.log(e);
+  });
+
+  
+}
+  useEffect(() => {
+    getPro();
+  }, []);
+  const handleChangeProvinsi =(v)=>{
+    setProvinsivalue(v.target.value);
+  }
 
   const MapComponent = () => {
     return (
@@ -111,7 +140,18 @@ export default function PetaSebaran({ type = null }) {
         <Container>
           <CardContent style={{ padding: 0, marginTop: 20 }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-              <Box>
+              <Grid container spacing={1}>
+                <Grid item>
+                  <SelectInput
+                    value={Provinsivalue}
+                    label="Provinsi"
+                    option={Provinsi}
+                    id="demo-multiple-name"
+                    style={{width:200}}
+                    onChange={handleChangeProvinsi}
+                  />
+                </Grid>
+                <Grid item>
                   <InputLabel id="demo-multiple-name-label">Name</InputLabel>
                   <Select
                     labelId="demo-multiple-name-label"
@@ -127,6 +167,10 @@ export default function PetaSebaran({ type = null }) {
                         
                       })}
                 </Select>
+                
+                </Grid>
+                <Grid item>
+                <br />
                 <DesktopDatePicker
                   label="Dari"
                   inputFormat="dd/MM/yyyy"
@@ -134,6 +178,9 @@ export default function PetaSebaran({ type = null }) {
                   onChange={handleChangestart}
                   renderInput={(params) => <TextField {...params} />}
                 />
+                </Grid>
+                <Grid item>
+                  <br />
                 <DesktopDatePicker
                   label="Sampai"
                   inputFormat="dd/MM/yyyy"
@@ -141,7 +188,9 @@ export default function PetaSebaran({ type = null }) {
                   value={end}
                   renderInput={(params) => <TextField {...params} />}
                 />
-              </Box>
+                </Grid>
+              </Grid>
+              
               <Button onClick={hanlechangemaps} size="large" variant="contained" color="primary">
                 Filter
               </Button>

@@ -24,6 +24,8 @@ import adupi from '../../assets/logo/adupi.png';
 import support from '../../assets/illustation/support.svg';
 import Akun from '../Akun';
 import Transaksi from '../Transaksi';
+import { GET_GETSINGLEMITRA } from 'src/api/target';
+import { ribuan } from 'src/utils/formatNumber';
 
 export default function MitraHome() {
   const navigate = useNavigate();
@@ -33,6 +35,18 @@ export default function MitraHome() {
     refetchOnWindowFocus: true,
   });
   const self = data && data?.data?.data;
+  let newDate = new Date()
+  let date = newDate.getDate();
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+  let fulltgl =  year+'-'+month+'-'+date;
+  const userId =self?.mitraCode;
+
+  const {data : dataax } = useQuery(["TARGET",fulltgl,userId] ,() => GET_GETSINGLEMITRA({tanggal:fulltgl , mitraCode:userId}) , {
+    // The query will not execute until the userId exists
+    enabled: !!userId,
+  });
+
   const menuList = [
     {
       title: 'Pembelian bahan DUP',
@@ -76,9 +90,17 @@ export default function MitraHome() {
               </Typography>
             </Toolbar>
             <Box sx={{ padding: 3,background:"#F5F5F5" , borderStartEndRadius:30 , borderStartStartRadius:30,marginTop:5 }}>
-              <Typography variant="h6">Selamat Datang,</Typography>
-            <Typography variant="h6">{self?.nama}</Typography>
-            <Typography>Selamat bergabung sebagai mitra</Typography>
+            <Grid container spacing={2}>
+              <Grid key={1} item xs={7}>
+                <Typography variant="h6">Selamat Datang,</Typography>
+                <Typography variant="h6">{self?.nama}</Typography>
+                <Typography>Selamat bergabung sebagai mitra</Typography>  
+              </Grid>
+              <Grid  key={2} item >
+                <Typography variant="body">Target : {dataax?.data?.data?.tanggal}</Typography>
+                <Typography variant="subtitle1">{dataax?.data?.data?.total_berat?ribuan(dataax?.data?.data?.total_berat)+"/"+ribuan(dataax?.data?.data?.MitraTargetName):"Target NA"} </Typography>
+              </Grid>
+            </Grid>
           </Box>
           </Box>
        
