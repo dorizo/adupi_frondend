@@ -60,7 +60,7 @@ export default function LampiranByFasilitator() {
         };
 
         console.log(Modalitems?.mitraLampiranCode);
-        // setloadingbutton(true);
+        setloadingbutton(true);
         const response = await ADD_MITRALAMPIRANIMAGE({MitraLampiranImageKeterangan:mitraLampiranImageNamevalue , MitraLampiranImageFoto:selectedImg , MitraLampiranCode:Modalitems?.mitraLampiranCode, MitraCode:params?.mitraCode});
         if (response.status === 422) {
             const asdf = response.data.errors;
@@ -86,12 +86,15 @@ export default function LampiranByFasilitator() {
         }
         const hapus = async (e) =>{
         console.log(e);
-        
+        var result;  
+        var r = confirm("Yakin Ingin Menghapus Data");  
+        if (r == true) {  
             const response = await DELETE_LAMPIRANIMAGE({id:e.MitraLampiranImageCode});
-            
             if (response.data.status === 200) {
+            enqueueSnackbar("data Berhasil di hapus", { variant: 'success' });
             await refetch();
-            }
+            } 
+        } 
 
         }
 return (
