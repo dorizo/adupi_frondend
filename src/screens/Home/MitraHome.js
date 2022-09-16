@@ -77,29 +77,38 @@ export default function MitraHome() {
             
             </div>
             <Toolbar sx={{color:"#FFFFFF"}}>
+             
+              <Grid container spacing={2}>
+              <Grid key={0} item xs={2}>
               <IconButton size="large" edge="start" color="inherit" aria-label="menu">
-                <AccountCircleIcon sx={{fontSize:70}} />
-              </IconButton>
-              <Typography variant="body" component="div" sx={{ flexGrow: 1 }}>
-                Hai,<br /> {self?.nama} <br />  
-                {self?.alamat}
-              
-              </Typography>
-              <Typography style={{ wordWrap: 'break-word', width: 100, textAlign: 'right' }}>
-                {' '}
-              </Typography>
+                    <AccountCircleIcon sx={{fontSize:50}} />
+                  </IconButton>
+              </Grid>
+              <Grid key={1} item xs={5}>
+                  <Typography variant="body2" component="div" sx={{ flexGrow: 1 }}>
+                    Hai,<br /> {self?.nama} <br />  
+                    {self?.alamat}
+                  
+                  </Typography>
+                  <Typography style={{ wordWrap: 'break-word', width: 100, textAlign: 'right' }}>
+                    {' '}
+                  </Typography>  
+              </Grid>
+              <Grid  key={2} item xs={5} >
+                <Typography variant="body">Target {dataax?.data?.data?.tanggal}</Typography>
+                <Typography variant='body2' style={{fontSize:12}} >{dataax?.data?.data?.total_berat?ribuan(dataax?.data?.data?.total_berat)+"/"+ribuan(dataax?.data?.data?.MitraTargetName):"Target NA"} </Typography>
+              </Grid>
+            </Grid>
+
             </Toolbar>
             <Box sx={{ padding: 3,background:"#F5F5F5" , borderStartEndRadius:30 , borderStartStartRadius:30,marginTop:5 }}>
             <Grid container spacing={2}>
-              <Grid key={1} item xs={7}>
+              <Grid key={1} item xs={12}>
                 <Typography variant="h6">Selamat Datang,</Typography>
                 <Typography variant="h6">{self?.nama}</Typography>
                 <Typography>Selamat bergabung sebagai mitra</Typography>  
               </Grid>
-              <Grid  key={2} item >
-                <Typography variant="body">Target : {dataax?.data?.data?.tanggal}</Typography>
-                <Typography variant="subtitle1">{dataax?.data?.data?.total_berat?ribuan(dataax?.data?.data?.total_berat)+"/"+ribuan(dataax?.data?.data?.MitraTargetName):"Target NA"} </Typography>
-              </Grid>
+           
             </Grid>
           </Box>
           </Box>

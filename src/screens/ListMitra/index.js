@@ -206,36 +206,6 @@ export default function ListMitra() {
                       </Box>
                     ))}
 
-                    <Button
-                      onClick={() => handleDetail(li)}
-                      sx={{ marginTop: 2 }}
-                      size="sm"
-                      variant="outlined"
-                      disabled={loading}
-                      color="info"
-                    >
-                      {openDetail === li.mitraCode ? 'Tutup' : loading ? 'Loading ...' : 'Detail'}
-                    </Button>
-                    <Button
-                      onClick={() => navigate(`/mobile/list-mitra/masalah/${li?.mitraCode}`)}
-                      sx={{ marginTop: 2, marginLeft: 2 }}
-                      size="sm"
-                      variant="outlined"
-                      color="warning"
-                    >
-                      Lihat masalah
-                    </Button>
-                    {alignment === 'verifikasi' && (
-                      <Button
-                        onClick={() => handleApprove(li.mitraCode)}
-                        sx={{ marginTop: 2 }}
-                        size="sm"
-                        variant="outlined"
-                        color="success"
-                      >
-                        Approve
-                      </Button>
-                    )}
                   </Grid>
                   <Grid item xs={6}>
                     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
@@ -243,6 +213,58 @@ export default function ListMitra() {
                     </Box>
                   </Grid>
                 </Grid>
+
+                <Grid container spacing={1} style={{ marginBottom: 10 }}>
+                  <Grid item xs={2}>
+                    <Button
+                      onClick={() => handleDetail(li)}
+                      sx={{ marginTop: 2 }}
+                      size="small"
+                      variant="outlined"
+                      disabled={loading}
+                      color="info"
+                    >
+                      {openDetail === li.mitraCode ? 'Tutup' : loading ? 'Loading ...' : 'Detail'}
+                    </Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                    <Button
+                      onClick={() => navigate(`/mobile/list-mitra/masalah/${li?.mitraCode}`)}
+                      sx={{ marginTop: 2, marginLeft: 2 }}
+                      size="small"
+                      variant="outlined"
+                      color="warning"
+                    >
+                      masalah
+                    </Button>
+                    </Grid>
+                    
+                    <Grid item xs={4}>
+                    <Button
+                      onClick={() => navigate(`/mobile/list-mitra/lampiran/${li?.mitraCode}`)}
+                      sx={{ marginTop: 2, marginLeft: 2 }}
+                      size="small"
+                      variant="outlined"
+                      color="warning"
+                    >
+                      Lampiran
+                    </Button>
+                    </Grid>
+                    <Grid item xs={3}>
+                    {alignment === 'verifikasi' && (
+                      <Button
+                        onClick={() => handleApprove(li.mitraCode)}
+                        sx={{ marginTop: 2 }}
+                        size="small"
+                        variant="outlined"
+                        color="success"
+                      >
+                        Approve
+                      </Button>
+                    )}
+                    </Grid>
+                    </Grid>
+                  
                 {openDetail === li.mitraCode && mitraDetail && (
                   <>
                     {mitraDetail?.fasilitator && (

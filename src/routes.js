@@ -52,6 +52,7 @@ import Detailmasalahstatus from './pages/Detailmasalahstatus';
 import Kunjunganmitra from './pages/kunjunganmitra';
 import Activityfasilitator from './pages/activityfasilitator';
 import Target from './pages/Target';
+import LampiranByFasilitator from './screens/LampiranByFasilitator';
 
 // ----------------------------------------------------------------------
 
@@ -384,6 +385,14 @@ export default function Router() {
           element: (
             <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
               <MasalahByFasilitator />
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'list-mitra/lampiran/:mitraCode',
+          element: (
+            <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
+              <LampiranByFasilitator />
             </MobileGuard>
           ),
         },
