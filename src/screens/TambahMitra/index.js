@@ -21,6 +21,7 @@ export default function TambahMitra() {
   const [drawerTitle, setDrawerTitle] = useState('');
   const [step, setStep] = useState(1);
   const [values, setValues] = useState({});
+  const [Progress, setProgress] = useState(0);
 
   const handleNext = async (s, t, val) => {
     setLoading(true);
@@ -31,7 +32,7 @@ export default function TambahMitra() {
       setValues({ ...values, ...val });
     }
     if (s === 0) {
-      const response = await POST_REGISTRASI_MITRA({ ...values, ...val });
+      const response = await POST_REGISTRASI_MITRA({ ...values, ...val },setProgress);
       // const response = await POST_REGISTRASI_MITRA({ ...values, ...val, ktp: '-', foto: '-' });
       if (response.status === 422) {
         const asdf = response.data.errors;
@@ -57,6 +58,7 @@ export default function TambahMitra() {
   const handleOpen = (a) => {
     setDrawerTitle(a);
     onOpen();
+    setProgress(0);
   };
   return (
     <>
@@ -71,7 +73,7 @@ export default function TambahMitra() {
           label={'Tambah'}
         />
       </div>
-      <Drawer title={drawerTitle || 'Tambah Mitra'}>
+      <Drawer title={Progress===0?drawerTitle || 'Tambah Mitra':Progress}>
         {step === 1 && <Step1 values={values} isLoading={loading} handleNext={handleNext} />}
         {step === 2 && <Step2 values={values} isLoading={loading} handleNext={handleNext} />}
         {step === 3 && <Step3 values={values} isLoading={loading} handleNext={handleNext} />}
