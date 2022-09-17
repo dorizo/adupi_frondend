@@ -21,6 +21,7 @@ import dummyKtp from '../../assets/dummy-ktp.jpg';
 import Page from '../../components/Page';
 import Image from '../../components/Image';
 import useImageViewer from '../../hooks/useImageViewer';
+import { GET_mitraLampiran } from 'src/api/mitralampiran';
 
 export default function MitraDetail() {
   const params = useParams();
@@ -28,6 +29,12 @@ export default function MitraDetail() {
   const { data, isLoading } = useQuery(['GET_MITRA_DETAIL_BY_SU', params.mitraCode], () =>
     GET_MITRA_DETAIL_BY_SU(params.mitraCode)
   );
+  const { data:datalampiran, refetch:refetchlampiran, isLoading:lodinglampiran }  = useQuery(
+    ['GET_ALL_MASALAH', params?.mitraCode],() => GET_mitraLampiran(params?.mitraCode),
+    {
+        refetchOnWindowFocus: false,
+    }
+    );
   const mitraDetail = data && data?.data?.data;
   if (isLoading) {
     return <LoadingComponent />;
@@ -192,6 +199,47 @@ export default function MitraDetail() {
             </>
           </CardContent>
         </Card>
+        {datalampiran?.data?.data.map((value,key) => (
+        <Card style={{margin:10}} key={key}>
+        <CardHeader
+        title={value.mitraLampiranName}
+        
+        >
+        </CardHeader>
+      
+        <CardContent>
+        {
+            value.mitra?.map((value1,key1) => (
+                <>
+                <Card key={key1} style={{margin:3}}>
+                <CardHeader
+                    >
+                    </CardHeader>
+                    <CardContent>
+                        <Grid container>
+                            <Grid item xs={8} >
+                            {value1?.MitraLampiranImageKeterangan}
+                            </Grid>
+                            <Grid item xs={4} >
+                            <Image
+                                style={{ width: 100 }}
+                                src={value1?.MitraLampiranImageFoto}
+                                alt={`img-barang`}
+                                folder="mesin"
+                                dummy={dummybarang}
+                            />
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </Card>
+                </>
+
+            ))
+        }
+        </CardContent>
+    </Card>
+        ))}
+        
       </Container>
     </Page>
   );
