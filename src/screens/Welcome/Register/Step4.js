@@ -1,4 +1,4 @@
-import { Box, Card, IconButton } from '@mui/material';
+import { Box, Card, IconButton, Typography } from '@mui/material';
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
@@ -12,7 +12,7 @@ import TextInput from '../../../components/TextInput';
 
 const containerStyle = {
   width: '100%',
-  height: '400px',
+  height: '300px',
 };
 const centerstyle = {
   position: 'absolute',
@@ -44,12 +44,7 @@ export default function Step4({ handleNext, values, isLoading }) {
   const removeImg = () => {
     setSelectedImg(null);
   };
-  const mylocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position.coords.latitude);
-      setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-    });
-  };
+  
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -88,20 +83,6 @@ export default function Step4({ handleNext, values, isLoading }) {
       });
     }
   };
-  useEffect(()=>{
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        console.log(position);
-        setMarker(pos);
-        setCenter(pos);
-      });
-    }
-  })
-
   const idPro = values?.wilayahCodeUsaha && values.wilayahCodeUsaha.split('.')[0];
   const idKab =
     values?.wilayahCodeUsaha && `${values.wilayahCodeUsaha.split('.')[0]}.${values.wilayahCodeUsaha.split('.')[1]}`;
@@ -281,9 +262,6 @@ export default function Step4({ handleNext, values, isLoading }) {
         multiline
       />
       <Card style={{ marginTop: 10, marginBottom: 10 }}>
-        <div style={centerstyle}>
-          <MyLocationIcon onClick={mylocation} />
-        </div>
         {isLoaded && (
           <GoogleMap
             mapContainerStyle={containerStyle}
@@ -298,7 +276,7 @@ export default function Step4({ handleNext, values, isLoading }) {
         )}
         <Box style={{ display: 'flex', justifyContent: 'end', marginRight: 5 }}>
           <IconButton onClick={handleMyLocation} aria-label="my location">
-            <MyLocationIcon />
+           <Typography style={{fontSize:12,marginRight:10}}>Tab untuk mendapatkan lokasi terkini </Typography><MyLocationIcon />
           </IconButton>
         </Box>
       </Card>
@@ -310,7 +288,7 @@ export default function Step4({ handleNext, values, isLoading }) {
         )}
         {!selectedImg && <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah Foto Gudang" />}
       </div>
-      <ButtonPrimary type="submit" disabled={!marker || !selectedImg || loading || isLoading} label="Selanjutnya" />
+      <ButtonPrimary type="submit" disabled={!marker || !selectedImg || loading || isLoading} label={!marker?"Map & Foto belum Diisi":"Selanjutnya"} />
     </form>
   );
 }
