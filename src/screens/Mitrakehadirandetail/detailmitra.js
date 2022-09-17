@@ -30,6 +30,7 @@ export default function Detailmitracomp({title}) {
     const [inputstatus , setinputstatus] = useState(null);
     const [selectedImg, setSelectedImg] = useState('');
     const [loadingbutton ,setloadingbutton] = useState(true);
+    const [pengisiansubmit ,setpengisiansubmit] = useState(true);
     const { enqueueSnackbar } = useSnackbar();
     const handleClose = () => {
         setOpenmodal(false);
@@ -402,7 +403,7 @@ return(
             <Card style={{marginTop:4}}>
               <CardContent>
                 <Typography variant="caption">FORM INPUT KUNJUNGAN</Typography>
-                <Form title={title} />
+                {pengisiansubmit?<Form title={title} pengisiansubmit={setpengisiansubmit} />:<h3>Sudah Menginput Form Kunjungan</h3>}
               </CardContent>
             </Card>
             <Card style={{marginTop:4}}>

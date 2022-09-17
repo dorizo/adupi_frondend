@@ -33,6 +33,7 @@ export default function Kunjungan() {
   const [Modalitems, setModalitems] = useState(null);
   const [selectedImg, setSelectedImg] = useState('');
   const [loadingbutton ,setloadingbutton] = useState(true);
+  const [progress ,setprogress] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
   const { data, refetch, isLoading } = useQuery('GET_ALL_KUNJUNGAN', GET_ALL_KUNJUNGAN, {
     refetchOnWindowFocus: false,
@@ -53,6 +54,7 @@ export default function Kunjungan() {
         setOpenmodal(true);
         setSelectedImg("");
         setloadingbutton(false);
+        setprogress(0);
     }
   const handleAdd = async (value) => {
     setLoading(true);
@@ -198,7 +200,7 @@ export default function Kunjungan() {
   };
   const Uploadimagebase = async () => {
     setloadingbutton(true);
-    const response = await ADD_KUNJUNGANIMAGE({idku:Modalitems.kunjunganCode , image:selectedImg , statusfoto:'non mitra'});
+    const response = await ADD_KUNJUNGANIMAGE({idku:Modalitems.kunjunganCode , image:selectedImg , statusfoto:'non mitra'} ,setprogress);
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -235,6 +237,7 @@ export default function Kunjungan() {
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
           <LoadingButton loading={loadingbutton} onClick={Uploadimagebase}>Upload</LoadingButton>
+          {progress===0?"":progress}
         </DialogActions>
       </Dialog>
       <BarMobile title={'Kunjungan'} />

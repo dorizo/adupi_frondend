@@ -23,6 +23,7 @@ export default function Step1({ handleNext, values, isLoading }) {
   const jenisMitraList = [
     { value: 'PT', label: 'PT' },
     { value: 'CV', label: 'CV' },
+    { value: 'UD', label: 'UD' },
   ];
   const [provinsi, setProvinsi] = useState();
   const [kabupaten, setKabupaten] = useState();
@@ -148,9 +149,7 @@ export default function Step1({ handleNext, values, isLoading }) {
     },
     validationSchema: Yup.object({
       nama: Yup.string().required('Harus Disisi'),
-      nik: Yup.number()
-        .test('len', 'NIK harus 16', (val) => val.toString().length === 16)
-        .required('Harus Disisi'),
+      nik: Yup.string().max(16).min(16).required('Harus Disisi'),
       noHp: Yup.string().required('Harus Disisi'),
       jenisKelamin: Yup.string().required('Harus Disisi'),
       jenisMitra: Yup.string().required('Harus Disisi'),
@@ -198,9 +197,9 @@ export default function Step1({ handleNext, values, isLoading }) {
       <TextInput
         name="nik"
         id="nik"
-        onInput={(e) => {
-          e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 16);
-        }}
+        // onInput={(e) => {
+        //   e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 16);
+        // }}
         value={formik.values.nik}
         onChange={formik.handleChange}
         error={formik.touched.nik && Boolean(formik.errors.nik)}

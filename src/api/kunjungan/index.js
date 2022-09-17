@@ -72,18 +72,25 @@ const ADD_KUNJUNGAN = async ({ judul, deskripsi, mitraCode,latitude,longitude })
 };
 
 
-const ADD_KUNJUNGANIMAGE = async ({ idku, image , statusfoto }) => {
+const ADD_KUNJUNGANIMAGE = async ({ idku, image , statusfoto } ,progressig) => {
   const data = qs.stringify({
     idku,
     image,
     statusfoto,
    });
-   console.log("kok kosong" , data);
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-  };
   try {
-    const response = await axios.post(`kunjungan/addfoto`, data, { headers });
+    const response = await axios.post(`kunjungan/addfoto`, data, 
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        progressig(percent);
+        // setUpload(`${loaded}kb of ${total}kb | ${percent}%`);
+      },
+    });
     return response;
   } catch (error) {
     return catchCallBack(error);

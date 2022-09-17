@@ -10,7 +10,7 @@ import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import SelectInput from '../../components/SelectInput';
 import TextInput from '../../components/TextInput';
 
-export default function Form({title}) {
+export default function Form({title ,pengisiansubmit}) {
 
       
     const { enqueueSnackbar } = useSnackbar();
@@ -20,6 +20,7 @@ export default function Form({title}) {
       console.log(response);
       if(response.status == 200){
         await enqueueSnackbar(response.data.message, { variant: 'success' });
+        pengisiansubmit(false);
         resetForm();
       }else{
         

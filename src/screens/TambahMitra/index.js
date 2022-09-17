@@ -71,7 +71,7 @@ export default function TambahMitra() {
           label={'Tambah'}
         />
       </div>
-      <Drawer closeable={closeAble} title={drawerTitle || 'Tambah Mitra'}>
+      <Drawer title={drawerTitle || 'Tambah Mitra'}>
         {step === 1 && <Step1 values={values} isLoading={loading} handleNext={handleNext} />}
         {step === 2 && <Step2 values={values} isLoading={loading} handleNext={handleNext} />}
         {step === 3 && <Step3 values={values} isLoading={loading} handleNext={handleNext} />}
