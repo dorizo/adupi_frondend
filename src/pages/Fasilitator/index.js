@@ -23,7 +23,7 @@ const headCells = [
     id: 'alamat',
     numeric: false,
     disablePadding: true,
-    label: 'Alamat',
+    label: 'No Telp',
   },
   {
     id: 'create',

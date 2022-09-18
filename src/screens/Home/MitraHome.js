@@ -65,6 +65,11 @@ export default function MitraHome() {
     { title: 'Alat', desc: 'Tambah Alat', icon: menuAlat, link: `/mobile/alat` },
   ];
 
+  const linker =() => {
+    var newPhone = self?.fasilitator?.alamat.replace(/^0/, '62');
+    var url = "whatsapp://send?phone="+newPhone;
+    window.location.href = url;
+    };
   return (
     <div style={{ paddingBottom: 40 }}>
       {value === 0 && (
@@ -125,10 +130,7 @@ export default function MitraHome() {
                 </Card>
               </Grid>
             ))}
-            <Grid onClick={() => {
-                  var url = "whatsapp://send?phone=6281285622115";
-                  window.location.href = url;
-                  }} key={8} item xs={6}>
+            <Grid onClick={linker} key={8} item xs={6}>
                 <Card style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
                   <CardContent
                     style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 15 }}

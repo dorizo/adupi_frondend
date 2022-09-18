@@ -301,7 +301,7 @@ export default function DialogComponent(props) {
               margin="dense"
               name="alamat"
               id="alamat"
-              label="Alamat"
+              label="No Telp"
               type="text"
               disabled={processing}
               value={formik.values.alamat}
