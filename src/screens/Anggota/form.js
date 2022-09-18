@@ -20,6 +20,7 @@ export default function Form({
   handleAdd,
   item,
   isLoading,
+  prosessinput,
 }) {
   const editAble = (item?.anggotaCode && true) || false;
   const [isNext, setIsNext] = useState({ a: '', s: '' });
@@ -289,7 +290,7 @@ export default function Form({
             disabled={selectedImg === null || loading || isLoading}
             onClick={editAble ? onUpdate : handleAdd}
             style={{ marginTop: 30, marginBottom: 5 }}
-            label={editAble ? 'Update' : 'Tambah'}
+            label={prosessinput===0?editAble ? 'Update' : 'Tambah':prosessinput}
           />
         </>
       )}

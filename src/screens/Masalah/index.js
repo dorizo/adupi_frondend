@@ -41,6 +41,7 @@ export default function Masalah() {
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(5);
   const { enqueueSnackbar } = useSnackbar();
+  const [prosessinput, setprosessinput] = useState(0);
   const { data, refetch, isLoading } = useQuery('GET_ALL_MASALAH', GET_ALL_MASALAH, {
     refetchOnWindowFocus: false,
   });
@@ -48,7 +49,7 @@ export default function Masalah() {
   const handleAdd = async () => {
     setLoading(true);
     //     const response = await ADD_MASALAH({ ...values, foto: '-' });
-    const response = await ADD_MASALAH({ ...values, foto: selectedImg });
+    const response = await ADD_MASALAH({ ...values, foto: selectedImg } ,setprosessinput);
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -139,6 +140,7 @@ export default function Masalah() {
     setSelectedImg(item.ktp);
     setDrawerTitle('Edit Masalah');
     onOpen();
+    setprosessinput(0);
   };
 
   const handleOnAdd = () => {
@@ -146,6 +148,7 @@ export default function Masalah() {
     onOpen();
     setStep(0);
     setItem(null);
+    setprosessinput(0);
   };
   const handleOnDelete = (item) => {
     setItem(item);
@@ -269,6 +272,7 @@ export default function Masalah() {
           handleAdd={handleAdd}
           onUpdate={handleUpdate}
           setValues={setValues}
+          prosessinput={prosessinput}
         />
       </Drawer>
       {alertOpen && (

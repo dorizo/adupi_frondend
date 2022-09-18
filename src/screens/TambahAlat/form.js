@@ -20,6 +20,7 @@ export default function Form({
   isLoading,
   handleAdd,
   item,
+  prosessinput
 }) {
   const editAble = (item?.mesinCode && true) || false;
   const [isNext, setIsNext] = useState({ a: '', s: '' });
@@ -86,7 +87,7 @@ export default function Form({
             value={formik.values.statusKepemilikanMesin}
             onChange={formik.handleChange}
             error={formik.touched.statusKepemilikanMesin && Boolean(formik.errors.statusKepemilikanMesin)}
-            option={[{ value: 'Milik Sendiri', label: 'Milik Sendiri' }]}
+            option={[{ value: 'Milik Sendiri', label: 'Milik Sendiri' } ,{ value: 'Program GESN', label: 'Program GESN' } ,{ value: 'Sewa', label: 'Sewa' } ,{ value: 'Hak Pakai', label: 'Hak Pakai' }]}
           />
           <SelectInput
             label="Jenis Mesin"
@@ -95,7 +96,7 @@ export default function Form({
             value={formik.values.jenisMesin}
             onChange={formik.handleChange}
             error={formik.touched.jenisMesin && Boolean(formik.errors.jenisMesin)}
-            option={[{ value: 'Mesin Press', label: 'Mesin Press' }]}
+            option={[{ value: 'Mesin Press', label: 'Mesin Press' },{ value: 'conveyor belt', label: 'Conveyor Belt' },{ value: 'Mesin Cacah', label: 'Mesin Cacah' },{ value: 'Mesin Pengering', label: 'Mesin Pengering' },{ value: 'Mesin kupas label', label: 'Mesin kupas label' }]}
           />
           <TextInput
             id="kapasitas"
@@ -128,7 +129,7 @@ export default function Form({
             disabled={selectedImg === null || loading || isLoading}
             onClick={editAble ? onUpdate : handleAdd}
             style={{ marginTop: 30, marginBottom: 5 }}
-            label={editAble ? 'Update' : 'Tambah'}
+            label={prosessinput===0?editAble ? 'Update' : 'Tambah':prosessinput}
           />
         </>
       )}

@@ -18,11 +18,12 @@ export default function JualSampah() {
   const [step, setStep] = useState(0);
   const [values, setValues] = useState({});
   const { enqueueSnackbar } = useSnackbar();
+  const [prosessinput, setprosessinput] = useState(0);
 
   const handleAdd = async () => {
     setLoading(true);
     // const response = await JUAL_SAMPAH({ ...values, nota: '-' });
-    const response = await JUAL_SAMPAH({ ...values, nota: selectedImg });
+    const response = await JUAL_SAMPAH({ ...values, nota: selectedImg },setprosessinput);
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -54,6 +55,7 @@ export default function JualSampah() {
     setDrawerTitle('Pilih Pembeli');
     onOpen();
     setStep(0);
+    setprosessinput(0);
   };
 
   return (
@@ -80,6 +82,7 @@ export default function JualSampah() {
           values={values}
           handleAdd={handleAdd}
           setValues={setValues}
+          prosessinput={prosessinput}
         />
       </Drawer>
     </>

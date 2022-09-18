@@ -12,7 +12,7 @@ import CurrencyFormat from 'react-currency-format';
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 
-export default function Form({ next, setSelectedImg, step, selectedImg, values, setValues, isLoading, handleAdd }) {
+export default function Form({ next, setSelectedImg, step, selectedImg, values, setValues, isLoading, handleAdd ,prosessinput }) {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowFrom] = useState(false);
   const [pembeli, setPembeli] = useState('');
@@ -218,7 +218,7 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
             )}
             <ButtonPrimary upload={handleUploadClick} component="label" label="Unggah File" />
           </div>
-          <ButtonPrimary disabled={loading || isLoading} onClick={handleAdd} label="Selesai" />
+          <ButtonPrimary disabled={loading || isLoading} onClick={handleAdd} label={prosessinput===0?"Selesai":prosessinput} />
         </>
       )}
     </form>

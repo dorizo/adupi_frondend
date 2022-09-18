@@ -98,17 +98,26 @@ const NOTE_MASALAH_FASILITATOR = async ({ masalahCode, note, status }) => {
     return catchCallBack(error);
   }
 };
-const ADD_MASALAH = async ({ jenisMasalah, deskripsi, foto }) => {
+const ADD_MASALAH = async ({ jenisMasalah, deskripsi, foto },progressig) => {
   const data = qs.stringify({
     jenisMasalah,
     deskripsi,
     foto,
   });
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-  };
   try {
-    const response = await axios.post(`masalah/add`, data, { headers });
+    const response = await axios.post(`masalah/add`, data, 
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        progressig(`${loaded}kb of ${total}kb | ${percent}%`);
+        // setUpload(`${loaded}kb of ${total}kb | ${percent}%`);
+      },
+    }
+    );
     return response;
   } catch (error) {
     return catchCallBack(error);

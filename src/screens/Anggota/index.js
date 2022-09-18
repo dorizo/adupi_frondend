@@ -28,6 +28,7 @@ export default function Anggota() {
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(5);
+  const [prosessinput, setprosessinput] = useState(0);
   const { data, refetch, isLoading } = useQuery('GET_ALL_ANGGOTA', GET_ALL_ANGGOTA, {
     refetchOnWindowFocus: false,
   });
@@ -35,7 +36,7 @@ export default function Anggota() {
   const handleAdd = async () => {
     setLoading(true);
     // const response = await ADD_ANGGOTA({ ...values, ktp: '-' });
-    const response = await ADD_ANGGOTA({ ...values, ktp: selectedImg });
+    const response = await ADD_ANGGOTA({ ...values, ktp: selectedImg } ,setprosessinput);
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -111,6 +112,7 @@ export default function Anggota() {
     setSelectedImg(item.ktp);
     setDrawerTitle('Edit Anggota');
     onOpen();
+    setprosessinput(0);
   };
 
   const handleOnAdd = () => {
@@ -118,6 +120,7 @@ export default function Anggota() {
     onOpen();
     setStep(0);
     setItem(null);
+    setprosessinput(0);
   };
   const handleOnDelete = (item) => {
     setItem(item);
@@ -257,6 +260,7 @@ export default function Anggota() {
           handleAdd={handleAdd}
           onUpdate={handleUpdate}
           setValues={setValues}
+          prosessinput={prosessinput}
         />
       </Drawer>
       {alertOpen && (

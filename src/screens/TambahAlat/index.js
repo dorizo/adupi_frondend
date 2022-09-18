@@ -32,6 +32,7 @@ export default function TambahAlat() {
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(5);
+  const [prosessinput, setprosessinput] = useState(0);
   const { data, refetch, isLoading } = useQuery(
     'GET_ALL_MESIN_MITRA',
     () => GET_ALL_MESIN_MITRA(auth?.mitra?.mitraCode),
@@ -47,7 +48,7 @@ export default function TambahAlat() {
   const handleAdd = async () => {
     setLoading(true);
     // const response = await ADD_MESIN({ ...values, foto: '-' });
-    const response = await ADD_MESIN({ ...values, foto: selectedImg });
+    const response = await ADD_MESIN({ ...values, foto: selectedImg } ,setprosessinput);
     if (response.status === 422) {
       const asdf = response.data.errors;
       const keys = asdf && Object.keys(asdf);
@@ -123,6 +124,7 @@ export default function TambahAlat() {
     setSelectedImg(item.ktp);
     setDrawerTitle('Edit alat');
     onOpen();
+    setprosessinput(0);
   };
 
   const handleOnAdd = () => {
@@ -130,6 +132,7 @@ export default function TambahAlat() {
     onOpen();
     setStep(0);
     setItem(null);
+    setprosessinput(0);
   };
   const handleOnDelete = (item) => {
     setItem(item);
@@ -240,6 +243,7 @@ export default function TambahAlat() {
           handleAdd={handleAdd}
           onUpdate={handleUpdate}
           setValues={setValues}
+          prosessinput={prosessinput}
         />
       </Drawer>
       {alertOpen && (

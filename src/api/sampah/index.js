@@ -49,17 +49,25 @@ const BELI_SAMPAH = async ({ anggotaCode, nota, detail }) => {
     return catchCallBack(error);
   }
 };
-const JUAL_SAMPAH = async ({ pembeliCode, nota, detail }) => {
+const JUAL_SAMPAH = async ({ pembeliCode, nota, detail },progressig) => {
   const data = qs.stringify({
     pembeliCode,
     nota,
     detail,
   });
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-  };
+
   try {
-    const response = await axios.post(`jual/sampah`, data, { headers });
+    const response = await axios.post(`jual/sampah`, data, 
+    { headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+    onUploadProgress: (progressEvent) => {
+      const { loaded, total } = progressEvent;
+      let percent = Math.floor((loaded * 100) / total);
+      progressig(`${loaded}kb of ${total}kb | ${percent}%`);
+      // setUpload(`${loaded}kb of ${total}kb | ${percent}%`);
+    },
+  });
     return response;
   } catch (error) {
     return catchCallBack(error);

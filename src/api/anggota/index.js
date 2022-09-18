@@ -46,7 +46,7 @@ const GET_ONE_ANGGOTA = async (id) => {
   }
 };
 
-const ADD_ANGGOTA = async ({ nama, nik, noHp, jenisKelamin, wilayahCode, ktp, alamat }) => {
+const ADD_ANGGOTA = async ({ nama, nik, noHp, jenisKelamin, wilayahCode, ktp, alamat } ,progressig) => {
   const data = qs.stringify({
     nama,
     nik,
@@ -56,11 +56,18 @@ const ADD_ANGGOTA = async ({ nama, nik, noHp, jenisKelamin, wilayahCode, ktp, al
     ktp,
     alamat,
   });
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-  };
   try {
-    const response = await axios.post(`anggota/add`, data, { headers });
+    const response = await axios.post(`anggota/add`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        progressig(`${loaded}kb of ${total}kb | ${percent}%`);
+        // setUpload(`${loaded}kb of ${total}kb | ${percent}%`);
+      },
+    });
     return response;
   } catch (error) {
     return catchCallBack(error);

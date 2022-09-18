@@ -24,7 +24,7 @@ const GET_ONE_MESIN = async (id) => {
   }
 };
 
-const ADD_MESIN = async ({ usahaCode, jenisMesin, statusKepemilikanMesin, kapasitas, foto }) => {
+const ADD_MESIN = async ({ usahaCode, jenisMesin, statusKepemilikanMesin, kapasitas, foto },progressig) => {
   const data = qs.stringify({
     usahaCode,
     jenisMesin,
@@ -32,11 +32,19 @@ const ADD_MESIN = async ({ usahaCode, jenisMesin, statusKepemilikanMesin, kapasi
     kapasitas,
     foto,
   });
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-  };
+
   try {
-    const response = await axios.post(`mesin/add`, data, { headers });
+    const response = await axios.post(`mesin/add`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        progressig(`${loaded}kb of ${total}kb | ${percent}%`);
+        // setUpload(`${loaded}kb of ${total}kb | ${percent}%`);
+      },
+    });
     return response;
   } catch (error) {
     return catchCallBack(error);
