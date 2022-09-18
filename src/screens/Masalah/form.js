@@ -79,6 +79,7 @@ export default function Form({
               'Masalah Ketenagakerjaan',
               'Masalah Suplay',
               'Kondisi Darurat',
+              'Masalah Lain Lain'
             ].map((a) => {
               return { value: a, label: a };
             })}
