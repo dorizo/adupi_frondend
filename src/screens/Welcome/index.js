@@ -22,6 +22,7 @@ export default function Welcome() {
   const [drawerTitle, setDrawerTitle] = useState('');
   const [step, setStep] = useState(1);
   const [values, setValues] = useState({});
+  const [Progress, setProgress] = useState(0);
 
   const handleNext = async (s, t, val) => {
     setLoading(true);
@@ -38,7 +39,7 @@ export default function Welcome() {
       //   const newww = { ...n, foto: '-' };
       //   return newww;
       // });
-      const response = await REGISTRASI_MITRA_NEW({ ...values, ...val });
+      const response = await REGISTRASI_MITRA_NEW({ ...values, ...val },setProgress);
       // const response = await REGISTRASI_MITRA_NEW({ ...values, ...val, mesin, ktp: '-', foto: '-' });
       if (response.status === 422) {
         const asdf = response.data.errors;
@@ -104,7 +105,7 @@ export default function Welcome() {
           )}
         </Drawer>
       </div>
-      <LoadingOverlayComponent loading={loadingRegister} />
+      <LoadingOverlayComponent text={"proses "+Progress} loading={loadingRegister} />
     </Page>
   );
 }

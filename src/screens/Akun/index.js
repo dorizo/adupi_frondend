@@ -64,7 +64,7 @@ export default function Akun() {
               ))}
             </List>
           ))}
-          <Typography align="center">ADUPI</Typography>
+          <Typography align="center">GERAKAN EKONOMI SIRKULAR NASIONAL</Typography>
           <Typography style={{ fontSize: 10, marginBottom: 10 }} align="center">
             v 0.1
           </Typography>

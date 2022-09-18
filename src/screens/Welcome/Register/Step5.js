@@ -72,7 +72,7 @@ export default function Step5({ handleNext, values, isLoading }) {
               id="statusKepemilikanMesin"
               value={form.statusKepemilikanMesin}
               onChange={(e) => setForm({ ...form, statusKepemilikanMesin: e.target.value })}
-              option={[{ value: 'Milik Sendiri', label: 'Milik Sendiri' }]}
+              option={[{ value: 'Milik Sendiri', label: 'Milik Sendiri' } ,{ value: 'Program GESN', label: 'Program GESN' } ,{ value: 'Sewa', label: 'Sewa' } ,{ value: 'Hak Pakai', label: 'Hak Pakai' }]}
             />
             <SelectInput
               label="Jenis Mesin"
@@ -80,8 +80,8 @@ export default function Step5({ handleNext, values, isLoading }) {
               id="jenisMesin"
               value={form.jenisMesin}
               onChange={(e) => setForm({ ...form, jenisMesin: e.target.value })}
-              option={[{ value: 'Mesin Press', label: 'Mesin Press' }]}
-            />
+              option={[{ value: 'Mesin Press', label: 'Mesin Press' },{ value: 'conveyor belt', label: 'Conveyor Belt' },{ value: 'Mesin Cacah', label: 'Mesin Cacah' },{ value: 'Mesin Pengering', label: 'Mesin Pengering' },{ value: 'Mesin kupas label', label: 'Mesin kupas label' }]}
+              />
             <TextInput
               id="kapasitas"
               name="kapasitas"

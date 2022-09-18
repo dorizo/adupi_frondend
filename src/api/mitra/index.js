@@ -64,7 +64,7 @@ const POST_REGISTRASI_MITRA = async ({
         let percent = Math.floor((loaded * 100) / total);
         setingproggress(`${loaded}kb of ${total}kb | ${percent}%`);
       },
-     });
+  });
     return response;
   } catch (error) {
     return catchCallBack(error);
@@ -95,7 +95,7 @@ const REGISTRASI_MITRA_NEW = async ({
   lang,
   lat,
   mesin,
-}) => {
+},setingproggress) => {
   const data = qs.stringify({
     nama,
     nik,
@@ -134,7 +134,16 @@ const REGISTRASI_MITRA_NEW = async ({
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.post('registrasi/mitra', data, { headers });
+    const response = await axios.post('registrasi/mitra', data,  { 
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        setingproggress(`${loaded}kb of ${total}kb | ${percent}%`);
+      },
+  });
     return response;
   } catch (error) {
     return catchCallBack(error);
