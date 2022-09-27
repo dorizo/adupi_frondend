@@ -16,6 +16,8 @@ import Register from './pages/Register';
 import Role from './pages/Role';
 import RoleDetail from './pages/RoleDetail';
 import User from './pages/User';
+import Pembelian from './pages/Pembelian';
+import Penjualan from './pages/penjualan';
 import UserDetail from './pages/UserDetail';
 import VarifikasiMitra from './pages/VarifikasiMitra';
 import VerifikasiAnggota from './pages/VerifikasiAnggota';
@@ -88,6 +90,16 @@ export default function Router() {
           <>
           <Kunjungandashboard />
           <PetaSebaran />
+          </>
+        )},
+        { path: 'penjualan', element:(
+          <>
+          <Penjualan />
+          </>
+        )},
+        { path: 'pembelian', element:(
+          <>
+          <Pembelian />
           </>
         )},
         { path: 'target', element:(

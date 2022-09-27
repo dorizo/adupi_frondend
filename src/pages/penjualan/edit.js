@@ -14,21 +14,21 @@ import { format } from 'date-fns';
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 
-export default function Form({ next, setSelectedImg, step, selectedImg, values, setValues, isLoading, handleAdd ,prosessinput }) {
+export default function Edit({ next, setSelectedImg, step, selectedImg, values, setValues, isLoading, handleAdd ,prosessinput ,item }) {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowFrom] = useState(false);
   const [pembeli, setPembeli] = useState('');
-  const [pembeliCode, setPembeliCode] = useState(null);
+  const [pembeliCode, setPembeliCode] = useState({"value":item?.pembeli?.pembeliCode,"title":item?.pembeli?.pembeli});
   
-  const [valuetanggal , Setvaluetanggal] = useState(null);
-  const [sampahbutton, setsampahbutton] = useState(false);
+  const [valuetanggal , Setvaluetanggal] = useState(item?.createAt);
+  const [sampahbutton, setsampahbutton] = useState(true);
   const [form, setForm] = useState({ jenisCode: '', harga: '', berat: '', jenis: '' });
 
-  const [sampah, setSampah] = useState([]);
+  const [sampah, setSampah] = useState(item?.detail_jual_sampahs);
   const { data: pembeliData } = useQuery('GET_ALL_PEMBELI', () => GET_ALL_PEMBELI(null));
   const listPembeli = pembeliData && pembeliData?.data?.data;
 
-  const pembeliOption =
+  const pembeliOption = []
     listPembeli &&
     listPembeli?.map((m) => {
       const option = { value: m.pembeliCode, title: m.pembeli };
@@ -65,8 +65,9 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
   };
   const removeListSampah = (index) => {
     const valuess = [...sampah];
-    valuess.splice(index);
-    setSampah(valuess);
+    console.log(valuess.filter(item => item !== index));
+    // valuess.splice(index);
+    setSampah(valuess.filter(item => item !== index));
   };
   const handelSimpan = () => {
     setSampah([...sampah, form]);
@@ -87,6 +88,7 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
       setPembeli('');
     }
   };
+  
   const handleAddPembeli = async () => {
     console.log(pembeliCode);
     if (pembeliCode.title === 'Lain-lain') {
@@ -105,12 +107,13 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
   const handleTanggal = async (e) => {
     
     
-    handleOpen('Pilih Supplier', 1,{ createAt: valuetanggal });
+    handleOpen('Pilih Supplier', 1,{ createAt: valuetanggal , jsCode : item?.jsCode });
   }
   return (
     <form>
       {step === 0 && (
         <>
+        {/* <Typography variant='h4'>Edit Penjualan</Typography> */}
         <StaticDateTimePicker
           displayStaticWrapperAs="desktop"
           openTo="day"
@@ -137,7 +140,10 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
             loading={isLoading}
             value={pembeliCode}
             getOptionLabel={(option) => option.title}
-            onChange={(_, newVal) => handleSetPemebeli(newVal)}
+            onChange={(_, newVal) =>{
+              // console.log(newVal);
+               handleSetPemebeli(newVal);
+              }}
           />
           {pembeliCode?.title === 'Lain-lain' && (
             <TextInput
@@ -152,7 +158,7 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
           <ButtonPrimary
             onClick={handleAddPembeli}
             style={{ marginTop: 30, marginBottom: 5 }}
-            disabled={pembeli === '' || isLoading}
+            disabled={isLoading}
             label={'Selanjutnya'}
           />
         </>
@@ -169,7 +175,7 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
                       <Typography sx={{ fontSize: 12 }}>Sumber : {m?.sumber}</Typography>
                       <Typography sx={{ fontSize: 12 }}>Kapasitas : {m?.berat}</Typography>
                       <Typography sx={{ fontSize: 12 }}>Kapasitas : {m?.harga}</Typography>
-                      <Button onClick={() => removeListSampah(i)} size="small" variant="outlined" color="error">
+                      <Button onClick={() => removeListSampah(m)} size="small" variant="outlined" color="error">
                         Hapus
                       </Button>
                     </Grid>
@@ -257,7 +263,7 @@ export default function Form({ next, setSelectedImg, step, selectedImg, values, 
   );
 }
 
-Form.propTypes = {
+Edit.propTypes = {
   next: PropTypes.any,
   setSelectedImg: PropTypes.any,
   step: PropTypes.any,

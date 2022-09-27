@@ -8,33 +8,41 @@ import { GET_ALL_JENIS_SAMPAH } from '../../api/jenis_sampah';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import SelectInput from '../../components/SelectInput';
 import TextInput from '../../components/TextInput';
-import Struck from './Struck';
 import CurrencyFormat from 'react-currency-format';
 import { fRupiah, ribuan } from 'src/utils/formatNumber';
 import { StaticDatePicker, StaticDateTimePicker } from '@mui/x-date-pickers';
 import { format ,parseISO} from 'date-fns';
+import { useEffect } from 'react';
+import { GET_MITRA_DETAIL_BY_SU } from 'src/api/mitra';
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 
-export default function Form({
+export default function Edit({
   next,
   mitra,
-  dataStruck,
-  setDataStruck,
   step,
   values,
   setValues,
   isLoading,
   handleAdd,
+  item,
 }) {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowFrom] = useState(false);
-  const [sampahbutton, setsampahbutton] = useState(false);
-  const [search, setSearch] = useState('');
-  const [valuetanggal , Setvaluetanggal] = useState(null);
+  const [sampahbutton, setsampahbutton] = useState(true);
+  const [search, setSearch] = useState(item?.anggotum?.nama);
+  const [valuetanggal , Setvaluetanggal] = useState(item?.createAt);
   const [form, setForm] = useState({ sumber: '', jsCode: '', harga: '', berat: '', jenis: '' });
+  // useEffect(() => {
+  //   console.log(item?.createAt);
+  // });
 
-  const [sampah, setSampah] = useState([]);
+  const [sampah, setSampah] = useState(item?.detail_beli_sampahs);
+  const {data:dataanggota}=useQuery(['GET_MITRA_DETAIL_BY_SU', item?.mitraCode], () =>
+    GET_MITRA_DETAIL_BY_SU(item?.mitraCode)
+  );
+
+  console.log(dataanggota?.data?.data?.anggota);
   const { data } = useQuery('GET_ALL_ANGGOTA', GET_ALL_ANGGOTA, {
     refetchOnMount: true,
   });
@@ -47,12 +55,13 @@ export default function Form({
       return { value: js.jsCode, label: js.jenis };
     });
 
-  const anggotaNF = data && data?.data?.data;
+  const anggotaNF = dataanggota && dataanggota?.data?.data?.anggota;
 
   const handleOpen = (a, s, val) => {
     setLoading(true);
     if (s === 3) {
       handleAdd({ ...values, ...val });
+      console.log(values);
     } else {
       setValues({ ...values, ...val });
       next(a, s);
@@ -61,9 +70,10 @@ export default function Form({
   };
 
   const removeListSampah = (index) => {
+    // console.log(index);
     const valuess = [...sampah];
-    valuess.splice(index);
-    setSampah(valuess);
+    // valuess.splice(index);
+    setSampah(valuess.filter(item => item !== index));
   };
   const handelSimpan = () => {
     setSampah([...sampah, form]);
@@ -77,34 +87,34 @@ export default function Form({
     setForm({ ...form, jsCode: e.target.value, jenis: jenis.label });
   };
   const handlePilihAnggota = (anggota) => {
-    // console.log(anggota);
-    setDataStruck({
-      ...dataStruck,
-      anggota,
-      mitra: { alamat: mitra?.alamat, namaUsaha: mitra?.gudang[0]?.namaUsaha },
-    });
+    // setDataStruck({
+    //   ...dataStruck,
+    //   anggota,
+    //   mitra: { alamat: mitra?.alamat },
+    // });
     handleOpen('PEMBELIAN BAHAN DUP', 2, { anggotaCode: anggota?.anggotaCode });
-    console.log(step);
   };
   const handleTambahSampah = async () => {
-    await setDataStruck({ ...dataStruck, detail: sampah });
+    // await setDataStruck({ ...dataStruck, detail: sampah });
     await handleOpen('Struck', 3, { detail: sampah });
+    console.log(values);
   };
   const filterAnggota = (array, query) => {
-    if (query) {
-      const column = array[0] && Object.keys(array[0]);
-      return array.filter((a) =>
-        column.some((col) => a[col] && a[col].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
-      );
-    }
+    if(array){
+      if (query) {
+        const column = array[0] && Object?.keys(array[0]);
+        return array.filter((a) =>
+          column.some((col) => a[col] && a[col].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
+        );
+      }
+    };
+    
+    
     return array;
   };
   const anggota = filterAnggota(anggotaNF, search);
   const handleTanggal = async (e) => {
-    
-    await setDataStruck({ ...dataStruck, createAt: valuetanggal });
-    
-    handleOpen('Pilih Supplier', 1,{ createAt: valuetanggal });
+    await handleOpen('Pilih Supplier', 1,{ createAt: valuetanggal , bsCode : item?.bsCode });
   }
   return (
     <form>
@@ -130,7 +140,7 @@ export default function Form({
       )}
       {step === 1 && (
         <>
-          <TextInput value={search} onChange={(e) => setSearch(e.target.value)} label="Cari Anggota" />
+          <TextInput value={search} onChange={(e) => setSearch(e.target.value)} label="Cari Anggota Edit" />
           {anggota && anggota.length === 0 && <TidakAdaData />}
           <Grid sx={{ padding: 3 }} container spacing={2}>
             {anggota &&
@@ -170,7 +180,7 @@ export default function Form({
                       <Typography sx={{ fontSize: 12 }}>Sumber : {m?.sumber}</Typography>
                       <Typography sx={{ fontSize: 12 }}>Kapasitas : {ribuan(m?.berat)}</Typography>
                       <Typography sx={{ fontSize: 12 }}>Kapasitas : {fRupiah(m?.harga)}</Typography>
-                      <Button onClick={() => removeListSampah(i)} size="small" variant="outlined" color="error">
+                      <Button onClick={() => removeListSampah(m)} size="small" variant="outlined" color="error">
                         Hapus
                       </Button>
                     </Grid>
@@ -230,15 +240,6 @@ export default function Form({
                 value={form.harga}
                 label={'Harga'}
                />
-{/*                 
-                <TextInput
-                  id="berat"
-                  name="berat"
-                  type="number"
-                  onChange={(e) => setForm({ ...form, berat: e.target.value })}
-                  value={form.berat}
-                  label={'Berat'}
-                /> */}
                 <ButtonPrimary
                   onClick={handelSimpan}
                   disabled={form.berat === '' || form.harga === '' || form.jsCode === '' || form.sumber === ''}
@@ -248,7 +249,6 @@ export default function Form({
               </>
             )}
             <ButtonPrimary
-              type="submit"
               disabled={sampah.length === 0 || sampahbutton===false || loading || isLoading}
               onClick={handleTambahSampah}
               label={isLoading ? 'Proses' : 'Simpan Pembelian'}
@@ -256,24 +256,16 @@ export default function Form({
           </form>
         </>
       )}
-      {step === 3 && (
-        <>
-          <Struck data={dataStruck} />
-          <ButtonPrimary disabled={loading || isLoading} onClick={handleAdd} label="Selesai" />
-        </>
-      )}
     </form>
   );
 }
 
-Form.propTypes = {
+Edit.propTypes = {
   next: PropTypes.any,
   step: PropTypes.any,
   mitra: PropTypes.any,
   setValues: PropTypes.any,
   isLoading: PropTypes.any,
   values: PropTypes.any,
-  dataStruck: PropTypes.func,
-  setDataStruck: PropTypes.func,
   handleAdd: PropTypes.func,
 };

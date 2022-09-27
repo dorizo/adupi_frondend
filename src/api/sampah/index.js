@@ -33,11 +33,12 @@ const GET_JUAL_SAMPAH = async ({ page, size, date }) => {
     return catchCallBack(error);
   }
 };
-const BELI_SAMPAH = async ({ anggotaCode, nota, detail }) => {
+const BELI_SAMPAH = async ({ anggotaCode, nota, detail ,createAt }) => {
   const data = qs.stringify({
     anggotaCode,
     nota,
     detail,
+    createAt
   });
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -49,9 +50,29 @@ const BELI_SAMPAH = async ({ anggotaCode, nota, detail }) => {
     return catchCallBack(error);
   }
 };
-const JUAL_SAMPAH = async ({ pembeliCode, nota, detail },progressig) => {
+
+const EDIT_BELI_SAMPAH = async ({ anggotaCode, nota, detail ,createAt,bsCode }) => {
+  const data = qs.stringify({
+    anggotaCode,
+    nota,
+    detail,
+    createAt,
+    bsCode
+  });
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.post(`beli/editsampah`, data, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+const JUAL_SAMPAH = async ({ pembeliCode, nota, detail , createAt },progressig) => {
   const data = qs.stringify({
     pembeliCode,
+    createAt,
     nota,
     detail,
   });
@@ -74,4 +95,31 @@ const JUAL_SAMPAH = async ({ pembeliCode, nota, detail },progressig) => {
   }
 };
 
-export { BELI_SAMPAH, GET_BELI_SAMPAH, GET_JUAL_SAMPAH, JUAL_SAMPAH };
+const JUAL_SAMPAHEDIT = async ({ pembeliCode, nota, detail , createAt , jsCode },progressig) => {
+  const data = qs.stringify({
+    pembeliCode,
+    createAt,
+    nota,
+    detail,
+    jsCode,
+  });
+  console.log(data);
+  try {
+    const response = await axios.post(`jual/editsampah`, data, 
+    { headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+    onUploadProgress: (progressEvent) => {
+      const { loaded, total } = progressEvent;
+      let percent = Math.floor((loaded * 100) / total);
+      progressig(`${loaded}kb of ${total}kb | ${percent}%`);
+      // setUpload(`${loaded}kb of ${total}kb | ${percent}%`);
+    },
+  });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+export { BELI_SAMPAH, GET_BELI_SAMPAH, GET_JUAL_SAMPAH, JUAL_SAMPAH,EDIT_BELI_SAMPAH ,JUAL_SAMPAHEDIT};

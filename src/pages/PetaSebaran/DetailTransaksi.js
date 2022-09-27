@@ -71,7 +71,7 @@ export default function DetailTransaksi({ anggotaCode }) {
             {list && list?.length === 0 && <TidakAdaData />}
 
             {list &&
-              list.map((li, i) => (
+              list?.map((li, i) => (
                 <Card key={i} style={{ marginBottom: 10 }}>
                   <CardContent>
                     <Box sx={{ justifyContent: 'space-between', flexGrow: 1, display: 'flex' }}>
@@ -91,7 +91,7 @@ export default function DetailTransaksi({ anggotaCode }) {
                     )}
                     {i === detailOpen &&
                       li?.detail_beli_sampahs &&
-                      li?.detail_beli_sampahs.map((di, ii) => (
+                      li?.detail_beli_sampahs?.map((di, ii) => (
                         <Card key={ii} style={{ marginBottom: 10 }}>
                           <CardContent style={{ padding: 10 }}>
                             <Box sx={{ justifyContent: 'space-between', flexGrow: 1, display: 'flex' }}>

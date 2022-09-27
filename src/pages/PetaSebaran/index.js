@@ -161,7 +161,7 @@ GET_ALL_PROVINSI()
                     onChange={singledata}
                   >
                     <MenuItem value="">SEMUA MITRA</MenuItem>
-                    {datamitra?.data?.data.map((row ,indexx)=>{
+                    {datamitra?.data?.data?.map((row ,indexx)=>{
                       
                        return(<MenuItem value={row.mitraCode}>{row.nama}</MenuItem>) 
                         

@@ -13,10 +13,11 @@ import CurrencyFormat from 'react-currency-format';
 import { fRupiah, ribuan } from 'src/utils/formatNumber';
 import { StaticDatePicker, StaticDateTimePicker } from '@mui/x-date-pickers';
 import { format ,parseISO} from 'date-fns';
+import { useEffect } from 'react';
 /* eslint-disable no-nested-ternary */
 /* eslint-disable radix */
 
-export default function Form({
+export default function Edit({
   next,
   mitra,
   dataStruck,
@@ -26,15 +27,19 @@ export default function Form({
   setValues,
   isLoading,
   handleAdd,
+  item,
 }) {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowFrom] = useState(false);
-  const [sampahbutton, setsampahbutton] = useState(false);
-  const [search, setSearch] = useState('');
-  const [valuetanggal , Setvaluetanggal] = useState(null);
+  const [sampahbutton, setsampahbutton] = useState(true);
+  const [search, setSearch] = useState(item?.anggotum?.nama);
+  const [valuetanggal , Setvaluetanggal] = useState(item?.createAt);
   const [form, setForm] = useState({ sumber: '', jsCode: '', harga: '', berat: '', jenis: '' });
+  useEffect(() => {
+    console.log(item?.createAt);
+  });
 
-  const [sampah, setSampah] = useState([]);
+  const [sampah, setSampah] = useState(item?.detail_beli_sampahs);
   const { data } = useQuery('GET_ALL_ANGGOTA', GET_ALL_ANGGOTA, {
     refetchOnMount: true,
   });
@@ -61,9 +66,11 @@ export default function Form({
   };
 
   const removeListSampah = (index) => {
+    console.log(index);
     const valuess = [...sampah];
-    valuess.splice(index);
-    setSampah(valuess);
+    console.log(valuess.filter(item => item !== index));
+    // valuess.splice(index);
+    setSampah(valuess.filter(item => item !== index));
   };
   const handelSimpan = () => {
     setSampah([...sampah, form]);
@@ -87,24 +94,30 @@ export default function Form({
     console.log(step);
   };
   const handleTambahSampah = async () => {
+    console.log(valuetanggal);
     await setDataStruck({ ...dataStruck, detail: sampah });
     await handleOpen('Struck', 3, { detail: sampah });
   };
   const filterAnggota = (array, query) => {
-    if (query) {
-      const column = array[0] && Object.keys(array[0]);
-      return array.filter((a) =>
-        column.some((col) => a[col] && a[col].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
-      );
-    }
+    if(array){
+      if (query) {
+        const column = array[0] && Object?.keys(array[0]);
+        return array.filter((a) =>
+          column.some((col) => a[col] && a[col].toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
+        );
+      }
+    };
+    
+    
     return array;
   };
   const anggota = filterAnggota(anggotaNF, search);
   const handleTanggal = async (e) => {
     
+    
     await setDataStruck({ ...dataStruck, createAt: valuetanggal });
     
-    handleOpen('Pilih Supplier', 1,{ createAt: valuetanggal });
+    await handleOpen('Pilih Supplier', 1,{ createAt: valuetanggal });
   }
   return (
     <form>
@@ -130,7 +143,7 @@ export default function Form({
       )}
       {step === 1 && (
         <>
-          <TextInput value={search} onChange={(e) => setSearch(e.target.value)} label="Cari Anggota" />
+          <TextInput value={search} onChange={(e) => setSearch(e.target.value)} label="Cari Anggota Edit" />
           {anggota && anggota.length === 0 && <TidakAdaData />}
           <Grid sx={{ padding: 3 }} container spacing={2}>
             {anggota &&
@@ -170,7 +183,7 @@ export default function Form({
                       <Typography sx={{ fontSize: 12 }}>Sumber : {m?.sumber}</Typography>
                       <Typography sx={{ fontSize: 12 }}>Kapasitas : {ribuan(m?.berat)}</Typography>
                       <Typography sx={{ fontSize: 12 }}>Kapasitas : {fRupiah(m?.harga)}</Typography>
-                      <Button onClick={() => removeListSampah(i)} size="small" variant="outlined" color="error">
+                      <Button onClick={() => removeListSampah(m)} size="small" variant="outlined" color="error">
                         Hapus
                       </Button>
                     </Grid>
@@ -266,7 +279,7 @@ export default function Form({
   );
 }
 
-Form.propTypes = {
+Edit.propTypes = {
   next: PropTypes.any,
   step: PropTypes.any,
   mitra: PropTypes.any,

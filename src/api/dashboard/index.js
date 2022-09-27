@@ -55,4 +55,31 @@ const GET_ALL_ANGGOTA = async (id) => {
     return catchCallBack(error);
   }
 };
-export { GET_ALL_ANGGOTA, GET_ALL_ANGGOTA_BY_WILAYAH, GET_DETAIL_TRANSAKSI,GET_MAP_ANGGOTA };
+
+
+const GET_SU_PEMBELIAN = async (id) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`/su/beli/sampah?page=0&size=50`, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+
+const GET_SU_PENJUALAN = async (id) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`/su/jual/sampah?page=0&size=50`, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+export { GET_ALL_ANGGOTA, GET_ALL_ANGGOTA_BY_WILAYAH, GET_DETAIL_TRANSAKSI,GET_MAP_ANGGOTA ,GET_SU_PEMBELIAN,GET_SU_PENJUALAN};

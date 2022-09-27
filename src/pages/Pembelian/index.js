@@ -1,78 +1,77 @@
 import { Button, Card, Container, Stack, TableCell, TableRow } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import { format } from 'date-fns';
 import { useSnackbar } from 'notistack';
+// import { useMee } from 'contexts/MeContext';
 import * as React from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { useNavigate } from 'react-router';
-import Label from '../../components/Label';
-import { ADD_TARGET, DELETE_TARGET, GET_ALLTARGET, UPDATE_TARGET } from '../../api/target';
+import { GET_SU_PEMBELIAN } from 'src/api/dashboard';
+import { fRupiah, ribuan } from 'src/utils/formatNumber';
+import { ADD_PEMBELI, DELETE_PEMBELI, GET_ALL_PEMBELI, UPDATE_PEMBELI } from '../../api/pembeli';
 import DialogConfirm from '../../components/DialogConfirm';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
-import { fRupiah, ribuan } from 'src/utils/formatNumber';
-import DialogComponent from './DialogComponent';
 import Action from './Action';
+import DialogComponent from './DialogComponent';
 
 const headCells = [
-  //   {
-  //     id: 'name',
-  //     numeric: false,
-  //     disablePadding: true,
-  //     label: 'Nama',
-  //   },
   {
-    id: 'Nama',
+    id: 'Mitra',
     numeric: false,
     disablePadding: true,
-    label: 'Nama',
+    label: 'Pembeli',
   },
   {
-    id: 'Tanggal',
+    id: 'Nama_Supplier',
     numeric: false,
     disablePadding: true,
-    label: 'Tanggal',
+    label: 'Nama Supplier',
   },
   {
-    id: 'Target',
+    id: 'TOTAL_BERAT',
     numeric: false,
     disablePadding: true,
-    label: 'Target',
+    label: 'TOTAL_BERAT',
   },
-  
   {
-    id: 'target Tercapai',
+    id: 'TOTAL_PEMBELIAN',
     numeric: false,
     disablePadding: true,
-    label: 'Pembelian',
+    label: 'TOTAL_PEMBELIAN',
   },
-  
   {
-    id: 'target Tercapai',
+    id: 'TANGGAL_PEMBELIAN',
     numeric: false,
     disablePadding: true,
-    label: 'Target Tercapai',
+    label: 'TANGGAL_PEMBELIAN',
+  },
+  {
+    id: 'TANGGAL_PEMBUATAN',
+    numeric: false,
+    disablePadding: true,
+    label: 'TANGGAL_PEMBUATAN',
   },
 ];
 
 export default function Index() {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [alertOpen, setAlertOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [alertText, setAlertText] = React.useState('');
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [itemSelected, setItemSelected] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
-  const navigate = useNavigate();
-  const { data, isLoading, refetch } = useQuery('GET_ALLTARGET', GET_ALLTARGET);
-
+  //   const { checkPermision } = useMee();
+  const { data, isLoading, refetch } = useQuery('GET_ALL_PEMBELI', () => GET_SU_PEMBELIAN(null));
   const { enqueueSnackbar } = useSnackbar();
 
-  const rows = data && data?.data?.data;
+  const rows = data && data?.data?.data?.data;
+
+
   const { TableComponent, list } = useTable({
     header: headCells,
     rows: rows || [],
     loading: isLoading,
   });
-  // HANDLE ACTION
   const handleActionOpen = (event, item) => {
     setItemSelected(item);
     setAnchorEl(event.currentTarget);
@@ -85,9 +84,7 @@ export default function Index() {
   const handleEdit = () => {
     setDialogOpen(true);
   };
-  const handleDetail = () => {
-    navigate(`/dashboard/user/detail/${itemSelected.userCode}`);
-  };
+
   // HANDLE ALERT
   const handleAlertOpen = (text) => {
     setAlertText(text);
@@ -98,7 +95,7 @@ export default function Index() {
     setAlertOpen(false);
   };
 
-  const deleteMutation = useMutation((params) => DELETE_USER(params.id), {
+  const deleteMutation = useMutation((params) => DELETE_PEMBELI(params.id), {
     onSuccess: async (res) => {
       const variant = res.status === 200 ? 'success' : 'warning';
       await enqueueSnackbar(res.data.message, { variant });
@@ -114,7 +111,7 @@ export default function Index() {
   // HANDLE ACTION
   const onAdd = async (data, callbackSetError) => {
     setLoading(true);
-    const response = await ADD_TARGET(data);
+    const response = await ADD_PEMBELI(data);
     if (response.status === 400) {
       callbackSetError(response.data.error.form);
     }
@@ -131,14 +128,11 @@ export default function Index() {
       setDialogOpen(false);
       handleActionClose();
     }
-    if (response.status === 500) {
-      await enqueueSnackbar('Internal server error', 'error');
-    }
     await setLoading(false);
   };
   const onUpdate = async (data, id, callbackSetError) => {
     setLoading(true);
-    const response = await UPDATE_TARGET(data, id);
+    const response = await UPDATE_PEMBELI(data, id);
     if (response.data.status === 400) {
       callbackSetError(response.data.error.form);
     }
@@ -151,61 +145,50 @@ export default function Index() {
     }
     await setLoading(false);
   };
+  const onDelete = async () => {
+    deleteMutation.mutate({ id: itemSelected.pembeliCode });
+  };
   const handleConfirm = async () => {
-    console.log(itemSelected.MitraTargetCode);
-    const response = await DELETE_TARGET({id:itemSelected.MitraTargetCode});
-    
-    if (response.data.status === 200) {
-      await refetch();
-      handleAlertClose();
-    }
+    await onDelete();
   };
 
   const actionOpen = Boolean(anchorEl);
-  const processing = loading || deleteMutation.isLoading || isLoading;
+  const processing = loading || isLoading || deleteMutation.isLoading;
   return (
-    <Page title="User">
+    <Page title="Pembeli">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Setting Target
+            PEMBELI
           </Typography>
-
-          <Button onClick={() => setDialogOpen(true)} variant="contained">
-            Tambah
-          </Button>
+          {/* )} */}
         </Stack>
+
         <Card>
           {list &&
             TableComponent(
-              list.map((row, index) => {
+              list?.map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`;
                 return (
-                  <TableRow
-                    label={labelId}
-                    onClick={(event) => handleActionOpen(event, row)}
-                    hover
-                    tabIndex={-1}
-                    key={index}
-                  >
-                    <TableCell>{row.no}</TableCell>
-                    {/* <TableCell component="th" id={labelId} scope="row" padding="none">
-                      <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Avatar sx={{ margin: 1 }} alt={row.name} src={row.photo} />
-                        {row.name}
-                      </div>
-                    </TableCell> */}
-                    <TableCell>{row.nama}({row.namaUsaha})</TableCell>
-                    <TableCell>{row.targettangal}</TableCell>
-                    <TableCell align="left">
-                        {ribuan(row.MitraTargetName)}
+                  <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
+                    <TableCell>{row?.no}</TableCell>
+                    <TableCell id={labelId} scope="row">
+                    {row?.mitra?.nama}({row?.mitra?.usahas?.[0]?.namaUsaha})
                     </TableCell>
-                    <TableCell>{ribuan(row.x)}</TableCell>
-                  
-                    <TableCell>
-                    <Label variant="ghost" color={(row.x - row.MitraTargetName ) > 0 ? 'success' : 'error'}>
-                        {ribuan(row.x - row.MitraTargetName) }
-                      </Label>
+                    <TableCell id={labelId} scope="row">
+                    {row?.anggotum?.nama}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                    {ribuan(row?.totalBerat)}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                    {fRupiah(row?.totalHarga)}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                    {format(new Date(row?.createAt) , "yyyy-MM-dd HH:mm")}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                    {format(new Date(row?.updateAt) , "yyyy-MM-dd HH:mm")}
                     </TableCell>
                   </TableRow>
                 );
@@ -227,7 +210,6 @@ export default function Index() {
         <Action
           actionOpen={actionOpen}
           handleEdit={handleEdit}
-          handleDetail={handleDetail}
           handelDelete={() => handleAlertOpen('Apakah yakin mau delete')}
           anchorEl={anchorEl}
           actionClose={handleActionClose}

@@ -41,7 +41,7 @@ const ComponentToPrint = React.forwardRef(({ data }, ref) => (
           </TableRow>
           <TableRow>
             <TableCell>
-              {fDateTime(data.createAt)} <br /> No. {Math.random()}
+              Transaksi {fDateTime(data.createAt)} <br /> No. {Math.floor(Math.random() * 999999999999)}<br />Dibuat {fDateTime(new Date())}
             </TableCell>
             <TableCell align="right">{data.anggota.nama}</TableCell>
           </TableRow>

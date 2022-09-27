@@ -52,6 +52,16 @@ const navConfig = [
                   icon: getIcon('eva:list-outline'),
                 },
                 {
+                  title: 'Pembelaian',
+                  path: '/dashboard/pembelian',
+                  icon: getIcon('eva:list-outline'),
+                },
+                {
+                  title: 'Penjualan',
+                  path: '/dashboard/penjualan',
+                  icon: getIcon('eva:list-outline'),
+                },
+                {
                   title: 'Setting Target',
                   path: '/dashboard/target',
                   icon: getIcon('eva:list-outline'),

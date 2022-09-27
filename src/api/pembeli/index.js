@@ -40,6 +40,22 @@ const ADD_PEMBELI = async ({ pembeli }) => {
   }
 };
 
+
+const ADD_PEMBELIMITRA = async ({ pembeli }) => {
+  const data = qs.stringify({
+    pembeli,
+  });
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.post(`jual/sampah/add/pembeli`, data, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
 const UPDATE_PEMBELI = async ({ pembeli }, id) => {
   const data = qs.stringify({
     pembeli,
@@ -65,4 +81,4 @@ const DELETE_PEMBELI = async (id) => {
     return catchCallBack(error);
   }
 };
-export { ADD_PEMBELI, GET_ALL_PEMBELI, DELETE_PEMBELI, UPDATE_PEMBELI, GET_ONE_PEMBELI };
+export { ADD_PEMBELI, GET_ALL_PEMBELI, DELETE_PEMBELI, UPDATE_PEMBELI, GET_ONE_PEMBELI ,ADD_PEMBELIMITRA };
