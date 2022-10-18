@@ -89,7 +89,7 @@ export default function JualSampah() {
   };
 
   const handleOnAdd = () => {
-    setDrawerTitle('Pilih Pembeli');
+    setDrawerTitle('Pilih Tanggal & Jam');
     onOpen();
     setStep(0);
     setprosessinput(0);
@@ -100,7 +100,7 @@ export default function JualSampah() {
     console.log("edits" ,valuedata);
     setValues({...values , "jsCode":valuedata?.e?.jsCode});
     setItem(valuedata?.e);
-    setDrawerTitle('Pilih Pembeli');
+    setDrawerTitle('Pilih Tanggal & Jam');
     onOpen();
     setStep(0);
     setFungsi('edit');

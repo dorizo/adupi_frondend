@@ -52,7 +52,7 @@ const navConfig = [
                   icon: getIcon('eva:list-outline'),
                 },
                 {
-                  title: 'Pembelaian',
+                  title: 'Pembelian',
                   path: '/dashboard/pembelian',
                   icon: getIcon('eva:list-outline'),
                 },

@@ -168,8 +168,8 @@ export default function Form({
                     <Grid item xs={12}>
                       <Typography sx={{ fontWeight: 'bold' }}>{m?.jenis}</Typography>
                       <Typography sx={{ fontSize: 12 }}>Sumber : {m?.sumber}</Typography>
-                      <Typography sx={{ fontSize: 12 }}>Kapasitas : {ribuan(m?.berat)}</Typography>
-                      <Typography sx={{ fontSize: 12 }}>Kapasitas : {fRupiah(m?.harga)}</Typography>
+                      <Typography sx={{ fontSize: 12 }}>Berat : {ribuan(m?.berat)}</Typography>
+                      <Typography sx={{ fontSize: 12 }}>Harga : {fRupiah(m?.harga)}</Typography>
                       <Button onClick={() => removeListSampah(i)} size="small" variant="outlined" color="error">
                         Hapus
                       </Button>
@@ -212,7 +212,7 @@ export default function Form({
               
                 <CurrencyFormat 
                 fullWidth 
-                label={'Berat'} 
+                label={'Berat (kg)'} 
                 customInput={TextField} 
                 style={{paddingBottom:15 ,paddingTop:15}} 
                 onValueChange={(e) => setForm({ ...form, berat: e.value })}
@@ -228,7 +228,7 @@ export default function Form({
                 type="tel"
                 onValueChange={(e) => setForm({ ...form, harga: e.value })}
                 value={form.harga}
-                label={'Harga'}
+                label={'Harga (Rp per kg)'}
                />
 {/*                 
                 <TextInput

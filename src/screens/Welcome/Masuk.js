@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Typography } from '@mui/material';
+import { IconButton, InputAdornment, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import TextInput from '../../components/TextInput';
 import axios from '../../api';
+import Iconify from 'src/components/Iconify';
 
 const LOGIN_URL = '/login';
 
 export default function Masuk() {
   const { setAuth, updateAuth } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/mobile';
@@ -30,6 +32,9 @@ export default function Masuk() {
     setErrMsg('');
   }, [user, pwd]);
 
+  const handleShowPassword = () => {
+    setShowPassword((show) => !show);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -79,12 +84,21 @@ export default function Masuk() {
           label={'E-mail'}
         />
         <TextInput
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           id="password"
           onChange={(e) => setPwd(e.target.value)}
           value={pwd}
           required
           label={'Password'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleShowPassword} edge="end">
+                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <ButtonPrimary disabled={loading} type="submit" label="Masuk" />
       </form>

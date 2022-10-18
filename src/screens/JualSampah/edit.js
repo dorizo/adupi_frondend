@@ -173,8 +173,8 @@ export default function Edit({ next, setSelectedImg, step, selectedImg, values, 
                     <Grid item xs={12}>
                       <Typography sx={{ fontWeight: 'bold' }}>{m?.jenis}</Typography>
                       <Typography sx={{ fontSize: 12 }}>Sumber : {m?.sumber}</Typography>
-                      <Typography sx={{ fontSize: 12 }}>Kapasitas : {m?.berat}</Typography>
-                      <Typography sx={{ fontSize: 12 }}>Kapasitas : {m?.harga}</Typography>
+                      <Typography sx={{ fontSize: 12 }}>Berat : {m?.berat}</Typography>
+                      <Typography sx={{ fontSize: 12 }}>Harga : {m?.harga}</Typography>
                       <Button onClick={() => removeListSampah(m)} size="small" variant="outlined" color="error">
                         Hapus
                       </Button>
@@ -204,7 +204,7 @@ export default function Edit({ next, setSelectedImg, step, selectedImg, values, 
                 />
                 <CurrencyFormat 
                 fullWidth 
-                label={'Berat'} 
+                label={'Berat (kg)'} 
                 customInput={TextField} 
                 style={{paddingBottom:15 ,paddingTop:15}} 
                 onValueChange={(e) => setForm({ ...form, berat: e.value })}
@@ -220,7 +220,7 @@ export default function Edit({ next, setSelectedImg, step, selectedImg, values, 
                 type="tel"
                 onValueChange={(e) => setForm({ ...form, harga: e.value })}
                 value={form.harga}
-                label={'Harga'}
+                label={'Harga (Rp per kg)'}
                />
                 <ButtonPrimary
                   onClick={handelSimpan}

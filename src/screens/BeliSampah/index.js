@@ -104,7 +104,7 @@ export default function BeliSampah() {
     setFungsi('edit');
   };
   const handleOnAdd = () => {
-    setDrawerTitle('Pilih Tanggal');
+    setDrawerTitle('Pilih Tanggal & Jam');
     onOpen();
     setStep(0);
     setFungsi('add');
