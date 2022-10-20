@@ -250,6 +250,18 @@ export default function ListMitra() {
                       Lampiran
                     </Button>
                     </Grid>
+                    
+                    <Grid item xs={4}>
+                    <Button
+                      onClick={() => navigate(`/mobile/list-mitra/transaksi/${li?.mitraCode}`)}
+                      sx={{ marginTop: 2, marginLeft: 2 }}
+                      size="small"
+                      variant="outlined"
+                      color="warning"
+                    >
+                      Transaksi
+                    </Button>
+                    </Grid>
                     <Grid item xs={3}>
                     {alignment === 'verifikasi' && (
                       <Button

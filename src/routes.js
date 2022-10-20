@@ -55,6 +55,8 @@ import Kunjunganmitra from './pages/kunjunganmitra';
 import Activityfasilitator from './pages/activityfasilitator';
 import Target from './pages/Target';
 import LampiranByFasilitator from './screens/LampiranByFasilitator';
+import Transaksi from './screens/Transaksi';
+import Fasilitatortransaksi from './screens/Fasilitatortransaksi';
 
 // ----------------------------------------------------------------------
 
@@ -397,6 +399,14 @@ export default function Router() {
           element: (
             <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
               <MasalahByFasilitator />
+            </MobileGuard>
+          ),
+        },
+        {
+          path: 'list-mitra/transaksi/:mitraCode',
+          element: (
+            <MobileGuard allowedRoles={['Fasilitator']} allowedPermission={['']}>
+              <Fasilitatortransaksi />
             </MobileGuard>
           ),
         },

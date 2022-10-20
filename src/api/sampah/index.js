@@ -17,6 +17,24 @@ const GET_BELI_SAMPAH = async ({ page, size, date }) => {
     return catchCallBack(error);
   }
 };
+
+const GET_BELI_SAMPAH_FASILITATOR = async (kodeku,{ page, size, date }) => {
+  console.log("Params " , kodeku);
+  const params = {
+    page,
+    size,
+    date,
+  };
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get('beli/sampah/'+kodeku, { headers, params });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_JUAL_SAMPAH = async ({ page, size, date }) => {
   const params = {
     page,
@@ -28,6 +46,22 @@ const GET_JUAL_SAMPAH = async ({ page, size, date }) => {
   };
   try {
     const response = await axios.get('jual/sampah', { headers, params });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+const GET_JUAL_SAMPAH_FASILITATOR = async (kode , { page, size, date }) => {
+  const params = {
+    page,
+    size,
+    date,
+  };
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get('jual/sampah/'+kode, { headers, params });
     return response;
   } catch (error) {
     return catchCallBack(error);
@@ -122,4 +156,4 @@ const JUAL_SAMPAHEDIT = async ({ pembeliCode, nota, detail , createAt , jsCode }
   }
 };
 
-export { BELI_SAMPAH, GET_BELI_SAMPAH, GET_JUAL_SAMPAH, JUAL_SAMPAH,EDIT_BELI_SAMPAH ,JUAL_SAMPAHEDIT};
+export { BELI_SAMPAH, GET_BELI_SAMPAH, GET_JUAL_SAMPAH, JUAL_SAMPAH,EDIT_BELI_SAMPAH ,JUAL_SAMPAHEDIT,GET_BELI_SAMPAH_FASILITATOR ,GET_JUAL_SAMPAH_FASILITATOR};
