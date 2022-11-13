@@ -167,7 +167,7 @@ export default function Kunjunganmitra() {
                   <TableRow hover tabIndex={-1} key={index}>
                     <TableCell>{row.no}</TableCell>
                     <TableCell id={labelId} scope="row">
-                      {row.nama}
+                      {row.nama} ({row.namaUsaha})
                     </TableCell>
                     <TableCell id={labelId} scope="row">
                       {row.Kunjungan_formCapaian}

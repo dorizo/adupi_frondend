@@ -93,7 +93,7 @@ export default function PetaSebaran({ type = null }) {
     getAllAnggota();
   }, []);
 
-  const warna = ['#F00', '#ffff00', '#005187', '#155612', '#ff00d0', '#0cd151', '#000','#A58CFF','#FFE15D','#0e7013' ,'#9b9b9b','#c68383','#a80000'];
+  const warna = ['#F00', '#ffff00', '#005187', '#155612', '#ff00d0', '#0cd151', '#000','#A58CFF','#FFE15D','#0e7013' ,'#9b9b9b','#c68383','#a80000','#FF8FB1','#FF6D28','#47B5FF','#256D85','#00FFD1','#182747'];
   function MyComponent() {
     const mapEvents = useMapEvents({
       zoomend: () => {
@@ -163,7 +163,7 @@ GET_ALL_PROVINSI()
                     <MenuItem value="">SEMUA MITRA</MenuItem>
                     {datamitra?.data?.data?.map((row ,indexx)=>{
                       
-                       return(<MenuItem value={row.mitraCode}>{row.nama}</MenuItem>) 
+                       return(<MenuItem value={row.mitraCode}>{row.nama} ({row?.usahas?.[0]?.namaUsaha})</MenuItem>) 
                         
                       })}
                 </Select>
@@ -219,7 +219,7 @@ GET_ALL_PROVINSI()
                 list?.map((a, i) => {
                   return (
                     <h6 style={{ color: warna[i] }} key={i}>
-                      {a?.nama?.nama}
+                      {a?.nama?.nama}  ({a?.nama?.usahas?.[0]?.namaUsaha })
                     </h6>
                   );
                 })}

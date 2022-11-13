@@ -19,7 +19,13 @@ const headCells = [
     id: 'Mitra',
     numeric: false,
     disablePadding: true,
-    label: 'Penjual',
+    label: 'Mitra',
+  },
+  {
+    id: 'Pembeli',
+    numeric: false,
+    disablePadding: true,
+    label: 'Pembeli',
   },
   {
     id: 'TOTAL_BERAT',
@@ -153,7 +159,7 @@ export default function Index() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            PEMBELI
+            Penjualan Bahan DUP
           </Typography>
           {/* )} */}
         </Stack>
@@ -165,7 +171,9 @@ export default function Index() {
                 const labelId = `enhanced-table-checkbox-${index}`;
                 return (
                   <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
-                    <TableCell>{row?.no}</TableCell>
+                    <TableCell>{row?.no}</TableCell>  <TableCell id={labelId} scope="row">
+                    {row?.mitra?.nama}({row?.mitra?.usahas?.[0]?.namaUsaha})
+                    </TableCell>
                     <TableCell id={labelId} scope="row">
                     {row?.pembeli?.pembeli}
                     </TableCell>

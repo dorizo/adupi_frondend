@@ -89,7 +89,7 @@ export default function DialogComponent(props) {
                   >
                     {datamitra?.data?.data.map((row ,indexx)=>{
                       
-                       return(<MenuItem value={row.mitraCode}>{row.nama}</MenuItem>) 
+                       return(<MenuItem value={row.mitraCode}>{row.nama} ({row?.usahas?.[0]?.namaUsaha})</MenuItem>) 
                         
                       })}
                 </Select>
