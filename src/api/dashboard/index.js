@@ -62,7 +62,7 @@ const GET_SU_PEMBELIAN = async (id) => {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.get(`/su/beli/sampah?page=0&size=50`, { headers });
+    const response = await axios.get(`/su/beli/sampah?page=0&size=500`, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
@@ -75,7 +75,7 @@ const GET_SU_PENJUALAN = async (id) => {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.get(`/su/jual/sampah?page=0&size=50`, { headers });
+    const response = await axios.get(`/su/jual/sampah?page=0&size=500`, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
