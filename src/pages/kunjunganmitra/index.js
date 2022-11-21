@@ -1,7 +1,7 @@
 import { AppBar, Button, Card, Container, Dialog, Divider, Grid, IconButton, ImageList, ImageListItem, List, ListItem, ListItemText, Stack, TableCell, TableRow, Toolbar } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useQuery } from 'react-query';
-import { fDateTime } from '../../utils/formatTime';
+import { fDateTime, fDatetimework } from '../../utils/formatTime';
 import { GET_ALL_KUNJUNGAN, GET_ALL_KUNJUNGANMITRA } from '../../api/kunjungan';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
@@ -21,6 +21,18 @@ const headCells = [
     label: 'NAMA MITRA',
   },
   {
+    id: 'Nama Fasilitator',
+    numeric: false,
+    disablePadding: true,
+    label: 'Nama Fasilitator',
+  },
+  {
+    id: 'Tanggal Check In',
+    numeric: false,
+    disablePadding: true,
+    label: 'Tanggal Check In',
+  },
+  {
     id: 'Capaian',
     numeric: false,
     disablePadding: true,
@@ -37,12 +49,6 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: 'Jumlah Pekerja',
-  },
-  {
-    id: 'Masalah Mesin',
-    numeric: false,
-    disablePadding: true,
-    label: 'Masalah Mesin',
   },
   {
     id: 'Pendampingan',
@@ -129,6 +135,23 @@ export default function Kunjunganmitra() {
               <ListItem button>
                 <ListItemText primary="pendampingan" secondary={kunjungan?.Kunjungan_formPendampingan} />
               </ListItem>
+              {/* <ListItem button>
+                <ListItemText primary="NAMA FASILITATOR" secondary={kunjungan?.nama_fasilitator} />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary="NAMA FASILITATOR" secondary={kunjungan?.nama_fasilitator} />
+              </ListItem> */}
+              <ListItem button>
+                <ListItemText primary="NAMA FASILITATOR" secondary={kunjungan?.nama_fasilitator} />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary="TANGGAL CHECK IN" secondary={kunjungan?.kunjungan_absen_date?fDatetimework(kunjungan?.kunjungan_absen_date):kunjungan?.kunjungan_absen_date} />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary="TANGGAL CHECK OUT" secondary={kunjungan?.x?fDatetimework(kunjungan?.x):kunjungan?.x} />
+              </ListItem>
+
+              
             </List>
               </Grid>
               <Grid item xs={6}>
@@ -170,6 +193,12 @@ export default function Kunjunganmitra() {
                       {row.nama} ({row.namaUsaha})
                     </TableCell>
                     <TableCell id={labelId} scope="row">
+                      {row.nama_fasilitator}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                      {row.kunjungan_absen_date?fDatetimework(row.kunjungan_absen_date):row.kunjungan_absen_date}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
                       {row.Kunjungan_formCapaian}
                     </TableCell>
                     <TableCell id={labelId} scope="row">
@@ -177,9 +206,6 @@ export default function Kunjunganmitra() {
                     </TableCell>
                     <TableCell id={labelId} scope="row">
                       {row.Kunjungan_formPekerja}
-                    </TableCell>
-                    <TableCell id={labelId} scope="row">
-                      {row.Kunjungan_formJumlahMesin}
                     </TableCell>
                     <TableCell id={labelId} scope="row">
                       {row.Kunjungan_formPendampingan}

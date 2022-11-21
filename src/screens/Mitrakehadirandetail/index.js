@@ -50,7 +50,7 @@ export default function Mitrakehadirandetail() {
             };
             navigate("/mobile/list-kehadiranmitra");
       };
-      const data  = await ADD_KUNJUNGANMITRA({"kunjungan_absen_name" : datasingle?.gudang?.[0]?.usahaCode , "kunjungan_absen_date": tanggalsekarang,"kunjungan_absen_status":statuscode,"mitraCode":params.mitraCode});
+      const data  = await ADD_KUNJUNGANMITRA({"kunjungan_absen_name" : datasingle?.gudang?.[0]?.usahaCode , "kunjungan_absen_date": tanggalsekarang+" "+newDate.getHours()+":"+newDate.getMinutes()+":"+newDate.getSeconds(),"kunjungan_absen_status":statuscode,"mitraCode":params.mitraCode});
       if(data.status === 200){
         // console.log(data.status);
         setstatuscode("checkout");

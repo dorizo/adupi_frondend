@@ -22,3 +22,7 @@ export function fToNow(date) {
     addSuffix: true,
   });
 }
+export function fDatetimework(date){
+  var dates = new Date(date);
+  return format(dates , 'dd MMM yyyy')+" "+dates.getUTCHours()+":"+dates.getUTCMinutes()+":"+dates.getUTCSeconds();
+}

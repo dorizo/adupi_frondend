@@ -142,7 +142,7 @@ export default function Form({
         .required('Harus Disisi'),
       noHp: Yup.string().required('Harus Disisi'),
       jenisKelamin: Yup.string().required('Harus Disisi'),
-      wilayahCode: Yup.string().required('Harus Disisi'),
+      // wilayahCode: Yup.string().required('Harus Disisi'),
       alamat: Yup.string().required('Harus Disisi'),
     }),
     onSubmit: handleSubmit,
@@ -166,12 +166,15 @@ export default function Form({
   };
   const handleChangeProvinsi = (e) => {
     getKab(e.target.value);
+    formik.values.wilayahCode = e.target.value;
   };
   const handleChangeKabupaten = (e) => {
     getKec(e.target.value);
+    formik.values.wilayahCode = e.target.value;
   };
   const handleChangeKecamatan = (e) => {
     getDesa(e.target.value);
+    formik.values.wilayahCode = e.target.value;
   };
   useEffect(() => {
     getPro();
@@ -253,7 +256,6 @@ export default function Form({
             onChange={formik.handleChange}
             label="Kelurahan"
             option={desa}
-            error={formik.touched.wilayahCode && Boolean(formik.errors.wilayahCode)}
           />
           <TextInput
             name="alamat"

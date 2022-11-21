@@ -173,12 +173,11 @@ export default function Kunjungan() {
   useEffect(()=>{
 
     navigator.geolocation.getCurrentPosition(function(position) {
-      console.log("Latitude disni :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
+      // console.log("Latitude disni :", position.coords.latitude);
+      // console.log("Longitude is :", position.coords.longitude);
       setlat(position.coords.latitude);
       setlong(position.coords.longitude);
       
-      console.log(lat);
     });    
   });
   const handleClose = () => {

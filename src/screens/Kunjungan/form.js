@@ -34,13 +34,12 @@ export default function Form({ mitra, step, isLoading, handleAdd, item, onUpdate
     onSubmit: handleSubmit,
   });
     
-  console.log('SSSS'+formik.values.latitude);
 
   return (
     <form onSubmit={formik.handleSubmit}>
       {step === 0 && (
         <>
-          <SelectInput
+          <TextInput
             label={'Mitra'}
             name="mitraCode"
             style={{ display:  "none"}}

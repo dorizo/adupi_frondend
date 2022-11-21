@@ -165,7 +165,7 @@ export default function Mitrakehadiran() {
               const rad  =  geolib.isPointWithinRadius(
                 { latitude: position.coords.latitude, longitude:position.coords.longitude },
                 { latitude: x?.data?.data?.gudang?.[0]?.lat, longitude: x?.data?.data?.gudang?.[0]?.lang },
-                1000
+                10000
             );
           if(rad){
             navigate("/mobile/kehadiranmitradetail/"+me.mitraCode)
