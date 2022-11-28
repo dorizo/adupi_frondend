@@ -32,6 +32,18 @@ const headCells = [
     label: 'Status',
   },
   {
+    id: 'Role',
+    numeric: false,
+    disablePadding: true,
+    label: 'Role',
+  },
+  {
+    id: 'NamaMitra',
+    numeric: false,
+    disablePadding: true,
+    label: 'Nama Mitra',
+  },
+  {
     id: 'active',
     numeric: false,
     disablePadding: true,
@@ -177,8 +189,10 @@ export default function Index() {
                         {row.name}
                       </div>
                     </TableCell> */}
-                    <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.status}</TableCell>
+                    <TableCell>{row?.email}</TableCell>
+                    <TableCell>{row?.status}</TableCell>
+                    <TableCell>{row?.role}</TableCell>
+                    <TableCell>{row?.userdata}</TableCell>
                     <TableCell align="left">
                       <Label variant="ghost" color={row.isActive ? 'success' : 'error'}>
                         {row.isActive ? 'Active' : 'InActive'}
