@@ -6,7 +6,7 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import PropTypes from 'prop-types';
 
 export default function Action(props) {
-  const { actionOpen, actionClose, anchorEl, handleDetail, handleVerifAnggota, handleMasalah } = props;
+  const { actionOpen, actionClose, anchorEl, handleDetail, handleVerifAnggota, handleMasalah , handleEdit } = props;
   return (
     <Menu
       id="basic-menu"
@@ -42,6 +42,12 @@ export default function Action(props) {
           <PeopleOutlineIcon fontSize="small" />
         </ListItemIcon>
         <ListItemText>Anggota</ListItemText>
+      </MenuItem>
+      <MenuItem onClick={handleEdit}>
+        <ListItemIcon>
+          <PeopleOutlineIcon fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>Edit</ListItemText>
       </MenuItem>
     </Menu>
   );

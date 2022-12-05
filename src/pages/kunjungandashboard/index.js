@@ -43,7 +43,7 @@ export default function Kunjungandashboard({ type = null }) {
                 
                 <Grid item xs={4}>
                 <Card style={{padding:20}}>
-                        <h5>Fasilitator Aktif</h5>
+                        <h5>Fasilitator Aktif Hari Ini</h5>
                         <h1>{totalmasalah?.data?.data.faslilitator}</h1>
                         <Button  onClick={() =>navigate("/dashboard/detaillogfasilitator")}  variant="contained" endIcon={<NextPlanIcon />}>
                         Detail

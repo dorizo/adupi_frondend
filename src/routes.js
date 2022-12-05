@@ -57,6 +57,7 @@ import Target from './pages/Target';
 import LampiranByFasilitator from './screens/LampiranByFasilitator';
 import Transaksi from './screens/Transaksi';
 import Fasilitatortransaksi from './screens/Fasilitatortransaksi';
+import MitraEdit from './pages/MitraEdit';
 
 // ----------------------------------------------------------------------
 
@@ -204,6 +205,14 @@ export default function Router() {
               ),
             },
           
+            {
+              path: 'edit/:mitraCode',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <MitraEdit />
+                </RequireAuth>
+              ),
+            },
             {
               path: 'masalah/:mitraCode',
               element: (

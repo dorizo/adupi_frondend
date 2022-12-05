@@ -133,6 +133,7 @@ GET_ALL_PROVINSI()
   const handleChangeProvinsi =(v)=>{
     setProvinsivalue(v.target.value);
   }
+  console.log(list);
 
   const MapComponent = () => {
     return (
@@ -163,7 +164,7 @@ GET_ALL_PROVINSI()
                     <MenuItem value="">SEMUA MITRA</MenuItem>
                     {datamitra?.data?.data?.map((row ,indexx)=>{
                       
-                       return(<MenuItem value={row.mitraCode}>{row.nama} ({row?.usahas?.[0]?.namaUsaha})</MenuItem>) 
+                       return(<MenuItem key={indexx} value={row.mitraCode}>{row.nama} ({row?.usahas?.[0]?.namaUsaha})</MenuItem>) 
                         
                       })}
                 </Select>
@@ -214,12 +215,12 @@ GET_ALL_PROVINSI()
                 zIndex: 'modal',
               }}
             >
-              <h4>List Mitra ({list.length})</h4>
+              <h4>Daftar Mitra GESN ({list.length})</h4>
               {list &&
                 list?.map((a, i) => {
                   return (
                     <h6 style={{ color: warna[i] }} key={i}>
-                      {a?.nama?.nama}  ({a?.nama?.usahas?.[0]?.namaUsaha })
+                    {a?.nama?.usahas?.[0]?.namaUsaha } -{a?.nama?.kabupaten?.[0]?.wilayah}, {a?.nama?.wilayahs?.[0]?.wilayah }
                     </h6>
                   );
                 })}

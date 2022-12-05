@@ -22,7 +22,7 @@ export default function SelectInput({ option = [], label, placeholder = '', sx, 
             <em>--PILIH--</em>
           </MenuItem>
         )}
-        {option && option.map((op) => <MenuItem value={op.value}>{op.label}</MenuItem>)}
+        {option && option.map((op , i) => <MenuItem key={i} value={op.value}>{op.label}</MenuItem>)}
       </Select>
     </>
   );

@@ -77,13 +77,17 @@ export default function Index() {
     setItemSelected(null);
     setAnchorEl(null);
   };
+  
+  const handleEdit = () => {
+    navigate(`/dashboard/mitra/edit/${itemSelected.mitraCode}`);
+  };
   const actionOpen = Boolean(anchorEl);
   return (
     <Page title="Mitra">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Mitra
+            List Mitra
           </Typography>
         </Stack>
 
@@ -96,7 +100,7 @@ export default function Index() {
                   <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
                     <TableCell>{row.no}</TableCell>
                     <TableCell id={labelId} scope="row">
-                      {row.nama}
+                    {row?.usahas?.[0]?.namaUsaha } -{row?.kabupaten?.[0]?.wilayah}, {row?.wilayahs?.[0]?.wilayah }
                     </TableCell>
                     <TableCell id={labelId} scope="row">
                       {row.nik}
@@ -123,6 +127,7 @@ export default function Index() {
         <Action
           handleVerifAnggota={handleVerifAnggota}
           handleMasalah={handleMasalah}
+          handleEdit={handleEdit}
           actionOpen={actionOpen}
           handleDetail={handleDetail}
           anchorEl={anchorEl}
