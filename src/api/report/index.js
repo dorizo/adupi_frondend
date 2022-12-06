@@ -120,12 +120,48 @@ const GET_PENJUALAN_MITRA_PERBULAN = async (tahun, mitraCode) => {
     return catchCallBack(error);
   }
 };
+
+const GET_PENJUALAN_MITRA_PERBULANLINE = async (tahun, mitraCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/penjualan/permitraPerbulanline`, {
+      headers,
+      params: {
+        tahun,
+        mitraCode,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_PEMBELIAN_MITRA_PERBULAN = async (tahun, mitraCode) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
     const response = await axios.get(`report/pembelian/permitraPerbulan`, {
+      headers,
+      params: {
+        tahun,
+        mitraCode,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+const GET_PEMBELIAN_MITRA_PERBULANLINE = async (tahun, mitraCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/permitraPerbulanline`, {
       headers,
       params: {
         tahun,
@@ -387,11 +423,13 @@ export {
   GET_LUAS_GUDANG_PERBULAN,
   GET_MASALAH_PERBULAN_JENIS_STATUS,
   GET_PEMBELIAN_MITRA_PERBULAN,
+  GET_PEMBELIAN_MITRA_PERBULANLINE,
   GET_PEMBELIAN_MITRA_PERBULAN_PABRIK,
   GET_PEMBELIAN_SEMUA_MITRA_PERBULAN,
   GET_PEMBELIAN_SEMUA_MITRA_PERBULAN_PABRIK,
   GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORI,
   GET_PENJUALAN_MITRA_PERBULAN,
+  GET_PENJUALAN_MITRA_PERBULANLINE,
   GET_PENJUALAN_MITRA_PERBULAN_PABRIK,
   GET_PENJUALAN_SEMUA_MITRA_PERBULAN,
   GET_PENJUALAN_SEMUA_MITRA_PERBULAN_PABRIK,

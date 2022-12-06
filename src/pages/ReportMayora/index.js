@@ -10,9 +10,12 @@ import PembelianMitraPerJenis from './Chart/PembelianMitraPerJenis';
 import PenjualanMitraPerJenis from './Chart/PenjualanMitraPerJenis';
 import PembelianPerMitraPerbulan from './Chart/PembelianPerMitraPerbulan';
 import PenjualanPerMitraPerbulan from './Chart/PenjualanPerMitraPerbulan';
+import PembelianPerMitraPerbulanline from './Chart/PembelianPerMitraPerbulanline';
+import PenjualanPerMitraPerbulanLine from './Chart/PenjualanPerMitraPerbulanLine';
 
 export default function ReportMayora() {
   return (
+    
     <Page title="Report Mayora">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -53,7 +56,7 @@ export default function ReportMayora() {
                 <PembelianPerMitraPerbulan type="pie" />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <PembelianPerMitraPerbulan />
+                <PembelianPerMitraPerbulanline />
               </Grid>
             </Grid>
           </CardContent>
@@ -65,7 +68,7 @@ export default function ReportMayora() {
                 <PenjualanPerMitraPerbulan type="pie" />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <PenjualanPerMitraPerbulan />
+                <PenjualanPerMitraPerbulanLine />
               </Grid>
             </Grid>
           </CardContent>

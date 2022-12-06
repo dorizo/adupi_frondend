@@ -3,13 +3,13 @@ import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
 import { GET_MITRA_ALL_BY_SU_YES } from '../../../api/mitra';
-import { GET_PEMBELIAN_MITRA_PERBULAN } from '../../../api/report';
+import { GET_PEMBELIAN_MITRA_PERBULAN, GET_PEMBELIAN_MITRA_PERBULANLINE, GET_PENJUALAN_MITRA_PERBULANLINE } from '../../../api/report';
 import AutoCompleteLoading from '../../../components/AutoCompleteLoading';
 import { yearOption } from '../../../utils/yearOption';
 
 const tahunSekarang = new Date().getFullYear();
 
-export default function PembelianPerMitraPerbulan({ type = 'line' }) {
+export default function PenjualanPerMitraPerbulanLine({ type = 'line' }) {
   const [tahun, setTahun] = useState({ value: tahunSekarang, title: tahunSekarang });
   const [mitraCode, setMitraCode] = useState(null);
   const [open, setOpen] = useState(false);
@@ -30,8 +30,8 @@ export default function PembelianPerMitraPerbulan({ type = 'line' }) {
     setOpen(false);
   };
 
-  const { data, isLoading, refetch } = useQuery(['GET_PEMBELIAN_MITRA_PERBULAN', tahun?.value], () =>
-    GET_PEMBELIAN_MITRA_PERBULAN(tahun?.value, mitraCode?.value)
+  const { data, isLoading, refetch } = useQuery(['GET_PENJUALAN_MITRA_PERBULANLINE', tahun?.value], () =>
+  GET_PENJUALAN_MITRA_PERBULANLINE(tahun?.value, mitraCode?.value)
   );
   const { data: mitraData } = useQuery('GET_MITRA_ALL_BY_SU_YES', GET_MITRA_ALL_BY_SU_YES);
   const listMitra = mitraData && mitraData?.data?.data;
@@ -42,27 +42,28 @@ export default function PembelianPerMitraPerbulan({ type = 'line' }) {
       return option;
     });
 
+    // console.log();
   let state = null;
   if (type === 'line') {
-    const list = data && data?.data?.data;
-    const seriesData =
-      !isLoading &&
-      list &&
-      list?.map((v) => {
-        const chartData = [...Array(12)].map(() => 0);
-        chartData[v.bulan - 1] = v.berat / 1000;
+    // const list = data && data?.data?.data;
+    // const seriesData =
+    //   !isLoading &&
+    //   list &&
+    //   list?.map((v) => {
+    //     const chartData = [...Array(12)].map(() => 0);
+    //     chartData[v.bulan - 1] = v.berat / 1000;
         
-        console.log(v.bulan);
-      console.log(v);
-        const s = {
-          name: v.nama,
-          data: chartData,
-        };
-        return s;
-      });
-      console.log(seriesData);
+    //     console.log(v.bulan);
+    //   console.log(v);
+    //     const s = {
+    //       name: v.nama,
+    //       data: chartData,
+    //     };
+    //     return s;
+    //   });
+    //   console.log(seriesData);
     state = {
-      series: seriesData,
+      series:!isLoading && data?.data?.data,
       options: {
         chart: {
           height: 350,
@@ -147,7 +148,7 @@ export default function PembelianPerMitraPerbulan({ type = 'line' }) {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Filter
+        Filters
       </Button>
 
       <ReactApexChart options={state.options} series={state.series} type={type} height={350} />
