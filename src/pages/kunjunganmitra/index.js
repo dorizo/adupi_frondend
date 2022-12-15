@@ -1,8 +1,8 @@
 import { AppBar, Button, Card, Container, Dialog, Divider, Grid, IconButton, ImageList, ImageListItem, List, ListItem, ListItemText, Stack, TableCell, TableRow, Toolbar } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useQuery } from 'react-query';
-import { fDateTime, fDatetimework } from '../../utils/formatTime';
-import { GET_ALL_KUNJUNGAN, GET_ALL_KUNJUNGANMITRA } from '../../api/kunjungan';
+import { fDateSuffix, fDateTime, fDatetimework } from '../../utils/formatTime';
+import { deletekunjunganmitra, GET_ALL_KUNJUNGAN, GET_ALL_KUNJUNGANMITRA } from '../../api/kunjungan';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
 
@@ -11,6 +11,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Image from 'src/components/Image';
 import { useState } from 'react';
 import { GET_viewimagekunjungan } from 'src/api/kunjunganmitra';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import EditIcon from '@mui/icons-material/Edit';
 
 const headCells = [
   
@@ -65,7 +67,7 @@ const headCells = [
 ];
 
 export default function Kunjunganmitra() {
-  const { data, isLoading } = useQuery('GET_ALL_KUNJUNGAN', GET_ALL_KUNJUNGANMITRA);
+  const { data, isLoading,refetch } = useQuery('GET_ALL_KUNJUNGAN', GET_ALL_KUNJUNGANMITRA);
   const [kunjungan , Setkunjungan] = useState(null);
   const [viewimage , Setviewimage] = useState(null);
   const [openmodel , Setopenmodel] = useState(false);
@@ -83,6 +85,22 @@ export default function Kunjunganmitra() {
   
 }
 
+const hapusdata = async (row) =>  {
+  console.log(row);
+  if (confirm("APAKAH ANDA YAKIN AKAN MENGHAPUS DATA") == true) {
+    const m = await deletekunjunganmitra({Kunjungan_formCode:row.Kunjungan_formCode , createAt:fDateSuffix(new Date())} );
+    console.log(m);
+    refetch();
+  } else {
+   console.log("gagal");
+  }
+
+}
+
+const editdata = async (row) =>  {
+  console.log(row);
+
+}
   const rows = data && data?.data?.data;
 
   console.log(rows);
@@ -210,11 +228,18 @@ export default function Kunjunganmitra() {
                     <TableCell id={labelId} scope="row">
                       {row.Kunjungan_formPendampingan}
                     </TableCell>
-                    <TableCell id={labelId} scope="row">
+                    <TableCell id={labelId} scope="row" width={300}>
+                      
+                    <Button  onClick={() => hapusdata(row)} >
+                        <DeleteSweepIcon/>
+                      </Button>
+                      
+                      {/* <Button  onClick={() => editdata(row)} >
+                        <EditIcon/>
+                      </Button> */}
                       <Button  onClick={() => rubahposisi(row)} >
                         <ReadMoreIcon/>
                       </Button>
-                      
                     </TableCell>
                     
                   </TableRow>

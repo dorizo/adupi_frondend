@@ -14,6 +14,7 @@ import NotFound from './pages/Page404';
 import Pembeli from './pages/Pembeli';
 import Register from './pages/Register';
 import Role from './pages/Role';
+import Warna from './pages/Warna';
 import RoleDetail from './pages/RoleDetail';
 import User from './pages/User';
 import Pembelian from './pages/Pembelian';
@@ -118,6 +119,28 @@ export default function Router() {
               element: (
                 <RequireAuth allowedRoles={['admin']}>
                   <Role />
+                </RequireAuth>
+              ),
+            },
+            {
+              path: 'detail/:roleId',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <RoleDetail />
+                </RequireAuth>
+              ),
+            },
+          ],
+        },
+
+        {
+          path: 'warna',
+          children: [
+            {
+              path: '',
+              element: (
+                <RequireAuth allowedRoles={['admin']}>
+                  <Warna />
                 </RequireAuth>
               ),
             },

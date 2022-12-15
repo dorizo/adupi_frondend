@@ -23,6 +23,8 @@ import Label from '../../components/Label';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
 import { fDateSuffix } from '../../utils/formatTime';
+import PenjualanPerMitraPerbulanLine from '../ReportMayora/Chart/PenjualanPerMitraPerbulanLine';
+import PembelianPerMitraPerbulanline from '../ReportMayora/Chart/PembelianPerMitraPerbulanline';
 import Action from './Action';
 import LuasGudangPerbulan from './Chart/LuasGudangPerbulan';
 import MasalahMitraPerbulan from './Chart/MasalahMitraPerbulan';
@@ -111,11 +113,11 @@ const chartOpton = [
     title: 'Penjualan Mitra Perbulan',
   },
   {
-    component: <PenjualanPerMitraPerbulan />,
+    component: <PenjualanPerMitraPerbulanLine />,
     title: 'Penjualan Per Mitra Perbulan',
   },
   {
-    component: <PembelianPerMitraPerbulan />,
+    component: <PembelianPerMitraPerbulanline />,
     title: 'Pembelian Per Mitra Perbulan',
   },
   {

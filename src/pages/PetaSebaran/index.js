@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, Marker, TileLayer, Tooltip, useMapEvents } from 'react-leaflet';
 import { useQuery, useQueryClient } from 'react-query';
 import { GET_MITRA_ALL_BY_SU_YES } from 'src/api/mitra';
+import { GET_ALL_WARNA } from 'src/api/warna';
 import { GET_ALL_PROVINSI } from 'src/api/wilayah';
 import SelectInput from 'src/components/SelectInput';
 import { GET_MAP_ANGGOTA } from '../../api/dashboard';
@@ -93,7 +94,8 @@ export default function PetaSebaran({ type = null }) {
     getAllAnggota();
   }, []);
 
-  const warna = ['#F00', '#ffff00', '#005187', '#155612', '#ff00d0', '#0cd151', '#000','#A58CFF','#FFE15D','#0e7013' ,'#9b9b9b','#c68383','#a80000','#FF8FB1','#FF6D28','#47B5FF','#256D85','#00FFD1','#182747'];
+  const warna = useQuery('GET_WARNA', GET_ALL_WARNA);//= ['#F00', '#ffff00', '#005187', '#155612', '#ff00d0', '#0cd151', '#000','#A58CFF','#FFE15D','#0e7013' ,'#9b9b9b','#c68383','#a80000','#FF8FB1','#FF6D28','#47B5FF','#256D85','#00FFD1','#182747'];
+  // console.log("warna" , warna?.data?.data?.data?.[0]?.warna);
   function MyComponent() {
     const mapEvents = useMapEvents({
       zoomend: () => {
@@ -216,10 +218,10 @@ GET_ALL_PROVINSI()
               }}
             >
               <h4>Daftar Mitra GESN ({list.length})</h4>
-              {list &&
+              {warna && list &&
                 list?.map((a, i) => {
                   return (
-                    <h6 style={{ color: warna[i] }} key={i}>
+                    <h6 style={{ color: warna?.data?.data?.data?.[i]?.warna }} key={i}>
                     {a?.nama?.usahas?.[0]?.namaUsaha } -{a?.nama?.kabupaten?.[0]?.wilayah}, {a?.nama?.wilayahs?.[0]?.wilayah }
                     </h6>
                   );
@@ -231,7 +233,7 @@ GET_ALL_PROVINSI()
             />
             {list &&
               list?.map((a, i) => {
-                const color = warna[i];
+                const color =  warna?.data?.data?.data?.[i]?.warna;
                 const mitra = `<svg version="1.1" id="marker-11" xmlns="http://www.w3.org/2000/svg" fill='${color}'
                 fill-opacity="1" width="12px" height="12px" viewBox="0 0 11 11"><path id="path4133" d="M5.5-0.0176c-1.7866,0-3.8711,1.0918-3.8711,3.8711&#xA;&#x9;C1.6289,5.7393,4.6067,9.9082,5.5,11c0.7941-1.0918,3.871-5.1614,3.871-7.1466C9.371,1.0742,7.2866-0.0176,5.5-0.0176z"/></svg>`;
                 const iconermitra = L.divIcon({ html: mitra, iconSize: [0, 0], iconAnchor: [0, 0] });
@@ -256,7 +258,7 @@ GET_ALL_PROVINSI()
               list?.map((a, i) => {
                 //  color = '#0DEAD0'
                 //  svg = '<svg height="10" width="10"><circle cx="5" cy="5" r="4" fill="' + color + '" /></svg>';
-                const color = warna[i];
+                const color =  warna?.data?.data?.data?.[i]?.warna;
 
                 return a?.anggota?.map((s, d) => {
                   const svg = `<svg width="${ukuranmarker}" height="${ukuranmarker}"><rect width="${ukuranmarker}" height="${ukuranmarker}" fill=${color} fill-opacity="0.6" /></svg>`;

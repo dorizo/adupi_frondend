@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Stack, TextField } from "@mui/material";
+import { Button, Card, CardContent, MenuItem, Select, Stack, TextField } from "@mui/material";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { GET_MITRA_DETAIL_BY_SU } from "src/api/mitra";
@@ -7,6 +7,9 @@ import LoadingComponent from "src/components/LoadingComponent";
 import useImageViewer from "src/hooks/useImageViewer";
 import qs from 'qs';
 import axios from "axios";
+import { GET_ALL_FASILITATOR } from "src/api/fasilitator";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function MitraEdit() {
     const params = useParams();
@@ -14,6 +17,9 @@ export default function MitraEdit() {
     const { data, isLoading } = useQuery(['GET_MITRA_DETAIL_BY_SU', params.mitraCode], () =>
       GET_MITRA_DETAIL_BY_SU(params.mitraCode)
     );
+    
+    const [fasilitatorCODEr, setfasilitatorCODEr] = useState();
+    const {data : fasilitatordata , loading : fasilitatorlodaing} = useQuery('fasilitatordata' , GET_ALL_FASILITATOR);
     const { data:datalampiran, refetch:refetchlampiran, isLoading:lodinglampiran }  = useQuery(
       ['GET_ALL_MASALAH', params?.mitraCode],() => GET_mitraLampiran(params?.mitraCode),
       {
@@ -24,7 +30,7 @@ export default function MitraEdit() {
     if (isLoading) {
       return <LoadingComponent />;
     }
-    console.log(mitraDetail);
+    console.log(data);
     const showForm = async (event) => {
         event.preventDefault();
             const data = qs.stringify({
@@ -34,6 +40,7 @@ export default function MitraEdit() {
                 "noHp" : event.target.noHp.value,
                 "jenisMitra" : event.target.jenisMitra.value,
                 "alamat" : event.target.alamat.value,
+                "fasilitatorCode" : event.target.fasilitatorCode.value,
             });
             const headers = {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -68,9 +75,21 @@ export default function MitraEdit() {
             console.log(error);
             }
     }
-  
+    
+    
+
+    const fasilitatorChange = (event) => {
+        setfasilitatorCODEr(event.target.value);
+      };
+    //   useEffect(() => {
+    //     let mounted = true;
+    //   console.log("xxxx");
+    //     return () => mounted = false;
+    //   }, [])
+    
 return(
     <div>
+    {fasilitatorCODEr}
         <Card>
             <CardContent>
                 <form  onSubmit={showForm}>
@@ -118,6 +137,13 @@ return(
                             name="alamat"
                             defaultValue={mitraDetail?.alamat}
                             />
+                        <Select label="Fasilitator" onChange={fasilitatorChange} name="fasilitatorCode" value={fasilitatorCODEr?fasilitatorCODEr:mitraDetail?.fasilitator?.fasilitatorCode}>
+                            {fasilitatordata?.data?.data?.map((choice,index) => (
+                            <MenuItem key={index} value={choice?.fasilitatorCode}>
+                                {choice?.nama}
+                            </MenuItem>
+                            ))}
+                        </Select>
                     <Button  type="submit" variant="contained">Simpan</Button>
                 </Stack>
                </form>

@@ -1,8 +1,8 @@
 import { AppBar, Button, Card, Container, Dialog, Divider, Grid, IconButton, ImageList, ImageListItem, List, ListItem, ListItemText, Modal, Stack, TableCell, TableRow, Toolbar } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useQuery } from 'react-query';
-import { fDateTime } from '../../utils/formatTime';
-import { GET_ALL_KUNJUNGAN } from '../../api/kunjungan';
+import { fDateSuffix, fDateTime } from '../../utils/formatTime';
+import { deletekunjungannonmitra, GET_ALL_KUNJUNGAN } from '../../api/kunjungan';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
@@ -10,6 +10,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { GET_viewimagekunjungan } from 'src/api/kunjunganmitra';
 import Image from 'src/components/Image';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import EditIcon from '@mui/icons-material/Edit';
 const headCells = [
   
   {
@@ -55,7 +57,7 @@ export default function KunjunganFasilitator() {
     Setviewimage(details?.data?.data);
   
 }
-  const { data, isLoading } = useQuery('GET_ALL_KUNJUNGAN', GET_ALL_KUNJUNGAN);
+  const { data, isLoading,refetch } = useQuery('GET_ALL_KUNJUNGAN', GET_ALL_KUNJUNGAN);
 
   const rows = data && data?.data?.data;
 
@@ -64,6 +66,22 @@ export default function KunjunganFasilitator() {
     rows: rows || [],
     loading: isLoading,
   });
+
+  
+  const hapusdata = async (row) =>  {
+    // console.log(row);
+    if (confirm("APAKAH ANDA YAKIN AKAN MENGHAPUS DATA") == true) {
+      const m = await deletekunjungannonmitra({kunjunganCode:row.kunjunganCode , deleteAt:fDateSuffix(new Date())} );
+      console.log(m);
+      refetch();
+    } else {
+     console.log("gagal");
+    }
+  }
+
+  const editdata = async (row) =>  {
+    console.log(new Date());
+  }
 
   return (
     
@@ -146,10 +164,17 @@ export default function KunjunganFasilitator() {
                       {fDateTime(row.createAt)}
                     </TableCell>
                     <TableCell id={labelId} scope="row">
+                      <Button  onClick={() => hapusdata(row)} >
+                        <DeleteSweepIcon/>
+                      </Button>
+                      
+                      {/* <Button  onClick={() => editdata(row)} >
+                        <EditIcon/>
+                      </Button> */}
+                      
                       <Button  onClick={() => rubahposisi(row)} >
                         <ReadMoreIcon/>
                       </Button>
-                      
                     </TableCell>
                   </TableRow>
                 );

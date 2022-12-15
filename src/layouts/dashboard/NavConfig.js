@@ -66,6 +66,11 @@ const navConfig = [
                   path: '/dashboard/target',
                   icon: getIcon('eva:list-outline'),
                 },
+                {
+                  title: 'Setting Warna',
+                  path: '/dashboard/warna',
+                  icon: getIcon('eva:settings-outline'),
+                },
               ]
   },
 
