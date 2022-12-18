@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, CardHeader, Chip, Grid, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardHeader, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Stack, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
@@ -7,6 +7,7 @@ import TidakAdaData from '../../components/TidakAdaData';
 import {
   ADD_MASALAH,
   CHANGE_STATUS_MASALAH,
+  CHANGE_STATUS_MASALAHbyfasilitator,
   DELETE_MASALAH,
   GET_ALL_MASALAH_BY_MITRA,
   UPDATE_MASALAH,
@@ -17,13 +18,16 @@ import BarMobile from '../../components/BarMobile';
 import DialogConfirm from '../../components/DialogConfirm';
 import Image from '../../components/Image';
 import useDrawer from '../../hooks/useDrawer';
-import { fDateTime } from '../../utils/formatTime';
+import { fDatesend, fDateSuffix, fDateTime, fDatetimework } from '../../utils/formatTime';
 import Form from './form';
 import MoreMenu from './MoreMenu';
 import LoadingCard from '../../components/LoadingCard';
+import useAuth from 'src/hooks/useAuth';
+import { DatePicker } from '@mui/x-date-pickers';
 
 export default function MasalahByFasilitator() {
   const params = useParams();
+  const { auth } = useAuth();
   const { onOpen, Drawer, onClose } = useDrawer();
   const [drawerTitle, setDrawerTitle] = useState('');
   const [selectedImg, setSelectedImg] = useState('');
@@ -33,6 +37,9 @@ export default function MasalahByFasilitator() {
   const [step, setStep] = useState(0);
   const [values, setValues] = useState({});
   const { enqueueSnackbar } = useSnackbar();
+  const [datePickerValue, setDatePickerValue] = useState();
+  const [masalahCodeedit, setmasalahCodeedit] = useState();
+
   const { data, refetch, isLoading } = useQuery(
     ['GET_ALL_MASALAH', params.mitraCode],
     () => GET_ALL_MASALAH_BY_MITRA(params?.mitraCode),
@@ -153,6 +160,32 @@ export default function MasalahByFasilitator() {
   };
   const list = data && data?.data?.data;
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = (a) => (event) => {
+    console.log(a);
+    setmasalahCodeedit(a?.masalahCode);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const submitmasalah = async (event) => {
+    if(datePickerValue){
+      console.log(fDatesend(datePickerValue));
+      // console.log(masalahCodeedit);
+      const response = await CHANGE_STATUS_MASALAHbyfasilitator({masalahCode : masalahCodeedit , status : "selesai",updateAt:fDatesend(datePickerValue)});
+      refetch();
+      setOpen(false);
+    }else{
+      alert("MOHON ISI TANGGAL SELESAI MASALAH");
+    }
+    
+
+  }
+
   return (
     <>
       <BarMobile title={'Masalah Mitra'} />
@@ -182,8 +215,12 @@ export default function MasalahByFasilitator() {
                     <Typography variant="caption">{li?.deskripsi}</Typography>
                     <br />
                     <Typography variant="caption">Mulai : {fDateTime(li?.createAt)}</Typography><br />
-                    <Typography variant="caption">Terselesaikan : {li?.updateAt?fDateTime(li?.updateAt):"-"}</Typography>
-                 
+                    <Typography variant="caption">Terselesaikan : {li?.updateAt?fDateTime(li?.updateAt):"-"}</Typography><br />
+                    
+                    <Button variant="outlined" onClick={handleClickOpen(li)}>
+                      Selesaikan
+                    </Button>
+                  
                   </Grid>
                   <Grid item xs={3}>
                     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
@@ -203,6 +240,31 @@ export default function MasalahByFasilitator() {
             </Card>
           ))}
       </div>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Selesaikan Masalah"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            
+          <Stack spacing={2}>
+                  <DatePicker
+                    name="updateAt"
+                    value={datePickerValue}
+                    onChange={(newValue) => setDatePickerValue(newValue)}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                  <Button  type="submit" onClick={submitmasalah} variant="contained">Simpan</Button>
+              </Stack>
+          </DialogContentText>
+        </DialogContent>
+        
+      </Dialog>
       <Drawer title={drawerTitle}>
         <Form
           item={item}

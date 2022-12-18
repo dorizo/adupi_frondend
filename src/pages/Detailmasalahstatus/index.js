@@ -32,10 +32,16 @@ const headCells = [
       label: 'Deskripsi',
     },
     {
-      id: 'tanggal',
+      id: 'CreateAt',
       numeric: false,
       disablePadding: true,
-      label: 'Tanggal',
+      label: 'tanggal Start Masalah',
+    },
+    {
+      id: 'updateAt',
+      numeric: false,
+      disablePadding: true,
+      label: 'tanggal Selesai Masalah',
     },
   ];
   
@@ -80,6 +86,10 @@ export default function Detailmasalahstatus({ type = null }) {
                     </TableCell>
                     <TableCell id={labelId} scope="row">
                       {fDateTime(row.createAt)}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                      {row.updateAt?fDateTime(row.updateAt):""}
+                      {/* Math.round((new Date(row.createAt) - new Date()) / (1000 * 60 * 60 * 24)) */}
                     </TableCell>
                   </TableRow>
                 );

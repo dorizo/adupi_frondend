@@ -82,6 +82,23 @@ const CHANGE_STATUS_MASALAH = async (id) => {
   }
 };
 
+const CHANGE_STATUS_MASALAHbyfasilitator = async ({ masalahCode , status ,updateAt }) => {
+  const data = qs.stringify({
+    masalahCode,
+    status,
+    updateAt,
+  });
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.post(`masalah/rubahfasilitatormasalah`,data, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
 const NOTE_MASALAH_FASILITATOR = async ({ masalahCode, note, status }) => {
   const data = qs.stringify({
     masalahCode,
@@ -159,6 +176,7 @@ export {
   UPDATE_MASALAH,
   GET_ONE_MASALAH,
   CHANGE_STATUS_MASALAH,
+  CHANGE_STATUS_MASALAHbyfasilitator,
   GET_ALL_MASALAH_DASHBOARD,
   GET_ALL_MASALAH_DASHBOARDLIST,
   GET_ALL_ACTIVITI_DASHBOARDLIST,

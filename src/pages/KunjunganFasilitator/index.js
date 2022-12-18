@@ -30,7 +30,13 @@ const headCells = [
     id: 'tanggal',
     numeric: false,
     disablePadding: true,
-    label: 'Tanggal',
+    label: 'Check-In',
+  },
+  {
+    id: 'tanggal1',
+    numeric: false,
+    disablePadding: true,
+    label: 'Check-Out',
   },
   {
     id: 'detail',
@@ -121,6 +127,12 @@ export default function KunjunganFasilitator() {
                 <ListItem button>
                   <ListItemText primary="Judul" secondary={kunjungan?.deskripsi} />
                 </ListItem>
+                <ListItem button>
+                  <ListItemText primary="Chekin" secondary={kunjungan?.createAt} />
+                </ListItem>
+                <ListItem button>
+                  <ListItemText primary="Chekout" secondary={kunjungan?.updateAt} />
+                </ListItem>
               </List>
               </Grid>
               <Grid item xs={6}>
@@ -162,6 +174,9 @@ export default function KunjunganFasilitator() {
                     </TableCell>
                     <TableCell id={labelId} scope="row">
                       {fDateTime(row.createAt)}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                      {row.updateAt?fDateTime(row.updateAt):"BELUM CHECK OUT"}
                     </TableCell>
                     <TableCell id={labelId} scope="row">
                       <Button  onClick={() => hapusdata(row)} >

@@ -17,6 +17,11 @@ export function fDateSuffix(date) {
   return format(new Date(date), 'yyyy-MM-dd');
 }
 
+export function fDatesend(date) {
+  var dates = new Date(date);
+  return format(new Date(date), 'yyyy-MM-dd')+" "+dates.getUTCHours()+":"+dates.getUTCMinutes()+":"+dates.getUTCSeconds();
+}
+
 export function fToNow(date) {
   return formatDistanceToNow(new Date(date), {
     addSuffix: true,
