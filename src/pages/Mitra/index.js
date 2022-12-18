@@ -100,7 +100,7 @@ export default function Index() {
                   <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
                     <TableCell>{row.no}</TableCell>
                     <TableCell id={labelId} scope="row">
-                    {row?.usahas?.[0]?.namaUsaha } -{row?.kabupaten?.[0]?.wilayah}, {row?.wilayahs?.[0]?.wilayah }
+                    {row?.usahas?.[0]?.namaUsaha}
                     </TableCell>
                     <TableCell id={labelId} scope="row">
                       {row.nik}

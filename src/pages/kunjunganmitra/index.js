@@ -208,7 +208,7 @@ const editdata = async (row) =>  {
                   <TableRow hover tabIndex={-1} key={index}>
                     <TableCell>{row.no}</TableCell>
                     <TableCell id={labelId} scope="row">
-                      {row.nama} ({row.namaUsaha})
+                      {row.nama} 
                     </TableCell>
                     <TableCell id={labelId} scope="row">
                       {row.nama_fasilitator}

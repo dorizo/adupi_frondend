@@ -1,4 +1,4 @@
-import { Box, Button, CardContent, Container, Drawer, FormControl, Grid, InputLabel, List, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { Box, Button, Card, CardContent, Container, Drawer, FormControl, Grid, InputLabel, List, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { width } from '@mui/system';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 import 'leaflet/dist/leaflet.css';
@@ -138,6 +138,7 @@ GET_ALL_PROVINSI()
   console.log(list);
 
   const MapComponent = () => {
+    
     return (
       <>
         <Container>
@@ -201,35 +202,10 @@ GET_ALL_PROVINSI()
           </CardContent>
 
           <MapContainer style={{ height: '546px', width: '100%' }} center={center} zoom={10} scrollWheelZoom={false}>
-            <MyComponent />
-            <Box
-              sx={{
-                bgcolor: (theme) => (theme.palette.mode === 'dark' ? 'grey.800' : '#fff'),
-                color: (theme) => (theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800'),
-                border: '1px solid',
-                borderColor: (theme) => (theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300'),
-                p: 2,
-                fontSize: '0.875rem',
-                fontWeight: '700',
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                zIndex: 'modal',
-              }}
-            >
-              <h4>Daftar Mitra GESN ({list.length})</h4>
-              {warna && list &&
-                list?.map((a, i) => {
-                  return (
-                    <h6 style={{ color: warna?.data?.data?.data?.[i]?.warna }} key={i}>
-                    {a?.nama?.usahas?.[0]?.namaUsaha } -{a?.nama?.kabupaten?.[0]?.wilayah}, {a?.nama?.wilayahs?.[0]?.wilayah }
-                    </h6>
-                  );
-                })}
-            </Box>
+            <MyComponent />       
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
             />
             {list &&
               list?.map((a, i) => {
@@ -246,7 +222,6 @@ GET_ALL_PROVINSI()
                   >
                     <Tooltip>
                       Nama Mitra : {a?.nama?.nama} <br />
-                      Nama Usaha : {a?.nama?.usahas[0]?.namaUsaha} <br />
                       <h6>{a?.nama?.usahas[0]?.alamat}</h6>
                       <br />
                     </Tooltip>
@@ -280,7 +255,59 @@ GET_ALL_PROVINSI()
                 });
               })}
           </MapContainer>
+            {/* <Box 
+              sx={{
+                marginTop:"1em",
+                bgcolor: 'grey.900',
+                color:"#FFF",
+                border: '1px solid',
+                borderColor: (theme) => (theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300'),
+              }}
+            >
+              <h4>Daftar Mitra GESN ({list.length})</h4>
+              {warna && list &&
+                list?.map((a, i) => {
+                  return (
+                    <Card style={{ color: warna?.data?.data?.data?.[i]?.warna }} key={i}>
+                    {a?.nama?.usahas?.[0]?.namaUsaha  }
+                    </Card>
+                  );
+                })}
+            </Box> */}
+            <div>
+              
+            <h4>Daftar Mitra GESN ({list.length})</h4>
+            </div>
+             <Box 
+              sx={{
+                marginTop:"1em",
+                padding:"1em",
+                bgcolor: '#333333',
+                color:"#FFF",
+                border: '1px solid',
+                mb: 2,
+                display: "flex",
+                flexDirection: "column",
+                height: 200,
+                overflow: "hidden",
+                overflowY: "scroll",
+                borderColor: (theme) => (theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300'),
+              }}
+            >
+              
+              <Grid container spacing={4}>
+                {warna && list &&
+                  list?.map((a, i) => {
+                    return (
+                      <Grid item xs={3} md={4} style={{ color: warna?.data?.data?.data?.[i]?.warna , fontSize:"12px" }} key={i}>
+                      {a?.nama?.usahas?.[0]?.namaUsaha  }
+                      </Grid>
+                    );
+                  })}
+              </Grid>
+            </Box>
         </Container>
+       
         <Drawer
           anchor="right"
           PaperProps={{
@@ -297,6 +324,7 @@ GET_ALL_PROVINSI()
             <DetailAnggota anggota={anggota} />
           </List>
         </Drawer>
+      
       </>
     );
   };
