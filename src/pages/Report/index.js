@@ -44,6 +44,7 @@ import PenjualanMitraPerKategori from './Chart/PenjualanMitraPerKategori';
 import PenjualanPerMitraPerbulan from './Chart/PenjualanPerMitraPerbulan';
 import PenjualanPerMitraPerbulanPabrik from './Chart/PenjualanPerMitraPerbulanPabrik';
 import TotalMitravsJumlahPembelian from './Chart/TotalMitravsJumlahPembelian';
+import Totalcontinuevspembelian from './Chart/Totalcontinuemitravspembelian';
 
 const headCells = [
   {
@@ -100,6 +101,10 @@ const chartOpton = [
   {
     component: <TotalMitravsJumlahPembelian />,
     title: 'Total Mitra vs Jumlah Pembelian Per Bulan Seluruh Mitra',
+  },
+  {
+    component: <Totalcontinuevspembelian />,
+    title: 'Total Mitra vs Jumlah Pembelian Continue Count',
   },
   {
     component: <LuasGudangPerbulan />,

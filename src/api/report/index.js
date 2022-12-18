@@ -393,6 +393,23 @@ const GET_ANALISA_V2_MITRA_PEMBELIAN = async (tahun) => {
     return catchCallBack(error);
   }
 };
+
+const GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN = async (tahun) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/totalmitravspembelian`, {
+      headers,
+      params: {
+        tahun,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_ANALISI_PEMBELIAN_LUAS_GUDANG_PERBULAN = async (tahun) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -455,4 +472,5 @@ export {
   GET_PEMBELIAN_SEMUA_MITRA_PERJENIS,
   GET_PENJUALAN_SEMUA_MITRA_PERJENIS,
   GET_ANALISA_V2_MITRA_PEMBELIAN,
+  GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN,
 };
