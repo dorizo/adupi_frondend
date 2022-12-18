@@ -23,8 +23,8 @@ export default function Kunjungan() {
   const [alertOpen, setAlertOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [item, setItem] = useState(null);
-  const [lat, setlat] = useState('');
-  const [long, setlong] = useState('');
+  const [lat, setlat] = useState(0);
+  const [long, setlong] = useState(0);
   const [step, setStep] = useState(0);
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState('');
@@ -129,7 +129,7 @@ export default function Kunjungan() {
   const handleOnUpdate = (item) => {
     setItem(item);
     setStep(0);
-    setDrawerTitle('Edit kunjungan');
+    setDrawerTitle('CHECKOUT');
     onOpen();
   };
 
@@ -174,9 +174,14 @@ export default function Kunjungan() {
 
     navigator.geolocation.getCurrentPosition(function(position) {
       // console.log("Latitude disni :", position.coords.latitude);
-      // console.log("Longitude is :", position.coords.longitude);
+      if(lat){
+        console.log("Longitude is :", lat);
+     
+      }else{
       setlat(position.coords.latitude);
       setlong(position.coords.longitude);
+    
+      }
       
     });    
   });
@@ -266,12 +271,17 @@ export default function Kunjungan() {
               <CardHeader
                 action={<MoreMenu handleOnUpdate={() => handleOnUpdate(m)} handleOnDelete={() => handleOnDelete(m)} />}
                 title={m?.judul}
-                subheader={`Tanggal :  ${fDateTime(m?.createAt)}`}
+                subheader={`Check In :  ${fDateTime(m?.createAt)}`}
               />
               <CardContent>
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
                     <Typography sx={{ fontSize: 10 }}>Deskripsi : {m?.deskripsi} </Typography>
+                  </Grid>
+                  
+                  
+                  <Grid item xs={12}>
+                  <Typography sx={{ fontSize: 14 }}>Check Out : {m?.updateAt?fDateTime(m?.updateAt):"Belum checkout"} </Typography>
                   </Grid>
                 </Grid>
               </CardContent> 

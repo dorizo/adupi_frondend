@@ -37,7 +37,7 @@ export default function MoreMenu({ handleOnDelete, handleOnUpdate }) {
           <ListItemIcon>
             <Iconify icon="eva:edit-fill" width={24} height={24} />
           </ListItemIcon>
-          <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
+          <ListItemText primary="Check Out" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
 
         <MenuItem

@@ -98,7 +98,7 @@ export default function Form({ mitra, step, isLoading, handleAdd, item, onUpdate
             type="submit"
             disabled={isLoading}
             style={{ marginTop: 30, marginBottom: 5 }}
-            label={'Simpan'}
+            label={editAble?'check Out':'Simpan'}
           />
         </>
       )}
