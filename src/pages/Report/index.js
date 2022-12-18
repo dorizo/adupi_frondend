@@ -43,6 +43,7 @@ import PenjualanMitraPerJenis from './Chart/PenjualanMitraPerJenis';
 import PenjualanMitraPerKategori from './Chart/PenjualanMitraPerKategori';
 import PenjualanPerMitraPerbulan from './Chart/PenjualanPerMitraPerbulan';
 import PenjualanPerMitraPerbulanPabrik from './Chart/PenjualanPerMitraPerbulanPabrik';
+import TotalMitravsJumlahPembelian from './Chart/TotalMitravsJumlahPembelian';
 
 const headCells = [
   {
@@ -96,6 +97,14 @@ const startInit = new Date(y, m, 1);
 const endInit = new Date(y, m + 1, 0);
 
 const chartOpton = [
+  {
+    component: <TotalMitravsJumlahPembelian />,
+    title: 'Total Mitra vs Jumlah Pembelian Per Bulan Seluruh Mitra',
+  },
+  {
+    component: <LuasGudangPerbulan />,
+    title: 'Luas Gudang Perbulan',
+  },
   {
     component: <LuasGudangPerbulan />,
     title: 'Luas Gudang Perbulan',
@@ -247,75 +256,6 @@ export default function Report() {
             );
           })}
         </Grid>
-        <Card>
-          <CardContent>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-              <Box>
-                <DesktopDatePicker
-                  label="Dari"
-                  inputFormat="dd/MM/yyyy"
-                  value={start}
-                  onChange={(_, newVal) => setStart(newVal)}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-                <DesktopDatePicker
-                  label="Sampai"
-                  inputFormat="dd/MM/yyyy"
-                  value={end}
-                  onChange={(_, newVal) => setEnd(newVal)}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </Box>
-              <Button
-                onClick={() => refetch(fDateSuffix(start), fDateSuffix(end))}
-                size="large"
-                variant="contained"
-                color="primary"
-              >
-                Filter
-              </Button>
-            </Stack>
-          </CardContent>
-          {list &&
-            TableComponent(
-              list.map((row, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`;
-                return (
-                  <TableRow onClick={(event) => handleActionOpen(event, row)} hover tabIndex={-1} key={index}>
-                    <TableCell>{row.no}</TableCell>
-                    <TableCell id={labelId} scope="row">
-                      {row.nama}
-                    </TableCell>
-                    <TableCell id={labelId} scope="row">
-                      {row.nik}
-                    </TableCell>
-
-                    <TableCell id={labelId} scope="row">
-                      {row.alamat}
-                    </TableCell>
-                    <TableCell id={labelId} scope="row">
-                      {row.totalBeliSampah}
-                    </TableCell>
-                    <TableCell id={labelId} scope="row">
-                      {row.totalJualSampah}
-                    </TableCell>
-                    <TableCell id={labelId} scope="row">
-                      {row.totalMesin}
-                    </TableCell>
-                    <TableCell id={labelId} scope="row">
-                      <Label variant="ghost" color={'warning'}>
-                        Proses : {row.totalMasalahProses}
-                      </Label>
-                      <br />
-                      <Label variant="ghost" color={'success'}>
-                        Selesa : {row.totalMasalahSelesai}
-                      </Label>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            )}
-        </Card>
       </Container>
       {actionOpen && (
         <Action
