@@ -282,8 +282,8 @@ GET_ALL_PROVINSI()
               sx={{
                 marginTop:"1em",
                 padding:"1em",
-                bgcolor: '#333333',
-                color:"#FFF",
+                bgcolor: '#F5F5F5',
+                color:"#000",
                 border: '1px solid',
                 mb: 2,
                 display: "flex",

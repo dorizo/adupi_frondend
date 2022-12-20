@@ -195,7 +195,7 @@ export default function Index() {
                         {row.name}
                       </div>
                     </TableCell> */}
-                    <TableCell>{row.nama}({row.namaUsaha})</TableCell>
+                    <TableCell>{row.nama}</TableCell>
                     <TableCell>{row.targettangal}</TableCell>
                     <TableCell align="left">
                         {ribuan(row.MitraTargetName)}
