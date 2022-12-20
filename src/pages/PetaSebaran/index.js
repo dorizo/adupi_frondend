@@ -205,7 +205,7 @@ GET_ALL_PROVINSI()
             <MyComponent />       
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=3383c943-27ab-4252-994a-785b44bc5f8c"
+              url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=3383c943-27ab-4252-994a-785b44bc5f8c"
             />
             {list &&
               list?.map((a, i) => {
