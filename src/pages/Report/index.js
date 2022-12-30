@@ -45,6 +45,7 @@ import PenjualanPerMitraPerbulan from './Chart/PenjualanPerMitraPerbulan';
 import PenjualanPerMitraPerbulanPabrik from './Chart/PenjualanPerMitraPerbulanPabrik';
 import TotalMitravsJumlahPembelian from './Chart/TotalMitravsJumlahPembelian';
 import Totalcontinuevspembelian from './Chart/Totalcontinuemitravspembelian';
+import MasalahmitraPerbulanline from './Chart/MasalahmitraPerbulanline';
 
 const headCells = [
   {
@@ -111,10 +112,6 @@ const chartOpton = [
     title: 'Luas Gudang Perbulan',
   },
   {
-    component: <LuasGudangPerbulan />,
-    title: 'Luas Gudang Perbulan',
-  },
-  {
     component: <PekerjaPerbulan />,
     title: 'Pekerja Perbulan',
   },
@@ -145,6 +142,10 @@ const chartOpton = [
   {
     component: <MasalahMitraPerbulan />,
     title: 'Masalah Mitra Perbulan',
+  },
+  {
+    component: <MasalahmitraPerbulanline />,
+    title: 'Masalah Mitra Perbulan Line',
   },
   {
     component: <MasalahPerMitraPerbulan />,
@@ -181,7 +182,7 @@ const chartOpton = [
 ];
 
 export default function Report() {
-  const fixedOptions = [chartOpton[2]];
+  const fixedOptions = [chartOpton[0]];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [start, setStart] = React.useState(startInit);
   const [end, setEnd] = React.useState(endInit);

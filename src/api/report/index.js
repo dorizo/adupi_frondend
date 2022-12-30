@@ -280,6 +280,25 @@ const GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUS = async (tahun, jenisMasalah, stat
     return catchCallBack(error);
   }
 };
+
+const GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINE = async (tahun, jenisMasalah, status) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/masalah/masalahmitraperbulanline`, {
+      headers,
+      params: {
+        tahun,
+        jenisMasalah,
+        status,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORI = async (ksCode) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -473,4 +492,5 @@ export {
   GET_PENJUALAN_SEMUA_MITRA_PERJENIS,
   GET_ANALISA_V2_MITRA_PEMBELIAN,
   GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN,
+  GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINE,
 };

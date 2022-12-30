@@ -71,7 +71,7 @@ export default function TotalMitravsJumlahPembelian() {
         text: 'Traffic Sources'
       },
       dataLabels: {
-        enabled: true,
+        enabled: false,
         enabledOnSeries: [1]
       },
       labels: label,
@@ -82,12 +82,20 @@ export default function TotalMitravsJumlahPembelian() {
         title: {
           text: 'Mitra',
         },
+        
       
-      }, {
+      },
+       {
         opposite: true,
         title: {
           text: 'Pembelian per kg'
+        },
+        labels: {
+          formatter: function (value) {
+            return value.toLocaleString("id-ID");
+          }
         }
+        
       }]
     },
   

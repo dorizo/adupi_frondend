@@ -12,6 +12,8 @@ import PembelianPerMitraPerbulan from './Chart/PembelianPerMitraPerbulan';
 import PenjualanPerMitraPerbulan from './Chart/PenjualanPerMitraPerbulan';
 import PembelianPerMitraPerbulanline from './Chart/PembelianPerMitraPerbulanline';
 import PenjualanPerMitraPerbulanLine from './Chart/PenjualanPerMitraPerbulanLine';
+import PenjualanMitraPerbulan from '../Report/Chart/PenjualanMitraPerbulan';
+import TotalMitravsJumlahPembelian from '../Report/Chart/TotalMitravsJumlahPembelian';
 
 export default function ReportMayora() {
   return (
@@ -24,6 +26,18 @@ export default function ReportMayora() {
           </Typography>
         </Stack>
 
+        <Card style={{ marginBottom: 10 }}>
+          <CardContent>
+            <Grid container spacing={1} style={{ marginBottom: 10 }}>
+              <Grid item xs={12} sm={6}>
+                <TotalMitravsJumlahPembelian />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <PenjualanMitraPerbulan />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
         <Card style={{ marginBottom: 10 }}>
           <CardContent>
             <Grid container spacing={1} style={{ marginBottom: 10 }}>

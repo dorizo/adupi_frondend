@@ -66,10 +66,10 @@ export default function Totalcontinuevspembelian() {
         width: [0, 4]
       },
       title: {
-        text: 'Traffic Sources'
+        text: ''
       },
       dataLabels: {
-        enabled: true,
+        enabled: false,
         enabledOnSeries: [1]
       },
       labels: label,
@@ -85,6 +85,10 @@ export default function Totalcontinuevspembelian() {
         opposite: true,
         title: {
           text: 'Pembelian per kg'
+        },labels: {
+          formatter: function (value) {
+            return value.toLocaleString("id-ID");
+          }
         }
       }]
     },
