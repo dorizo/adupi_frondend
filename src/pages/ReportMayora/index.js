@@ -16,6 +16,8 @@ import PenjualanMitraPerbulan from '../Report/Chart/PenjualanMitraPerbulan';
 import TotalMitravsJumlahPembelian from '../Report/Chart/TotalMitravsJumlahPembelian';
 import Totalcontinuevspembelian from '../Report/Chart/Totalcontinuemitravspembelian';
 import PenjualanMitraPerKategori from '../Report/Chart/PenjualanMitraPerKategori';
+import LuasGudangPerbulan from '../Report/Chart/LuasGudangPerbulan';
+import PekerjaPerbulan from '../Report/Chart/PekerjaPerbulan';
 
 export default function ReportMayora() {
   return (
@@ -56,16 +58,16 @@ export default function ReportMayora() {
           <CardContent>
             <Grid container spacing={1} style={{ marginBottom: 10 }}>
               <Grid item xs={12} sm={6}>
-                <PembelianMitraPerKategori />
+                <LuasGudangPerbulan />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <PembelianMitraPerbulan />
+                <PekerjaPerbulan />
               </Grid>
             </Grid>
           </CardContent>
         </Card>
 
-        <Card style={{ marginBottom: 10 }}>
+        {/* <Card style={{ marginBottom: 10 }}>
           <CardContent>
             <Grid container spacing={1} style={{ marginBottom: 10 }}>
               <Grid item xs={12} sm={6}>
@@ -100,7 +102,7 @@ export default function ReportMayora() {
               </Grid>
             </Grid>
           </CardContent>
-        </Card>
+        </Card> */}
         <Card style={{ marginBottom: 10 }}>
           <CardContent style={{ margin: 0, padding: 0, marginBottom: 30 }}>
             <PetaSebaran type="component" />
