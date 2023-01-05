@@ -29,17 +29,30 @@ export default function LuasGudangPerbulan() {
     GET_LUAS_GUDANG_PERBULAN(tahun?.value)
   );
   const list = data && data?.data?.data;
-  const chartData = [...Array(12)].map(() => 0);
+  
+  const chartDataPekerja = [];
+  const label = [];
+  const mitra = [];
   if (!isLoading) {
-    list?.forEach((v) => {
-      chartData[v.bulan - 1] = v.luasGudang;
+    list?.forEach((v,index, arr) => {
+    //   chartDataPekerja[v.bulan - 1] = v?.jumlahPekerja;
+    //   chartDataJumlah[v.bulan - 1] = v?.jumlahBeli;
+    chartDataPekerja[index] = v.data;
+    mitra[index] = "luas Gudang";
+    label[index] = v.tahun+"-"+v.bulan+"- 15";
     });
   }
+  // const chartData = [...Array(12)].map(() => 0);
+  // if (!isLoading) {
+  //   list?.forEach((v) => {
+  //     chartData[v.bulan - 1] = v.luasGudang;
+  //   });
+  // }
   const state = {
     series: [
       {
         name: 'Luas Gudang',
-        data: chartData,
+        data: chartDataPekerja,
       },
     ],
     options: {
@@ -54,7 +67,6 @@ export default function LuasGudangPerbulan() {
       plotOptions: {
         bar: {
           borderRadius: 4,
-          horizontal: true,
         },
       },
       dataLabels: {
@@ -62,21 +74,19 @@ export default function LuasGudangPerbulan() {
       },
 
       xaxis: {
-        categories: [
-          'Januari',
-          'Febuari',
-          'Maret',
-          'April',
-          'Mei',
-          'Juni',
-          'Juli',
-          'Agustus',
-          'September',
-          'Oktober',
-          'November',
-          'Desember',
-        ],
+        categories:label,
+        
+        type: 'datetime'
       },
+
+      
+      yaxis: [{
+      labels: {
+          formatter: function (value) {
+            return value.toLocaleString("id-ID");
+          }
+        }
+      }]
     },
   };
 

@@ -139,18 +139,18 @@ const chartOpton = [
     component: <PenjualanPerMitraPerbulanPabrik />,
     title: 'Penjualan Per Mitra Perbulan Pabrik',
   },
-  {
-    component: <MasalahMitraPerbulan />,
-    title: 'Masalah Mitra Perbulan',
-  },
+  // {
+  //   component: <MasalahMitraPerbulan />,
+  //   title: 'Masalah Mitra Perbulan',
+  // },
   {
     component: <MasalahmitraPerbulanline />,
-    title: 'Masalah Mitra Perbulan Line',
+    title: 'Masalah Mitra Perbulan ',
   },
-  {
-    component: <MasalahPerMitraPerbulan />,
-    title: 'Masalah PerMitra Perbulan',
-  },
+  // {
+  //   component: <MasalahPerMitraPerbulan />,
+  //   title: 'Masalah PerMitra Perbulan',
+  // },
   {
     component: <PembelianMitraPerKategori />,
     title: 'Pembelian Mitra Per Kategori',
@@ -167,18 +167,18 @@ const chartOpton = [
     component: <PenjualanMitraPerJenis />,
     title: 'Penjualan Mitra Per Jenis',
   },
-  {
-    component: <PembelianPerMitra />,
-    title: 'Analisis Pembelian Per Mitra',
-  },
-  {
-    component: <PembelianPerPekerja />,
-    title: 'Analisis Pembelian Per Pekerja',
-  },
-  {
-    component: <PembelianPerLuas />,
-    title: 'Analisis Pembelian Per Luas',
-  },
+  // {
+  //   component: <PembelianPerMitra />,
+  //   title: 'Analisis Pembelian Per Mitra',
+  // },
+  // {
+  //   component: <PembelianPerPekerja />,
+  //   title: 'Analisis Pembelian Per Pekerja',
+  // },
+  // {
+  //   component: <PembelianPerLuas />,
+  //   title: 'Analisis Pembelian Per Luas',
+  // },
 ];
 
 export default function Report() {

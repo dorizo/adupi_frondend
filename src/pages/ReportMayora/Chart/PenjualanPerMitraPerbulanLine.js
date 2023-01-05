@@ -72,6 +72,9 @@ export default function PenjualanPerMitraPerbulanLine({ type = 'line' }) {
             enabled: false,
           },
         },
+        legend: {
+          height:100
+        },
         dataLabels: {
           enabled: false,
         },
@@ -91,7 +94,7 @@ export default function PenjualanPerMitraPerbulanLine({ type = 'line' }) {
         yaxis: [
           {
             labels: {
-              formatter: (val) => val.toFixed(2),
+              formatter: (val) => val.toLocaleString("id-ID"),
             },
           },
         ],

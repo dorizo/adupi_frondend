@@ -23,7 +23,7 @@ const center = [-6.258752, 106.6201363];
 const date = new Date();
 const y = date.getFullYear();
 const m = date.getMonth();
-const startInit = new Date(y, m, 1);
+const startInit = new Date(2021, m);
 const endInit = new Date(y, m + 1, 0);
 
 const setOption = (data) => {

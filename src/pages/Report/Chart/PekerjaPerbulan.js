@@ -29,17 +29,24 @@ export default function PekerjaPerbulan() {
     GET_JUMLAH_PEKERJA_PERBULAN(tahun?.value)
   );
   const list = data && data?.data?.data;
-  const chartData = [...Array(12)].map(() => 0);
+  
+  const chartDataPekerja = [];
+  const label = [];
+  const mitra = [];
   if (!isLoading) {
-    list?.forEach((v) => {
-      chartData[v.bulan - 1] = v.jumlahPekerja;
+    list?.forEach((v,index, arr) => {
+    //   chartDataPekerja[v.bulan - 1] = v?.jumlahPekerja;
+    //   chartDataJumlah[v.bulan - 1] = v?.jumlahBeli;
+    chartDataPekerja[index] = v.data;
+    mitra[index] = "luas Gudang";
+    label[index] = v.tahun+"-"+v.bulan+"- 15";
     });
   }
   const state = {
     series: [
       {
         name: 'Pekerja',
-        data: chartData,
+        data: chartDataPekerja,
       },
     ],
     options: {
@@ -53,7 +60,6 @@ export default function PekerjaPerbulan() {
       plotOptions: {
         bar: {
           borderRadius: 4,
-          horizontal: true,
         },
       },
       dataLabels: {
@@ -61,20 +67,9 @@ export default function PekerjaPerbulan() {
       },
 
       xaxis: {
-        categories: [
-          'Januari',
-          'Febuari',
-          'Maret',
-          'April',
-          'Mei',
-          'Juni',
-          'Juli',
-          'Agustus',
-          'September',
-          'Oktober',
-          'November',
-          'Desember',
-        ],
+        categories:label,
+        
+        type: 'datetime'
       },
     },
   };

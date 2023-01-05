@@ -56,6 +56,14 @@ export default function PembelianMitraPerKategori() {
         text: `Jumlah Pembelian per jenis `,
       },
       labels,
+      
+      yaxis: [{
+      labels: {
+          formatter: function (value) {
+            return value.toLocaleString("id-ID");
+          }
+        }
+      }],
       responsive: [
         {
           breakpoint: 480,

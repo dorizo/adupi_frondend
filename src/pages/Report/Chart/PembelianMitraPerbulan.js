@@ -72,6 +72,14 @@ export default function PembelianMitraPerbulan() {
           opacity: 0.5,
         },
       },
+      
+      yaxis: [{
+      labels: {
+          formatter: function (value) {
+            return value.toLocaleString("id-ID");
+          }
+        }
+      }],
       xaxis: {
         categories: [
           'Januari',
