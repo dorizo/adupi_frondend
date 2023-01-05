@@ -15,6 +15,7 @@ import PenjualanPerMitraPerbulanLine from './Chart/PenjualanPerMitraPerbulanLine
 import PenjualanMitraPerbulan from '../Report/Chart/PenjualanMitraPerbulan';
 import TotalMitravsJumlahPembelian from '../Report/Chart/TotalMitravsJumlahPembelian';
 import Totalcontinuevspembelian from '../Report/Chart/Totalcontinuemitravspembelian';
+import PenjualanMitraPerKategori from '../Report/Chart/PenjualanMitraPerKategori';
 
 export default function ReportMayora() {
   return (
@@ -43,10 +44,10 @@ export default function ReportMayora() {
           <CardContent>
             <Grid container spacing={1} style={{ marginBottom: 10 }}>
               <Grid item xs={12} sm={6}>
-                <PembelianMitraPerJenis />
+                <PembelianMitraPerKategori />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <PenjualanMitraPerJenis />
+                <PenjualanMitraPerKategori />
               </Grid>
             </Grid>
           </CardContent>
