@@ -59,7 +59,7 @@ export default function PembelianPerMitraPerbulan() {
     series: seriesData,
     options: {
       chart: {
-        height: 350,
+        height: 450,
         type: 'line',
         zoom: {
           enabled: false,

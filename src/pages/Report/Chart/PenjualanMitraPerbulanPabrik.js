@@ -64,6 +64,11 @@ export default function PenjualanMitraPerbulanPabrik() {
         height: 350,
         type: 'bar',
       },
+      
+      legend: {
+        show:false,
+        height:100
+      },
       plotOptions: {
         bar: {
           horizontal: false,
@@ -103,6 +108,13 @@ export default function PenjualanMitraPerbulanPabrik() {
           'Desember',
         ],
       },
+      yaxis: [
+        {
+          labels: {
+            formatter: (val) =>  val.toLocaleString("id-ID"),
+          },
+        },
+      ],
     },
   };
 

@@ -66,13 +66,14 @@ export default function PembelianPerMitraPerbulanline({ type = 'line' }) {
       series:!isLoading && data?.data?.data,
       options: {
         chart: {
-          height: 350,
+          height: 450,
           type: 'line',
           zoom: {
             enabled: false,
           },
         },
         legend: {
+          show:false,
           height:100
         },
         dataLabels: {
@@ -154,7 +155,7 @@ export default function PembelianPerMitraPerbulanline({ type = 'line' }) {
         Filters
       </Button>
 
-      <ReactApexChart options={state.options} series={state.series} type={type} height={350} />
+      <ReactApexChart options={state.options} series={state.series} type={type} height={450} />
       <Typography variant="caption">*Tahun : {tahun?.title}</Typography>
       {mitraCode && <Typography variant="caption">, Mitra : {mitraCode.title}</Typography>}
 

@@ -87,7 +87,13 @@ export default function PenjualanMitraPerbulan() {
           'November',
           'Desember',
         ],
-      },
+      },yaxis: [
+        {
+          labels: {
+            formatter: (val) =>  val.toLocaleString("id-ID"),
+          },
+        },
+      ],
     },
   };
 

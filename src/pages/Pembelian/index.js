@@ -16,13 +16,13 @@ import DialogComponent from './DialogComponent';
 
 const headCells = [
   {
-    id: 'Mitra',
+    id: 'mitra',
     numeric: false,
     disablePadding: true,
-    label: 'Pembeli',
+    label: 'nama mitra',
   },
   {
-    id: 'Nama_Supplier',
+    id: 'anggotum',
     numeric: false,
     disablePadding: true,
     label: 'Nama Supplier',
@@ -65,6 +65,10 @@ export default function Index() {
   const { enqueueSnackbar } = useSnackbar();
 
   const rows = data && data?.data?.data?.data;
+  rows.forEach((element , index) => {
+   rows[index]["nama"] = element?.mitra?.nama; 
+   rows[index]["pembeli"] = element?.anggotum?.nama; 
+  });
 
 
   const { TableComponent, list } = useTable({

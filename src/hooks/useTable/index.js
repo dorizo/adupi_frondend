@@ -17,6 +17,7 @@ const useTable = ({ header, rows, loading }) => {
         return { ...a, no: i + 1 };
       })) ||
     [];
+  console.log(rows);
   const [search, setSearch] = React.useState('');
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');

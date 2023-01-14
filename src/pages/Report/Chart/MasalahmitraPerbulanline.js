@@ -83,6 +83,13 @@ export default function MasalahmitraPerbulanline() {
           'Desember',
         ],
       },
+      yaxis: [
+        {
+          labels: {
+            formatter: (val) =>  val.toLocaleString("id-ID"),
+          },
+        },
+      ],
     },
   };
 

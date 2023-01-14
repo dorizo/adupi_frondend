@@ -71,6 +71,13 @@ export default function PekerjaPerbulan() {
         
         type: 'datetime'
       },
+      yaxis: [
+        {
+          labels: {
+            formatter: (val) =>  val.toLocaleString("id-ID"),
+          },
+        },
+      ],
     },
   };
 

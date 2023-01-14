@@ -66,6 +66,10 @@ export default function Index() {
 
   const rows = data && data?.data?.data?.data;
 
+  rows.forEach((element , index) => {
+    rows[index]["nama"] = element?.mitra?.nama; 
+    rows[index]["pembelis"] = element?.pembeli?.pembeli; 
+   });
 
   const { TableComponent, list } = useTable({
     header: headCells,
