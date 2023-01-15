@@ -65,11 +65,14 @@ export default function Index() {
   const { enqueueSnackbar } = useSnackbar();
 
   const rows = data && data?.data?.data?.data;
-  rows.forEach((element , index) => {
-   rows[index]["nama"] = element?.mitra?.nama; 
-   rows[index]["pembeli"] = element?.anggotum?.nama; 
-  });
-
+  if(!isLoading){
+    rows.forEach((element , index) => {
+      rows[index]["nama"] = element?.mitra?.nama; 
+      rows[index]["pembeli"] = element?.anggotum?.nama; 
+     });
+   
+  }
+ 
 
   const { TableComponent, list } = useTable({
     header: headCells,
