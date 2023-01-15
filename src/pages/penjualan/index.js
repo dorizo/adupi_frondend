@@ -67,7 +67,7 @@ export default function Index() {
   const rows = data && data?.data?.data?.data;
 
   if(!isLoading){
-  rows.forEach((element , index) => {
+  rows?.forEach((element , index) => {
     rows[index]["nama"] = element?.mitra?.nama; 
     rows[index]["pembelis"] = element?.pembeli?.pembeli; 
    });

@@ -61,15 +61,20 @@ export default function Index() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [itemSelected, setItemSelected] = React.useState(null);
   //   const { checkPermision } = useMee();
-  const { data, isLoading, refetch } = useQuery('GET_ALL_PEMBELI', () => GET_SU_PEMBELIAN(null));
+  const { data, isLoading, refetch } = useQuery('GET_ALL_PEMBELIANDATA', () => GET_SU_PEMBELIAN(null));
   const { enqueueSnackbar } = useSnackbar();
 
   const rows = data && data?.data?.data?.data;
   if(!isLoading){
-    rows.forEach((element , index) => {
-      rows[index]["nama"] = element?.mitra?.nama; 
-      rows[index]["pembeli"] = element?.anggotum?.nama; 
-     });
+    
+  console.log(rows.length);
+    if(rows){
+      rows?.forEach((element , index) => {
+        rows[index]["nama"] = element?.mitra?.nama; 
+        rows[index]["pembeli"] = element?.anggotum?.nama; 
+       });
+     
+    }
    
   }
  

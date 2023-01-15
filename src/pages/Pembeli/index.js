@@ -28,7 +28,7 @@ export default function Index() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [itemSelected, setItemSelected] = React.useState(null);
   //   const { checkPermision } = useMee();
-  const { data, isLoading, refetch } = useQuery('GET_ALL_PEMBELI', () => GET_ALL_PEMBELI(null));
+  const { data, isLoading, refetch } = useQuery('PEMBELIANMEMEK', () => GET_ALL_PEMBELI(null));
   const { enqueueSnackbar } = useSnackbar();
 
   const rows = data && data?.data?.data;
