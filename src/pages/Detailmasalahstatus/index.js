@@ -73,9 +73,9 @@ export default function Detailmasalahstatus({ type = null }) {
     return(
         <Container>
            <Card>
-          {totalmasalah &&
+          {list &&
             TableComponent(
-                totalmasalah?.data?.data?.map((row, index) => {
+              list?.map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`;
                 return (
                   <TableRow hover tabIndex={-1} key={index}>
