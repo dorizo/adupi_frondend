@@ -2,7 +2,7 @@ import { Button, Card, Container, Grid, TableCell, TableRow } from "@mui/materia
 import { useQuery } from "react-query";
 import {  GET_ALL_MASALAH_DASHBOARDLIST } from "src/api/masalah";
 import NextPlanIcon from '@mui/icons-material/NextPlan';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useTable from '../../hooks/useTable/index';
 import { fDateTime } from "src/utils/formatTime";
 
@@ -43,10 +43,18 @@ const headCells = [
       disablePadding: true,
       label: 'tanggal Selesai Masalah',
     },
+    {
+      id: 'action',
+      numeric: false,
+      disablePadding: true,
+      label: 'Action',
+    },
   ];
   
 export default function Detailmasalahstatus({ type = null }) {
     const paramsx  = useParams();
+    
+    let navigate = useNavigate();
     const { data : totalmasalah , isLoading:lodingmasalah } = useQuery(['GET_ALL_MASALAH_DASHBOARDLIST' , paramsx.status], () =>
     GET_ALL_MASALAH_DASHBOARDLIST(paramsx.status)
     );
@@ -90,6 +98,9 @@ export default function Detailmasalahstatus({ type = null }) {
                     <TableCell id={labelId} scope="row">
                       {row.updateAt?fDateTime(row.updateAt):""}
                       {/* Math.round((new Date(row.createAt) - new Date()) / (1000 * 60 * 60 * 24)) */}
+                    </TableCell>
+                    <TableCell id={labelId} scope="row">
+                    <Button  onClick={() =>navigate("/dashboard/mitra/masalah/"+row.mitraCode)}  variant="contained" endIcon={<NextPlanIcon />}></Button>
                     </TableCell>
                   </TableRow>
                 );

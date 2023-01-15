@@ -53,7 +53,7 @@ const GET_ALL_MASALAH_BY_MITRA = async (id) => {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   };
   try {
-    const response = await axios.get(`masalah/all/${id}`, { headers });
+    const response = await axios.get(`masalah/admin/${id}`, { headers });
     return response;
   } catch (error) {
     return catchCallBack(error);
