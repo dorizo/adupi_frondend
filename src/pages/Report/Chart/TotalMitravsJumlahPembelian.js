@@ -68,7 +68,7 @@ export default function TotalMitravsJumlahPembelian() {
         width: [0, 4]
       },
       title: {
-        text: 'Traffic Sources'
+        text: 'Mitra Vs Pembelian per bulan'
       },
       dataLabels: {
         enabled: false,

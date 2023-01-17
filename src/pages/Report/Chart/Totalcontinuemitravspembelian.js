@@ -66,7 +66,7 @@ export default function Totalcontinuevspembelian() {
         width: [0, 4]
       },
       title: {
-        text: ''
+        text: 'Mitra Vs Pembelian per bulan Continue'
       },
       dataLabels: {
         enabled: false,
