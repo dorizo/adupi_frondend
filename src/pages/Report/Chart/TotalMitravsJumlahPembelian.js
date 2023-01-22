@@ -68,7 +68,13 @@ export default function TotalMitravsJumlahPembelian() {
         width: [0, 4]
       },
       title: {
-        text: 'Mitra Vs Pembelian per bulan'
+        text: 'akumulasi total mitra vs laju koleksi pembelian perbulan',
+        style: {
+          fontSize:  '14px',
+          fontWeight:  'bold',
+          fontFamily:  undefined,
+          color:  '#263238'
+        },
       },
       dataLabels: {
         enabled: false,

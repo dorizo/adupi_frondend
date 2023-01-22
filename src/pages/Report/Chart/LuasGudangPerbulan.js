@@ -61,7 +61,7 @@ export default function LuasGudangPerbulan() {
         height: 350,
       },
       title: {
-        text: 'Jumlah Luas Gudang Perbulan',
+        text: 'Akumulasi luas gudang semua mitra perbulan (m2)',
       },
 
       plotOptions: {

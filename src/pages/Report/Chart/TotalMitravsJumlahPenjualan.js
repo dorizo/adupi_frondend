@@ -2,13 +2,13 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography }
 import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
-import { GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN, GET_ANALISI_PEMBELIAN_PEKERJA_PERBULAN } from '../../../api/report';
+import { GET_ANALISA_V2_MITRA_PENJUALAN, GET_ANALISI_PEMBELIAN_PEKERJA_PERBULAN } from '../../../api/report';
 import AutoCompleteLoading from '../../../components/AutoCompleteLoading';
 import { yearOption } from '../../../utils/yearOption';
 
 const tahunSekarang = new Date().getFullYear();
 
-export default function Totalcontinuevspembelian() {
+export default function TotalMitravsJumlahPenjualan() {
   const [tahun, setTahun] = useState({ value: tahunSekarang, title: tahunSekarang });
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -28,8 +28,8 @@ export default function Totalcontinuevspembelian() {
   const { data, isLoading, refetch } = useQuery(['GET_ANALISI_PEMBELIAN_PEKERJA_PERBULAN', tahun?.value], () =>
     GET_ANALISI_PEMBELIAN_PEKERJA_PERBULAN(tahun?.value)
   );
-  const { data : mitrapembelian, isLoading:lodingmitrapembelian, refetch:refetchmitrapembelian } = useQuery(['GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN', tahun?.value], () =>
-  GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN(tahun?.value)
+  const { data : mitrapembelian, isLoading:lodingmitrapembelian, refetch:refetchmitrapembelian } = useQuery(['GET_ANALISA_V2_PENJUALANDIR', tahun?.value], () =>
+  GET_ANALISA_V2_MITRA_PENJUALAN(tahun?.value)
   );
 //   console.log(mitrapembelian);
   
@@ -37,8 +37,10 @@ export default function Totalcontinuevspembelian() {
   const chartDataPekerja = [];
   const label = [];
   const mitra = [];
-  if (!lodingmitrapembelian) {
+  if (!isLoading) {
     list?.forEach((v,index, arr) => {
+    //   chartDataPekerja[v.bulan - 1] = v?.jumlahPekerja;
+    //   chartDataJumlah[v.bulan - 1] = v?.jumlahBeli;
     chartDataPekerja[index] = v.data;
     mitra[index] = v.mitra;
     label[index] = v.tahun+"-"+v.bulan+"- 15";
@@ -66,9 +68,9 @@ export default function Totalcontinuevspembelian() {
         width: [0, 4]
       },
       title: {
-        text: 'akumulasi total mitra vs laju total volume pembelian perbulan',
+        text: 'akumulasi total mitra vs laju koleksi Penjualan perbulan',
         style: {
-          fontSize:  '12px',
+          fontSize:  '14px',
           fontWeight:  'bold',
           fontFamily:  undefined,
           color:  '#263238'
@@ -86,16 +88,20 @@ export default function Totalcontinuevspembelian() {
         title: {
           text: 'Mitra',
         },
+        
       
-      }, {
+      },
+       {
         opposite: true,
         title: {
           text: 'Pembelian per kg'
-        },labels: {
+        },
+        labels: {
           formatter: function (value) {
             return value.toLocaleString("id-ID");
           }
         }
+        
       }]
     },
   

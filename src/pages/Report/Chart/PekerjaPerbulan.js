@@ -55,7 +55,7 @@ export default function PekerjaPerbulan() {
         height: 350,
       },
       title: {
-        text: 'Jumlah Pekerja Perbulan',
+        text: 'Akumulasi total pekerja (orang)',
       },
       plotOptions: {
         bar: {

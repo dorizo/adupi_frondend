@@ -47,11 +47,6 @@ export default function TableToolbar({ search, onSearch }) {
           </InputAdornment>
         }
       />
-      <Tooltip title="Filter list">
-        <IconButton>
-          <Iconify icon="ic:round-filter-list" />
-        </IconButton>
-      </Tooltip>
     </RootStyle>
   );
 }

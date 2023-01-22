@@ -34,7 +34,7 @@ export default function Kunjungandashboard({ type = null }) {
                     <Card style={{padding:20}}>
                         <h5>Masalah Belum Terselesaikan</h5>
                         <h1>{totalmasalah?.data?.data.belum}</h1>
-                        <Button  onClick={() => pindah("dalam peninjauan")}  variant="contained" endIcon={<NextPlanIcon />}>
+                        <Button  onClick={() => navigate("/dashboard/detailmasalahall/dalam peninjauan")}  variant="contained" endIcon={<NextPlanIcon />}>
                         Detail
                         </Button>
                         

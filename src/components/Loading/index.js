@@ -1,5 +1,5 @@
 import { CircularProgress, Typography } from '@mui/material';
-import logo from '../../assets/logo/adupi.png';
+import logo from '../../assets/logo/logo.png';
 
 export default function LoadingPage() {
   return (
@@ -14,7 +14,14 @@ export default function LoadingPage() {
           alignItems: 'center',
         }}
       >
-        <img src={logo} alt="logo-app" width="120" />
+          <div style={{
+            backgroundColor:"#2889BE",
+            padding:10,
+            borderRadius:10,
+            marginBottom:10,
+          }}>
+          <img src={logo} alt="logo-app" width="220" />
+        </div>
         <CircularProgress color="info" disableShrink />
       </div>
     </div>

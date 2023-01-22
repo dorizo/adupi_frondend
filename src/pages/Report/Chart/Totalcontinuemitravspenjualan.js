@@ -2,13 +2,13 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography }
 import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
-import { GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN, GET_ANALISI_PEMBELIAN_PEKERJA_PERBULAN } from '../../../api/report';
+import { GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN, GET_ANALISA_V2_CONTINUE_MITRA_PENJUALAN, GET_ANALISI_PEMBELIAN_PEKERJA_PERBULAN } from '../../../api/report';
 import AutoCompleteLoading from '../../../components/AutoCompleteLoading';
 import { yearOption } from '../../../utils/yearOption';
 
 const tahunSekarang = new Date().getFullYear();
 
-export default function Totalcontinuevspembelian() {
+export default function Totalcontinuevspenjualan() {
   const [tahun, setTahun] = useState({ value: tahunSekarang, title: tahunSekarang });
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -28,8 +28,8 @@ export default function Totalcontinuevspembelian() {
   const { data, isLoading, refetch } = useQuery(['GET_ANALISI_PEMBELIAN_PEKERJA_PERBULAN', tahun?.value], () =>
     GET_ANALISI_PEMBELIAN_PEKERJA_PERBULAN(tahun?.value)
   );
-  const { data : mitrapembelian, isLoading:lodingmitrapembelian, refetch:refetchmitrapembelian } = useQuery(['GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN', tahun?.value], () =>
-  GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN(tahun?.value)
+  const { data : mitrapembelian, isLoading:lodingmitrapembelian, refetch:refetchmitrapembelian } = useQuery(['GET_ANALISA_V2_CONTINUE_MITRA_PENJUALAN', tahun?.value], () =>
+  GET_ANALISA_V2_CONTINUE_MITRA_PENJUALAN(tahun?.value)
   );
 //   console.log(mitrapembelian);
   
@@ -66,9 +66,9 @@ export default function Totalcontinuevspembelian() {
         width: [0, 4]
       },
       title: {
-        text: 'akumulasi total mitra vs laju total volume pembelian perbulan',
+        text: 'akumulasi total mitra vs laju total volume penjualan perbulan',
         style: {
-          fontSize:  '12px',
+          fontSize:  '14px',
           fontWeight:  'bold',
           fontFamily:  undefined,
           color:  '#263238'

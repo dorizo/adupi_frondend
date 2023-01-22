@@ -52,7 +52,7 @@ const headCells = [
     },
   ];
   
-export default function Detailmasalahstatus({ type = null }) {
+export default function Detailmasalahall({ type = null }) {
     const paramsx  = useParams();
     
     let navigate = useNavigate();
@@ -64,10 +64,8 @@ export default function Detailmasalahstatus({ type = null }) {
   const rows =Array();  
 
   totalmasalah?.data?.data.forEach((element ,index) => {
-    if(element?.updateAt?.slice(0, 7) == format(new Date() , "yyyy-MM")){
       console.log(element);
       rows[index] = element;
-    };
   });
 
     console.log(totalmasalah);
@@ -83,20 +81,6 @@ export default function Detailmasalahstatus({ type = null }) {
         <Container>
            
            <Card>
-           
-            <Grid
-  container
-  direction="row"
-  justifyContent="space-between"
-  alignItems="center"
->
-    <Grid item></Grid>
-    <Grid item>
-    <Button sx={{ marginLeft: "auto" }}  onClick={() => navigate("/dashboard/detailmasalahall/selesai")}  variant="contained" endIcon={<NextPlanIcon />}>
-                        Lihat Semua Masalah Terselesaikan
-            </Button>
-    </Grid>
-</Grid>
           
           {list &&
             TableComponent(

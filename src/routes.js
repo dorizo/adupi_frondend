@@ -59,6 +59,7 @@ import LampiranByFasilitator from './screens/LampiranByFasilitator';
 import Transaksi from './screens/Transaksi';
 import Fasilitatortransaksi from './screens/Fasilitatortransaksi';
 import MitraEdit from './pages/MitraEdit';
+import Detailmasalahall from './pages/Detailmasalahall';
 
 // ----------------------------------------------------------------------
 
@@ -78,6 +79,14 @@ export default function Router() {
           element: (
             <RequireAuth allowedRoles={['admin']}>
               <Detailmasalahstatus />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'detailmasalahall/:status',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <Detailmasalahall />
             </RequireAuth>
           ),
         },

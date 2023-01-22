@@ -190,10 +190,10 @@ export default function Index() {
                     {fRupiah(row?.totalHarga)}
                     </TableCell>
                     <TableCell id={labelId} scope="row">
-                    {format(new Date(row?.createAt) , "yyyy-MM-dd HH:mm")}
+                    {format(new Date(row?.createAt) , "dd-MM-yyyy")}
                     </TableCell>
                     <TableCell id={labelId} scope="row">
-                    {format(new Date(row?.updateAt) , "yyyy-MM-dd HH:mm")}
+                    {format(new Date(row?.updateAt) , "dd-MM-yyyy")}
                     </TableCell>
                   </TableRow>
                 );

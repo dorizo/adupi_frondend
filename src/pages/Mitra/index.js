@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { fDateTime } from 'src/utils/formatTime';
 import { GET_MITRA_ALL_BY_SU_YES } from '../../api/mitra';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
@@ -109,7 +110,7 @@ export default function Index() {
                       {row.jenisKelamin}
                     </TableCell>
                     <TableCell id={labelId} scope="row">
-                      {row.tanggalLahir}
+                      {fDateTime(row.tanggalLahir)}
                     </TableCell>
                     <TableCell id={labelId} scope="row">
                       {row.tempatLahir}
