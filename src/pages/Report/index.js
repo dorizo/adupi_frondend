@@ -46,6 +46,8 @@ import PenjualanPerMitraPerbulanPabrik from './Chart/PenjualanPerMitraPerbulanPa
 import TotalMitravsJumlahPembelian from './Chart/TotalMitravsJumlahPembelian';
 import Totalcontinuevspembelian from './Chart/Totalcontinuemitravspembelian';
 import MasalahmitraPerbulanline from './Chart/MasalahmitraPerbulanline';
+import TotalMitravsJumlahPenjualan from './Chart/TotalMitravsJumlahPenjualan';
+import Totalcontinuevspenjualan from './Chart/Totalcontinuemitravspenjualan';
 
 const headCells = [
   {
@@ -101,11 +103,20 @@ const endInit = new Date(y, m + 1, 0);
 const chartOpton = [
   {
     component: <TotalMitravsJumlahPembelian />,
-    title: 'Total Mitra vs Jumlah Pembelian Per Bulan Seluruh Mitra',
+    title: 'Akumulasi total mitra vs laju koleksi pembelian perbulan',
   },
   {
     component: <Totalcontinuevspembelian />,
-    title: 'Total Mitra vs Jumlah Pembelian Continue Count',
+    title: 'Akumulasi total mitra vs laju total volume pembelian perbulan',
+  },
+  
+  {
+    component: <TotalMitravsJumlahPenjualan />,
+    title: 'Akumulasi total mitra vs laju koleksi penjualan perbulan',
+  },
+  {
+    component: <Totalcontinuevspenjualan />,
+    title: 'Akumulasi total mitra vs laju total volume penjualan perbulan',
   },
   {
     component: <LuasGudangPerbulan />,
