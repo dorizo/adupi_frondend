@@ -31,14 +31,18 @@ export default function MasalahmitraPerbulanline() {
     setOpen(false);
   };
 
-  const { data, isLoading, refetch } = useQuery(['GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINE', tahun?.value], () =>
+  const { data, isLoading, refetch } = useQuery(['GETMASALAH_KOK_DIRIBETIN_YA', tahun?.value], () =>
   GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINE(tahun?.value, jenisMasalah?.value, status?.value)
   );
   const list = data && data?.data?.data;
 
-
+  if(!isLoading){
+    console.log(isLoading);
+    console.log(list);
+  }
+  
   const state = {
-    series: list,
+    series:  !isLoading && list,
     options: {
       chart: {
         height: 350,
@@ -88,70 +92,37 @@ export default function MasalahmitraPerbulanline() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Filter
-      </Button>
+    <Button variant="outlined" onClick={handleClickOpen}>
+      Filter
+    </Button>
 
-      <ReactApexChart options={state.options} series={state.series} type="bar" height={350} />
-      <Typography variant="caption">*Tahun : {tahun?.title}</Typography>
-      {jenisMasalah && <Typography variant="caption">, Jenis : {jenisMasalah?.title}</Typography>}
-      {status && <Typography variant="caption">, Status : {status?.title}</Typography>}
-      <Dialog
-        fullWidth
-        maxWidth="xs"
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Filter Chart</DialogTitle>
-        <DialogContent>
-          <AutoCompleteLoading
-            label="Tahun"
-            options={yearOption}
-            loading={loading}
-            value={tahun}
-            getOptionLabel={(option) => option.title}
-            onChange={(_, newVal) => setTahun(newVal)}
-          />
-          <AutoCompleteLoading
-            label="Status"
-            options={[
-              { value: 'Selesai', title: 'Selesai' },
-              { value: 'Proses', title: 'Proses' },
-            ]}
-            loading={loading}
-            value={status}
-            getOptionLabel={(option) => option.title}
-            onChange={(_, newVal) => setStatus(newVal)}
-          />
-          <AutoCompleteLoading
-            label="Jenis Masalah"
-            options={[
-              'Kerusakan Mesin',
-              'Kerusakan Kendaraan',
-              'Kerusakan Peralatan',
-              'Masalah Ketenagakerjaan',
-              'Masalah Suplay',
-              'Kondisi Darurat',
-            ].map((a) => {
-              return { value: a, title: a };
-            })}
-            loading={loading}
-            value={jenisMasalah}
-            getOptionLabel={(option) => option.title}
-            onChange={(_, newVal) => setJenisMasalah(newVal)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleReset} autoFocus>
-            Reset
-          </Button>
-          <Button onClick={handleFilter} autoFocus>
-            Filter
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <ReactApexChart options={state.options} series={state.series} type="line" height={350} />
+    <Typography variant="caption">*Tahun : {tahun?.title}</Typography>
+    <Dialog
+      fullWidth
+      maxWidth="xs"
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">Filter Chart</DialogTitle>
+      <DialogContent>
+        <AutoCompleteLoading
+          label="Tahun"
+          options={yearOption}
+          loading={loading}
+          value={tahun}
+          getOptionLabel={(option) => option.title}
+          onChange={(_, newVal) => setTahun(newVal)}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleFilter} autoFocus>
+          Filter
+        </Button>
+      </DialogActions>
+    </Dialog>
+  </div>
   );
 }

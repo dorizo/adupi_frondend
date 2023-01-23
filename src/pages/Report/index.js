@@ -45,9 +45,9 @@ import PenjualanPerMitraPerbulan from './Chart/PenjualanPerMitraPerbulan';
 import PenjualanPerMitraPerbulanPabrik from './Chart/PenjualanPerMitraPerbulanPabrik';
 import TotalMitravsJumlahPembelian from './Chart/TotalMitravsJumlahPembelian';
 import Totalcontinuevspembelian from './Chart/Totalcontinuemitravspembelian';
-import MasalahmitraPerbulanline from './Chart/MasalahmitraPerbulanline';
 import TotalMitravsJumlahPenjualan from './Chart/TotalMitravsJumlahPenjualan';
 import Totalcontinuevspenjualan from './Chart/Totalcontinuemitravspenjualan';
+import MasalahmitraPerbulanline from '../ReportMayora/Chart/MasalahmitraPerbulanline';
 
 const headCells = [
   {
