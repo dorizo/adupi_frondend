@@ -173,6 +173,24 @@ const GET_PEMBELIAN_MITRA_PERBULANLINE = async (tahun, mitraCode) => {
     return catchCallBack(error);
   }
 };
+
+const GET_PEMBELIAN_MITRA_PERBULANLINEALL = async (tahun, mitraCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/permitraPerbulanlineall`, {
+      headers,
+      params: {
+        tahun,
+        mitraCode,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_PEMBELIAN_SEMUA_MITRA_PERBULAN_PABRIK = async (tahun, pembeliCode) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -516,6 +534,7 @@ export {
   GET_MASALAH_PERBULAN_JENIS_STATUS,
   GET_PEMBELIAN_MITRA_PERBULAN,
   GET_PEMBELIAN_MITRA_PERBULANLINE,
+  GET_PEMBELIAN_MITRA_PERBULANLINEALL,
   GET_PEMBELIAN_MITRA_PERBULAN_PABRIK,
   GET_PEMBELIAN_SEMUA_MITRA_PERBULAN,
   GET_PEMBELIAN_SEMUA_MITRA_PERBULAN_PABRIK,

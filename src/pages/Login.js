@@ -35,11 +35,11 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
-  maxWidth: 464,
+  maxWidth: 500,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2),
+  margin: theme.spacing(0, 0, 0, 0),
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -63,20 +63,20 @@ export default function Login() {
     <Page title="Login">
       <RootStyle>
         <HeaderStyle>
-          <Logo />
+          {/* <Logo /> */}
         </HeaderStyle>
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+            {/* <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
               Hi, Welcome Back
-            </Typography>
-            <img src="/static/illustrations/illustration_login.png" alt="login" />
+            </Typography> */}
+            <img src="/static/illustrations/LoginMedium.png" width={500} alt="login" />
           </SectionStyle>
         )}
         <Container maxWidth="sm">
           <ContentStyle>
-            <Typography variant="h4" gutterBottom>
-              Sign in to Adupi Bank Sampah
+            <Typography variant="h5" sx={{color:"#5AB5F2"}} gutterBottom>
+              Sign in to GERAKAN EKONOMI SIRKULAR
             </Typography>
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>Enter your details below.</Typography>
             <LoginForm />
