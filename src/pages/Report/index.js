@@ -48,6 +48,8 @@ import Totalcontinuevspembelian from './Chart/Totalcontinuemitravspembelian';
 import TotalMitravsJumlahPenjualan from './Chart/TotalMitravsJumlahPenjualan';
 import Totalcontinuevspenjualan from './Chart/Totalcontinuemitravspenjualan';
 import MasalahmitraPerbulanline from '../ReportMayora/Chart/MasalahmitraPerbulanline';
+import PenjualanPerMitraPerbulanLineContinue from '../ReportMayora/Chart/PenjualanPerMitraPerbulanLineContinue';
+import PembelianPerMitraPerbulanLineContinue from '../ReportMayora/Chart/PembelianPerMitraPerbulanlineContinue';
 
 const headCells = [
   {
@@ -138,6 +140,16 @@ const chartOpton = [
     component: <PenjualanPerMitraPerbulanLine />,
     title: 'Penjualan Per Mitra Perbulan',
   },
+  {
+    component: <PenjualanPerMitraPerbulanLineContinue />,
+    title: 'Penjualan Per Mitra Perbulan Continue',
+  },
+  
+  {
+    component: <PembelianPerMitraPerbulanLineContinue />,
+    title: 'Pembelian Per Mitra Perbulan Continue',
+  },
+  
   {
     component: <PembelianPerMitraPerbulanline />,
     title: 'Pembelian Per Mitra Perbulan',

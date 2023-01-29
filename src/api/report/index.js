@@ -138,6 +138,43 @@ const GET_PENJUALAN_MITRA_PERBULANLINE = async (tahun, mitraCode) => {
     return catchCallBack(error);
   }
 };
+
+
+const GET_PENJUALAN_MITRA_PERBULANLINECONTINUES = async (tahun, mitraCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/penjualan/permitraPerbulanlinecontinue`, {
+      headers,
+      params: {
+        tahun,
+        mitraCode,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+const GET_PEMBELIAN_MITRA_PERBULANLINECONTINUES = async (tahun, mitraCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/permitraPerbulanlinecontinue`, {
+      headers,
+      params: {
+        tahun,
+        mitraCode,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_PEMBELIAN_MITRA_PERBULAN = async (tahun, mitraCode) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -553,4 +590,6 @@ export {
   GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINE,
   GET_ANALISA_V2_MITRA_PENJUALAN,
   GET_ANALISA_V2_CONTINUE_MITRA_PENJUALAN,
+  GET_PENJUALAN_MITRA_PERBULANLINECONTINUES,
+  GET_PEMBELIAN_MITRA_PERBULANLINECONTINUES,
 };
