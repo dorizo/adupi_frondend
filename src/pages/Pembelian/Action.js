@@ -30,12 +30,12 @@ export default function Action(props) {
         </ListItemIcon>
         <ListItemText>Edit</ListItemText>
       </MenuItem>
-      {/* <MenuItem onClick={handelDelete}>
+      <MenuItem onClick={handelDelete}>
         <ListItemIcon>
           <DeleteIcon fontSize="small" />
         </ListItemIcon>
         <ListItemText>Delete</ListItemText>
-      </MenuItem> */}
+      </MenuItem>
     </Menu>
   );
 }

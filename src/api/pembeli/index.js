@@ -81,4 +81,17 @@ const DELETE_PEMBELI = async (id) => {
     return catchCallBack(error);
   }
 };
-export { ADD_PEMBELI, GET_ALL_PEMBELI, DELETE_PEMBELI, UPDATE_PEMBELI, GET_ONE_PEMBELI ,ADD_PEMBELIMITRA };
+
+
+const DELETE_PENJUALAN = async (id) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.delete(`penjualan/delete/${id}`, { headers });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+export { ADD_PEMBELI, GET_ALL_PEMBELI, DELETE_PEMBELI, UPDATE_PEMBELI, GET_ONE_PEMBELI ,ADD_PEMBELIMITRA,DELETE_PENJUALAN };

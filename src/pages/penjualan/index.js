@@ -7,7 +7,7 @@ import * as React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { GET_SU_PEMBELIAN, GET_SU_PENJUALAN } from 'src/api/dashboard';
 import { fRupiah, ribuan } from 'src/utils/formatNumber';
-import { ADD_PEMBELI, DELETE_PEMBELI, GET_ALL_PEMBELI, UPDATE_PEMBELI } from '../../api/pembeli';
+import { ADD_PEMBELI, DELETE_PEMBELI, DELETE_PENJUALAN, GET_ALL_PEMBELI, UPDATE_PEMBELI } from '../../api/pembeli';
 import DialogConfirm from '../../components/DialogConfirm';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
@@ -101,7 +101,7 @@ export default function Index() {
     setAlertOpen(false);
   };
 
-  const deleteMutation = useMutation((params) => DELETE_PEMBELI(params.id), {
+  const deleteMutation = useMutation((params) => DELETE_PENJUALAN(params.id), {
     onSuccess: async (res) => {
       const variant = res.status === 200 ? 'success' : 'warning';
       await enqueueSnackbar(res.data.message, { variant });
@@ -152,7 +152,7 @@ export default function Index() {
     await setLoading(false);
   };
   const onDelete = async () => {
-    deleteMutation.mutate({ id: itemSelected.pembeliCode });
+    deleteMutation.mutate({ id: itemSelected.jsCode });
   };
   const handleConfirm = async () => {
     await onDelete();

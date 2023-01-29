@@ -158,7 +158,8 @@ export default function Index() {
     await setLoading(false);
   };
   const onDelete = async () => {
-    deleteMutation.mutate({ id: itemSelected.pembeliCode });
+    console.log(itemSelected);
+    deleteMutation.mutate({ id: itemSelected.bsCode });
   };
   const handleConfirm = async () => {
     await onDelete();
@@ -222,7 +223,7 @@ export default function Index() {
         <Action
           actionOpen={actionOpen}
           handleEdit={handleEdit}
-          handelDelete={() => handleAlertOpen('Apakah yakin mau delete')}
+          handelDelete={() => handleAlertOpen('Apakah yakin mau delete Pembelian Ini')}
           anchorEl={anchorEl}
           actionClose={handleActionClose}
         />
