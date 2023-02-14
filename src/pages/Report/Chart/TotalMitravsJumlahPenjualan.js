@@ -94,7 +94,7 @@ export default function TotalMitravsJumlahPenjualan() {
        {
         opposite: true,
         title: {
-          text: 'Pembelian per kg'
+          text: 'Penjualan per kg'
         },
         labels: {
           formatter: function (value) {

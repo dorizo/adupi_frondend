@@ -90,7 +90,7 @@ export default function Totalcontinuevspenjualan() {
       }, {
         opposite: true,
         title: {
-          text: 'Pembelian per kg'
+          text: 'Penjualan per kg'
         },labels: {
           formatter: function (value) {
             return value.toLocaleString("id-ID");
