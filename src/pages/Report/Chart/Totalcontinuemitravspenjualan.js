@@ -53,7 +53,7 @@ export default function Totalcontinuevspenjualan() {
       type: 'column',
       data: mitra
     }, {
-      name: 'Pembelian',
+      name: 'penjualan',
       type: 'line',
       data: chartDataPekerja
     }],

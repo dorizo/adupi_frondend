@@ -55,7 +55,7 @@ export default function TotalMitravsJumlahPenjualan() {
       type: 'column',
       data: mitra
     }, {
-      name: 'Pembelian',
+      name: 'Penjualan',
       type: 'line',
       data: chartDataPekerja
     }],
