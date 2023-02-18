@@ -55,6 +55,25 @@ const GET_LUAS_GUDANG_PERBULAN = async (tahun) => {
     return catchCallBack(error);
   }
 };
+
+const GET_LUAS_GUDANG_PERBULANFASILITAOTOR = async (tahun , fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/jumlahLuasGudangPerbulanfasilitator`, {
+      headers,
+      params: {
+        tahun,
+        fasilitatorCode
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
 const GET_JUMLAH_PEKERJA_PERBULAN = async (tahun) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -451,6 +470,25 @@ const GET_ANALISI_PEMBELIAN_PEKERJA_PERBULAN = async (tahun) => {
   }
 };
 
+
+const GET_ANALISI_PEMBELIAN_PEKERJA_PERBULANFASILITATOR = async (tahun , fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/analisis/pembelianDenganPekerjaPerbulan`, {
+      headers,
+      params: {
+        tahun,
+        fasilitatorCode
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
 const GET_ANALISA_V2_MITRA_PEMBELIAN = async (tahun) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -460,6 +498,25 @@ const GET_ANALISA_V2_MITRA_PEMBELIAN = async (tahun) => {
       headers,
       params: {
         tahun,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+
+const GET_ANALISA_V2_MITRA_PEMBELIANFASILITATOR = async (tahun ,fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/permitraPerbulanlinevsmitrafasilitator`, {
+      headers,
+      params: {
+        tahun,
+        fasilitatorCode
       },
     });
     return response;
@@ -485,6 +542,26 @@ const GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN = async (tahun) => {
   }
 };
 
+const GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIANFASILITATOTR = async (tahun , fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/totalmitravspembelianfasilitator`, {
+      headers,
+      params: {
+        tahun,
+        fasilitatorCode
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+
+
 
 
 const GET_ANALISA_V2_MITRA_PENJUALAN = async (tahun) => {
@@ -496,6 +573,25 @@ const GET_ANALISA_V2_MITRA_PENJUALAN = async (tahun) => {
       headers,
       params: {
         tahun,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+
+const GET_ANALISA_V2_MITRA_PENJUALANFASILITATOR = async (tahun,fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/penjualan/permitraPerbulanlinevsmitrafasilitator`, {
+      headers,
+      params: {
+        tahun,
+        fasilitatorCode
       },
     });
     return response;
@@ -521,6 +617,23 @@ const GET_ANALISA_V2_CONTINUE_MITRA_PENJUALAN = async (tahun) => {
   }
 };
 
+const GET_ANALISA_V2_CONTINUE_MITRA_PENJUALANFASILITATOR = async (tahun,fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/penjualan/totalmitravspenjualanfasilitator`, {
+      headers,
+      params: {
+        tahun,
+        fasilitatorCode
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 
 
 const GET_ANALISI_PEMBELIAN_LUAS_GUDANG_PERBULAN = async (tahun) => {
@@ -590,6 +703,12 @@ export {
   GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINE,
   GET_ANALISA_V2_MITRA_PENJUALAN,
   GET_ANALISA_V2_CONTINUE_MITRA_PENJUALAN,
+  GET_ANALISA_V2_CONTINUE_MITRA_PENJUALANFASILITATOR,
   GET_PENJUALAN_MITRA_PERBULANLINECONTINUES,
   GET_PEMBELIAN_MITRA_PERBULANLINECONTINUES,
+  GET_ANALISI_PEMBELIAN_PEKERJA_PERBULANFASILITATOR,
+  GET_ANALISA_V2_MITRA_PEMBELIANFASILITATOR,
+  GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIANFASILITATOTR,
+  GET_ANALISA_V2_MITRA_PENJUALANFASILITATOR,
+  GET_LUAS_GUDANG_PERBULANFASILITAOTOR
 };

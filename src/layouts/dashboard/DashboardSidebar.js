@@ -15,6 +15,7 @@ import useResponsive from '../../hooks/useResponsive';
 import account from '../../_mock/account';
 //
 import navConfig from './NavConfig';
+import navConfigfas from './navConfigfas';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -80,9 +81,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           </AccountStyle>
         </Link>
       </Box>
-
-      <NavSection navConfig={navConfig} />
-
+        {auth.role=="Fasilitator"?<NavSection navConfig={navConfigfas} />:<NavSection navConfig={navConfig} />}
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
   );

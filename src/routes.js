@@ -60,6 +60,7 @@ import Transaksi from './screens/Transaksi';
 import Fasilitatortransaksi from './screens/Fasilitatortransaksi';
 import MitraEdit from './pages/MitraEdit';
 import Detailmasalahall from './pages/Detailmasalahall';
+import Reportfasilitator from './pages/Reportfasilitator';
 
 // ----------------------------------------------------------------------
 
@@ -289,6 +290,16 @@ export default function Router() {
             </RequireAuth>
           ),
         },
+
+        {
+          path: 'reportkordinator',
+          element: (
+            <RequireAuth allowedRoles={['admin']}>
+              <Reportfasilitator />
+            </RequireAuth>
+          ),
+        },
+        
         {
           path: 'export-data',
           element: (
