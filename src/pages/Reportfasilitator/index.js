@@ -25,8 +25,8 @@ import Label from '../../components/Label';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
 import { fDateSuffix } from '../../utils/formatTime';
-import PenjualanPerMitraPerbulanLine from '../ReportMayora/Chart/PenjualanPerMitraPerbulanLine';
-import PembelianPerMitraPerbulanline from '../ReportMayora/Chart/PembelianPerMitraPerbulanline';
+import PenjualanPerMitraPerbulanLine from './Chart/PenjualanPerMitraPerbulanLine';
+import PembelianPerMitraPerbulanline from './Chart/PembelianPerMitraPerbulanline';
 import Action from './Action';
 import LuasGudangPerbulan from './Chart/LuasGudangPerbulan';
 import PekerjaPerbulan from './Chart/PekerjaPerbulan';
@@ -42,9 +42,9 @@ import TotalMitravsJumlahPembelian from './Chart/TotalMitravsJumlahPembelian';
 import Totalcontinuevspembelian from './Chart/Totalcontinuemitravspembelian';
 import TotalMitravsJumlahPenjualan from './Chart/TotalMitravsJumlahPenjualan';
 import Totalcontinuevspenjualan from './Chart/Totalcontinuemitravspenjualan';
-import MasalahmitraPerbulanline from '../ReportMayora/Chart/MasalahmitraPerbulanline';
-import PenjualanPerMitraPerbulanLineContinue from '../ReportMayora/Chart/PenjualanPerMitraPerbulanLineContinue';
-import PembelianPerMitraPerbulanLineContinue from '../ReportMayora/Chart/PembelianPerMitraPerbulanlineContinue';
+import MasalahmitraPerbulanline from './Chart/MasalahmitraPerbulanline';
+import PenjualanPerMitraPerbulanLineContinue from './Chart/PenjualanPerMitraPerbulanLineContinue';
+import PembelianPerMitraPerbulanLineContinue from './Chart/PembelianPerMitraPerbulanlineContinue';
 import useAuth from 'src/hooks/useAuth';
 import { GET_ALL_FASILITATOR } from 'src/api/fasilitator';
 
@@ -151,14 +151,6 @@ const chartOpton = [
     component: <PembelianPerMitraPerbulanline />,
     title: 'Pembelian Per Mitra Perbulan',
   },
-  {
-    component: <PenjualanMitraPerbulanPabrik />,
-    title: 'Penjualan Mitra Perbulan Pabrik',
-  },
-  {
-    component: <PenjualanPerMitraPerbulanPabrik />,
-    title: 'Penjualan Per Mitra Perbulan Pabrik',
-  },
   // {
   //   component: <MasalahMitraPerbulan />,
   //   title: 'Masalah Mitra Perbulan',
@@ -204,7 +196,7 @@ const chartOpton = [
 export default function Reportfasilitator() {
   
   const [kordinatorval, setKordinatorval] = React.useState(sessionStorage.getItem("kordinator"));
-  const fixedOptions = [chartOpton[7]];
+  const fixedOptions = [chartOpton[12]];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [start, setStart] = React.useState(startInit);
   const [end, setEnd] = React.useState(endInit);

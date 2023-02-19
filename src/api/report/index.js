@@ -213,6 +213,25 @@ const GET_PENJUALAN_MITRA_PERBULANLINE = async (tahun, mitraCode) => {
   }
 };
 
+const GET_PENJUALAN_MITRA_PERBULANLINEFASILITATOR = async (tahun, mitraCode,fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/penjualan/permitraPerbulanlinefasilitator`, {
+      headers,
+      params: {
+        tahun,
+        mitraCode,
+        fasilitatorCode
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
 
 const GET_PENJUALAN_MITRA_PERBULANLINECONTINUES = async (tahun, mitraCode) => {
   const headers = {
@@ -232,6 +251,29 @@ const GET_PENJUALAN_MITRA_PERBULANLINECONTINUES = async (tahun, mitraCode) => {
   }
 };
 
+
+
+
+const GET_PENJUALAN_MITRA_PERBULANLINECONTINUESFASILITATOR = async (tahun, mitraCode,fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/penjualan/permitraPerbulanlinecontinuefasilitator`, {
+      headers,
+      params: {
+        tahun,
+        mitraCode,
+        fasilitatorCode
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+
 const GET_PEMBELIAN_MITRA_PERBULANLINECONTINUES = async (tahun, mitraCode) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -249,6 +291,26 @@ const GET_PEMBELIAN_MITRA_PERBULANLINECONTINUES = async (tahun, mitraCode) => {
     return catchCallBack(error);
   }
 };
+
+const GET_PEMBELIAN_MITRA_PERBULANLINECONTINUESFASILITATOR = async (tahun, mitraCode , fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/permitraPerbulanlinecontinuefasilitator`, {
+      headers,
+      params: {
+        tahun,
+        mitraCode,
+        fasilitatorCode
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
 const GET_PEMBELIAN_MITRA_PERBULAN = async (tahun, mitraCode) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -277,6 +339,26 @@ const GET_PEMBELIAN_MITRA_PERBULANLINE = async (tahun, mitraCode) => {
       params: {
         tahun,
         mitraCode,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+
+const GET_PEMBELIAN_MITRA_PERBULANLINEFAS = async (tahun, mitraCode,fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/permitraPerbulanlinefas`, {
+      headers,
+      params: {
+        tahun,
+        mitraCode,
+        fasilitatorCode
       },
     });
     return response;
@@ -421,6 +503,27 @@ const GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINE = async (tahun, jenisMasalah, 
         tahun,
         jenisMasalah,
         status,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+
+const GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINEFASILITATOR = async (tahun, jenisMasalah, status , fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/masalah/masalahmitraperbulanlinefas`, {
+      headers,
+      params: {
+        tahun,
+        jenisMasalah,
+        status,
+        fasilitatorCode
       },
     });
     return response;
@@ -763,10 +866,15 @@ export {
   GET_ANALISA_V2_CONTINUE_MITRA_PENJUALAN,
   GET_ANALISA_V2_CONTINUE_MITRA_PENJUALANFASILITATOR,
   GET_PENJUALAN_MITRA_PERBULANLINECONTINUES,
+  GET_PENJUALAN_MITRA_PERBULANLINECONTINUESFASILITATOR,
   GET_PEMBELIAN_MITRA_PERBULANLINECONTINUES,
   GET_ANALISI_PEMBELIAN_PEKERJA_PERBULANFASILITATOR,
   GET_ANALISA_V2_MITRA_PEMBELIANFASILITATOR,
   GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIANFASILITATOTR,
   GET_ANALISA_V2_MITRA_PENJUALANFASILITATOR,
-  GET_LUAS_GUDANG_PERBULANFASILITAOTOR
+  GET_LUAS_GUDANG_PERBULANFASILITAOTOR,
+  GET_PENJUALAN_MITRA_PERBULANLINEFASILITATOR,
+  GET_PEMBELIAN_MITRA_PERBULANLINECONTINUESFASILITATOR,
+  GET_PEMBELIAN_MITRA_PERBULANLINEFAS,
+  GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINEFASILITATOR
 };
