@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Container, Drawer, FormControl, Grid, InputLabel, List, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { Alert, Box, Button, Card, CardContent, Container, Drawer, FormControl, Grid, InputLabel, List, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { width } from '@mui/system';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 import 'leaflet/dist/leaflet.css';
@@ -9,8 +9,10 @@ import { GET_MITRA_ALL_BY_SU_YES } from 'src/api/mitra';
 import { GET_ALL_WARNA } from 'src/api/warna';
 import { GET_ALL_PROVINSI } from 'src/api/wilayah';
 import SelectInput from 'src/components/SelectInput';
+import useAuth from 'src/hooks/useAuth';
 import { GET_MAP_ANGGOTA } from '../../api/dashboard';
 import Page from '../../components/Page';
+import Reportfasilitator from '../Reportfasilitator';
 import DetailAnggota from './DetailAnggota';
 // import { jakartaBarat } from '../../kml/jakarta/barat';
 // import { jakartaSelatan } from '../../kml/jakarta/selatan';
@@ -35,6 +37,8 @@ const setOption = (data) => {
   return list;
 };
 export default function PetaSebaran({ type = null }) {
+  
+  const { auth } = useAuth();
   const [loading, setLoading] = useState(false);
   const [Provinsi, setProvinsi] = useState(null);
   const [Provinsivalue, setProvinsivalue] = useState(null);
@@ -139,7 +143,13 @@ GET_ALL_PROVINSI()
 
   const MapComponent = () => {
     
+    if (auth?.role =="Fasilitator") {
+      return (
+       <Reportfasilitator></Reportfasilitator>
+      );
+    }
     return (
+      
       <>
         <Container>
           <CardContent style={{ padding: 0, marginTop: 20 }}>

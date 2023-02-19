@@ -3,11 +3,14 @@ import { useQuery } from "react-query";
 import { GET_ALL_MASALAH_DASHBOARD } from "src/api/masalah";
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import { useNavigate } from "react-router-dom";
+import useAuth from "src/hooks/useAuth";
 
 export default function Kunjungandashboard({ type = null }) {
     const { data : totalmasalah , isLoading:lodingmasalah } = useQuery(['GET_ALL_MASALAH_DASHBOARD'], () =>
     GET_ALL_MASALAH_DASHBOARD()
     );
+    
+  const { auth } = useAuth();
     let navigate = useNavigate();
     // console.log();
     const pindah = async (id) =>{
@@ -20,6 +23,7 @@ export default function Kunjungandashboard({ type = null }) {
     }
     return(
         <Container>
+        {auth.role=="Fasilitator"?<></>:
             <Grid container spacing={2}>
                 <Grid item xs={4}>
                     <Card style={{padding:20}}>
@@ -52,6 +56,7 @@ export default function Kunjungandashboard({ type = null }) {
                     </Card>
                 </Grid>
             </Grid>
+    }
         </Container>
     )
 }
