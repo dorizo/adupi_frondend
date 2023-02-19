@@ -159,6 +159,24 @@ const GET_PENJUALAN_SEMUA_MITRA_PERBULAN = async (tahun) => {
     return catchCallBack(error);
   }
 };
+
+const GET_PENJUALAN_SEMUA_MITRA_PERBULANFASILITATOR = async (tahun , fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/penjualan/semuaMitraPerbulanfasilitator`, {
+      headers,
+      params: {
+        tahun,
+        fasilitatorCode
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_PENJUALAN_MITRA_PERBULAN = async (tahun, mitraCode) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -732,6 +750,7 @@ export {
   GET_PENJUALAN_MITRA_PERBULANLINE,
   GET_PENJUALAN_MITRA_PERBULAN_PABRIK,
   GET_PENJUALAN_SEMUA_MITRA_PERBULAN,
+  GET_PENJUALAN_SEMUA_MITRA_PERBULANFASILITATOR,
   GET_PENJUALAN_SEMUA_MITRA_PERBULAN_PABRIK,
   GET_PENJUALAN_SEMUA_MITRA_PERKATEGORI,
   GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUS,
