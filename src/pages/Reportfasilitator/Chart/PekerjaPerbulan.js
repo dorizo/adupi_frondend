@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography }
 import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
-import { GET_JUMLAH_PEKERJA_PERBULAN } from '../../../api/report';
+import { GET_JUMLAH_PEKERJA_PERBULAN, GET_JUMLAH_PEKERJA_PERBULANFASILITATOR } from '../../../api/report';
 import AutoCompleteLoading from '../../../components/AutoCompleteLoading';
 import { yearOption } from '../../../utils/yearOption';
 
@@ -21,12 +21,12 @@ export default function PekerjaPerbulan() {
     setOpen(false);
   };
   const handleFilter = () => {
-    refetch(tahun?.value);
+    refetch(tahun?.value, sessionStorage.getItem("kordinator"));
     setOpen(false);
   };
 
-  const { data, isLoading, refetch } = useQuery(['GET_JUMLAH_PEKERJA_PERBULAN', tahun?.value], () =>
-    GET_JUMLAH_PEKERJA_PERBULAN(tahun?.value)
+  const { data, isLoading, refetch } = useQuery(['GET_JUMLAH_PEKERJA_PERBULANFASILITATOTR', tahun?.value], () =>
+    GET_JUMLAH_PEKERJA_PERBULANFASILITATOR(tahun?.value, sessionStorage.getItem("kordinator"))
   );
   const list = data && data?.data?.data;
   

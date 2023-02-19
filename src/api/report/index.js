@@ -90,6 +90,24 @@ const GET_JUMLAH_PEKERJA_PERBULAN = async (tahun) => {
     return catchCallBack(error);
   }
 };
+
+const GET_JUMLAH_PEKERJA_PERBULANFASILITATOR = async (tahun,fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/jumlahPekerjaPerbulanfasilitator`, {
+      headers,
+      params: {
+        tahun,
+        fasilitatorCode
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
 const GET_PEMBELIAN_SEMUA_MITRA_PERBULAN = async (tahun) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -99,6 +117,25 @@ const GET_PEMBELIAN_SEMUA_MITRA_PERBULAN = async (tahun) => {
       headers,
       params: {
         tahun,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+
+const GET_PEMBELIAN_SEMUA_MITRA_PERBULANFASILITATOR = async (tahun,fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/semuaMitraPerbulanfasilitator`, {
+      headers,
+      params: {
+        tahun,
+        fasilitatorCode
       },
     });
     return response;
@@ -680,6 +717,7 @@ export {
   GET_ANALISI_PEMBELIAN_PEKERJA_PERBULAN,
   GET_JUMLAH_MITRA_PERBULAN_KAB,
   GET_JUMLAH_PEKERJA_PERBULAN,
+  GET_JUMLAH_PEKERJA_PERBULANFASILITATOR,
   GET_LUAS_GUDANG_PERBULAN,
   GET_MASALAH_PERBULAN_JENIS_STATUS,
   GET_PEMBELIAN_MITRA_PERBULAN,
@@ -687,6 +725,7 @@ export {
   GET_PEMBELIAN_MITRA_PERBULANLINEALL,
   GET_PEMBELIAN_MITRA_PERBULAN_PABRIK,
   GET_PEMBELIAN_SEMUA_MITRA_PERBULAN,
+  GET_PEMBELIAN_SEMUA_MITRA_PERBULANFASILITATOR,
   GET_PEMBELIAN_SEMUA_MITRA_PERBULAN_PABRIK,
   GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORI,
   GET_PENJUALAN_MITRA_PERBULAN,

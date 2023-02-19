@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography }
 import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
-import { GET_PEMBELIAN_SEMUA_MITRA_PERBULAN } from '../../../api/report';
+import { GET_PEMBELIAN_SEMUA_MITRA_PERBULAN, GET_PEMBELIAN_SEMUA_MITRA_PERBULANFASILITATOR } from '../../../api/report';
 import AutoCompleteLoading from '../../../components/AutoCompleteLoading';
 import { yearOption } from '../../../utils/yearOption';
 
@@ -21,12 +21,12 @@ export default function PembelianMitraPerbulan() {
     setOpen(false);
   };
   const handleFilter = () => {
-    refetch(tahun?.value);
+    refetch(tahun?.value, sessionStorage.getItem("kordinator"));
     setOpen(false);
   };
 
   const { data, isLoading, refetch } = useQuery(['GET_PEMBELIAN_SEMUA_MITRA_PERBULAN', tahun?.value], () =>
-    GET_PEMBELIAN_SEMUA_MITRA_PERBULAN(tahun?.value)
+    GET_PEMBELIAN_SEMUA_MITRA_PERBULANFASILITATOR(tahun?.value, sessionStorage.getItem("kordinator"))
   );
   const list = data && data?.data?.data;
   const chartDataBerat = [...Array(12)].map(() => 0);
