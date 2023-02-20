@@ -21,7 +21,7 @@ export default function TotalMitravsJumlahPembelian() {
     setOpen(false);
   };
   const handleFilter = () => {
-    refetch(tahun?.value);
+    refetchmitrapembelian(tahun?.value, sessionStorage.getItem("kordinator"));
     setOpen(false);
   };
 

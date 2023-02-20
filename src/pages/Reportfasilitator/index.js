@@ -196,7 +196,7 @@ const chartOpton = [
 export default function Reportfasilitator() {
   
   const [kordinatorval, setKordinatorval] = React.useState(sessionStorage.getItem("kordinator"));
-  const fixedOptions = [chartOpton[14]];
+  const fixedOptions = [chartOpton[15]];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [start, setStart] = React.useState(startInit);
   const [end, setEnd] = React.useState(endInit);

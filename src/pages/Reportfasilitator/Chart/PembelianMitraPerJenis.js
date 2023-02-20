@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
 import { GET_ALL_JENIS_SAMPAH } from '../../../api/jenis_sampah';
-import { GET_PEMBELIAN_SEMUA_MITRA_PERJENIS } from '../../../api/report';
+import { GET_PEMBELIAN_SEMUA_MITRA_PERJENIS, GET_PEMBELIAN_SEMUA_MITRA_PERJENISfas } from '../../../api/report';
 import AutoCompleteLoading from '../../../components/AutoCompleteLoading';
 import { yearOption } from '../../../utils/yearOption';
 
@@ -26,12 +26,12 @@ export default function PembelianMitraPerJenis() {
     setJsCode(null);
   };
   const handleFilter = () => {
-    refetch(jsCode?.value);
+    refetch(jsCode?.value,sessionStorage.getItem("kordinator"));
     setOpen(false);
   };
 
   const { data, refetch } = useQuery(['GET_PEMBELIAN_SEMUA_MITRA_PERJENIS', jsCode?.value], () =>
-    GET_PEMBELIAN_SEMUA_MITRA_PERJENIS(jsCode?.value)
+    GET_PEMBELIAN_SEMUA_MITRA_PERJENISfas(jsCode?.value,sessionStorage.getItem("kordinator"))
   );
   const { data: jsData } = useQuery('GET_ALL_JENIS_SAMPAH', GET_ALL_JENIS_SAMPAH);
   const listJS = jsData && jsData?.data?.data;

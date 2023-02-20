@@ -583,7 +583,6 @@ const GET_PENJUALAN_SEMUA_MITRA_PERKATEGORI = async (ksCode) => {
   }
 };
 
-
 const GET_PENJUALAN_SEMUA_MITRA_PERKATEGORIFAS = async (ksCode,fasilitatorCode) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -610,6 +609,24 @@ const GET_PEMBELIAN_SEMUA_MITRA_PERJENIS = async (jsCode) => {
       headers,
       params: {
         jsCode,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
+const GET_PEMBELIAN_SEMUA_MITRA_PERJENISfas = async (jsCode,fasilitatorCode) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/pembelian/semuaMitraPerkategorifas`, {
+      headers,
+      params: {
+        jsCode,
+        fasilitatorCode
       },
     });
     return response;
@@ -896,6 +913,7 @@ export {
   GET_PENJUALAN_SEMUA_MITRA_PERKATEGORI,
   GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUS,
   GET_PEMBELIAN_SEMUA_MITRA_PERJENIS,
+  GET_PEMBELIAN_SEMUA_MITRA_PERJENISfas,
   GET_PENJUALAN_SEMUA_MITRA_PERJENIS,
   GET_ANALISA_V2_MITRA_PEMBELIAN,
   GET_ANALISA_V2_CONTINUE_MITRA_PEMBELIAN,
@@ -916,5 +934,5 @@ export {
   GET_PEMBELIAN_MITRA_PERBULANLINEFAS,
   GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINEFASILITATOR,
   GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORIFAS,
-  GET_PENJUALAN_SEMUA_MITRA_PERKATEGORIFAS
+  GET_PENJUALAN_SEMUA_MITRA_PERKATEGORIFAS,
 };

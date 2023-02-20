@@ -21,7 +21,7 @@ export default function TotalMitravsJumlahPenjualan() {
     setOpen(false);
   };
   const handleFilter = () => {
-    refetch(tahun?.value);
+    refetchmitrapembelian(tahun?.value, sessionStorage.getItem("kordinator"));
     setOpen(false);
   };
 

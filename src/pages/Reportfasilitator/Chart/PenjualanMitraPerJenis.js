@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
 import { GET_ALL_JENIS_SAMPAH } from '../../../api/jenis_sampah';
-import { GET_PENJUALAN_SEMUA_MITRA_PERKATEGORI } from '../../../api/report';
+import { GET_PENJUALAN_SEMUA_MITRA_PERKATEGORI, GET_PENJUALAN_SEMUA_MITRA_PERKATEGORIFAS } from '../../../api/report';
 import AutoCompleteLoading from '../../../components/AutoCompleteLoading';
 import { yearOption } from '../../../utils/yearOption';
 
@@ -26,12 +26,12 @@ export default function PenjualanMitraPerJenis() {
     setJsCode(null);
   };
   const handleFilter = () => {
-    refetch(jsCode?.value);
+    refetch(jsCode?.value,sessionStorage.getItem("kordinator"));
     setOpen(false);
   };
 
-  const { data, isLoading, refetch } = useQuery(['GET_PENJUALAN_SEMUA_MITRA_PERKATEGORI', jsCode?.value], () =>
-    GET_PENJUALAN_SEMUA_MITRA_PERKATEGORI(jsCode?.value)
+  const { data, isLoading, refetch } = useQuery(['GET_PENJUALAN_SEMUA_MITRA_PERKATEGORIfas', jsCode?.value], () =>
+    GET_PENJUALAN_SEMUA_MITRA_PERKATEGORIFAS(jsCode?.value,sessionStorage.getItem("kordinator"))
   );
   const { data: jsData } = useQuery('GET_ALL_JENIS_SAMPAH', GET_ALL_JENIS_SAMPAH);
   const listJS = jsData && jsData?.data?.data;
