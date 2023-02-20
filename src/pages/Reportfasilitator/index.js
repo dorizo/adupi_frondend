@@ -20,7 +20,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers';
 import * as React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { GET_REPORT_MITRA_BY_DATE } from '../../api/report';
+import { FASILITATORDETECT, GET_REPORT_MITRA_BY_DATE } from '../../api/report';
 import Label from '../../components/Label';
 import Page from '../../components/Page';
 import useTable from '../../hooks/useTable/index';
@@ -196,7 +196,7 @@ const chartOpton = [
 export default function Reportfasilitator() {
   
   const [kordinatorval, setKordinatorval] = React.useState(sessionStorage.getItem("kordinator"));
-  const fixedOptions = [chartOpton[15]];
+  const fixedOptions = [];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [start, setStart] = React.useState(startInit);
   const [end, setEnd] = React.useState(endInit);
@@ -211,6 +211,23 @@ export default function Reportfasilitator() {
       retry: false,
     }
   );
+  
+  const { data:fasdata, isLoading:fasisloading, refetch:fasrefetch } = useQuery(
+    'GET_DATA_FAS_DATA',
+    () => FASILITATORDETECT( auth.user),
+    {
+      retry: false,
+    }
+  );
+  React.useEffect(() => {
+    console.log("datakudisini");
+  if(!fasisloading){
+    // console.log(fasdata?.data?.data?.[0]?.fasilitatorCode);
+    setKordinatorval(fasdata?.data?.data?.[0]?.fasilitatorCode);
+    sessionStorage.setItem("kordinator",fasdata?.data?.data?.[0]?.fasilitatorCode);
+  }
+  
+}, []);
   const navigate = useNavigate();
   const rows = data && data?.data?.data;
   const { TableComponent, list } = useTable({
@@ -247,10 +264,9 @@ export default function Reportfasilitator() {
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Report Kordinator
-            {sessionStorage.getItem("kordinator")}
-          </Typography>
+            </Typography>
         </Stack>
-        <Card  style={{ marginBottom: 10 }}>
+        <Card  style={auth?.role =="Fasilitator"?{ marginBottom: 10, display: "none"  }:{ marginBottom: 10}}>
         <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"

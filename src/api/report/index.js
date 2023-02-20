@@ -11,6 +11,24 @@ const GET_REPORT_MITRA_BY_DATE = async (start, end) => {
     return catchCallBack(error);
   }
 };
+
+const FASILITATORDETECT = async (email) => {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+  try {
+    const response = await axios.get(`report/fasilitatordetect`, {
+      headers,
+      params: {
+        email,
+      },
+    });
+    return response;
+  } catch (error) {
+    return catchCallBack(error);
+  }
+};
+
 const GET_REPORT_MITRA_DETAIL_BY_DATE = async (start, end, id) => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -935,4 +953,5 @@ export {
   GET_SEMUA_MASALAH_PERBULAN_JENIS_STATUSLINEFASILITATOR,
   GET_PEMBELIAN_SEMUA_MITRA_PERKATEGORIFAS,
   GET_PENJUALAN_SEMUA_MITRA_PERKATEGORIFAS,
+  FASILITATORDETECT,
 };

@@ -113,6 +113,12 @@ const navConfig = [
         path: '/dashboard/report',
         icon: getIcon('eva:archive-outline'),
       },
+      
+      // {
+      //   title: 'report Fasilitator',
+      //   path: '/dashboard/reportkordinator',
+      //   icon: getIcon('eva:archive-outline'),
+      // },
       {
         title: 'report mayora',
         path: '/dashboard/report_mayora',
